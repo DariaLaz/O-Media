@@ -4,8 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMedia", "OMedia\OMedia.csproj", "{8E25F816-D030-46C3-B50F-F2C8FBF02308}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABCD8FC0-03CA-4826-B85F-DE7957716E61} = {ABCD8FC0-03CA-4826-B85F-DE7957716E61}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMedia.Core", "OMedia.Core\OMedia.Core.csproj", "{ABCD8FC0-03CA-4826-B85F-DE7957716E61}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4763FB5-1BA1-49EC-846B-566BF596C204} = {D4763FB5-1BA1-49EC-846B-566BF596C204}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMedia.Infrastructure", "OMedia.Infrastructure\OMedia.Infrastructure.csproj", "{D4763FB5-1BA1-49EC-846B-566BF596C204}"
 EndProject

@@ -767,6 +767,34 @@
             "rid": "win"
           }
         }
+      },
+      "OMedia.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "OMedia.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/OMedia.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OMedia.Core.dll": {}
+        }
+      },
+      "OMedia.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.7",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.7",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.7"
+        },
+        "compile": {
+          "bin/placeholder/OMedia.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OMedia.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -2257,6 +2285,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "OMedia.Core/1.0.0": {
+      "type": "project",
+      "path": "../OMedia.Core/OMedia.Core.csproj",
+      "msbuildProject": "../OMedia.Core/OMedia.Core.csproj"
+    },
+    "OMedia.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../OMedia.Infrastructure/OMedia.Infrastructure.csproj",
+      "msbuildProject": "../OMedia.Infrastructure/OMedia.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2265,7 +2303,8 @@
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.7",
       "Microsoft.AspNetCore.Identity.UI >= 6.0.7",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.7",
-      "Microsoft.EntityFrameworkCore.Tools >= 6.0.7"
+      "Microsoft.EntityFrameworkCore.Tools >= 6.0.7",
+      "OMedia.Core >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2301,7 +2340,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Core\\OMedia.Core.csproj": {
+              "projectPath": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Core\\OMedia.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

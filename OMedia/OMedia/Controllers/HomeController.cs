@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OMedia.Core.Contracts;
+using OMedia.Core.Services;
 using OMedia.Models;
 using System.Diagnostics;
 
@@ -6,16 +8,18 @@ namespace OMedia.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly INewsFeedService homeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(INewsFeedService _homeService)
         {
-            _logger = logger;
+            homeService = _homeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await homeService.GetNewsSortedByDate();
+
+            return View(model);
         }
 
         public IActionResult Privacy()

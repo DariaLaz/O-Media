@@ -68,3 +68,7 @@ E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\refint\OMedia.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.pdb
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.genruntimeconfig.cache
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\ref\OMedia.dll
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Infrastructure.dll
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Infrastructure.pdb
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Core.dll
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Core.pdb
