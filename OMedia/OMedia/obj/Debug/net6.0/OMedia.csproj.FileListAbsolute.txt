@@ -1,3 +1,11 @@
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.csproj.AssemblyReference.cache
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.GeneratedMSBuildEditorConfig.editorconfig
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.AssemblyInfoInputs.cache
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.AssemblyInfo.cs
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.csproj.CoreCompileInputs.cache
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.MvcApplicationPartsAssemblyInfo.cache
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.RazorAssemblyInfo.cache
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.RazorAssemblyInfo.cs
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\appsettings.Development.json
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\appsettings.json
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.staticwebassets.runtime.json
@@ -19,6 +27,7 @@ E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.EntityFramew
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
@@ -48,15 +57,11 @@ E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\runtimes\win\lib\netco
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.csproj.AssemblyReference.cache
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.GeneratedMSBuildEditorConfig.editorconfig
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.AssemblyInfoInputs.cache
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.AssemblyInfo.cs
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.csproj.CoreCompileInputs.cache
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Core.dll
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Infrastructure.dll
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Core.pdb
+E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Infrastructure.pdb
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.MvcApplicationPartsAssemblyInfo.cs
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.MvcApplicationPartsAssemblyInfo.cache
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.RazorAssemblyInfo.cache
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.RazorAssemblyInfo.cs
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\staticwebassets.build.json
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\staticwebassets.development.json
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
@@ -68,7 +73,3 @@ E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\refint\OMedia.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.pdb
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.genruntimeconfig.cache
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\ref\OMedia.dll
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Infrastructure.dll
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Infrastructure.pdb
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Core.dll
-E:\softuni\SoftUni\O-Media\OMedia\OMedia\bin\Debug\net6.0\OMedia.Core.pdb

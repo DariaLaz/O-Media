@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OMedia.Core.Contracts;
-using OMedia.Core.Services;
 using OMedia.Infrastructure.Data;
 using OMedia.Infrastructure.Data.Common;
+using OMedia.Core.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddScoped<INewsFeedService, NewsFeedService>();
+builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+
 
 var app = builder.Build();
 
@@ -41,7 +45,6 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

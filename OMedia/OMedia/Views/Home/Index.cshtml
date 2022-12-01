@@ -1,56 +1,5 @@
-﻿@model IEnumerable<NewsHomeModel>
+﻿@model IEnumerable<NewsViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
 
-
-
-@*@if (Model.Count() == 0)
-{
-    <div class="mt-4 p-5 bg-light">
-        <h1 class="display-4">Welcome to the best place for renting houses!</h1>
-        <p class="lead">
-            There are no houses in the system currently available
-            so why don't you just add one?
-        </p>
-        <hr class="my-4">
-        <p class="lead">
-        </p>
-    </div>
-}
-*@
-
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
-<div class="col-md-7">
-    @foreach (var n in Model)
-    {
-           <div class="social-feed-box w-75 p-3 d-flex justify-content-center">
-            <div class="pull-right social-action dropdown">
-            </div>
-            <div class="social-avatar">
-                <a href="" class="pull-left">
-                </a>
-                <div class="media-body">
-                    <a href="#">
-                        @n.Title
-                    </a>
-                    <small class="text-muted">@n.Date</small>
-                </div>
-            </div>
-            <div class="social-body">
-                <p>
-                    @n.Content
-                </p>
-                <img src="@n.ImageUrl" class="img-responsive">
-                <div class="btn-group">
-                    
-                    <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                    <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-                </div>
-            </div>
-        </div> 
-    }
-</div>
-</div>
