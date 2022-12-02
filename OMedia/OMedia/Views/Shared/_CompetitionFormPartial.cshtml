@@ -1,0 +1,77 @@
+﻿@model AddCompetitionViewModel
+  @*<div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Details</label>
+              <textarea class="form-control" rows="3" placeholder="Details..."></textarea>
+            </div>*@
+@*<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Name...">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location"></label>
+                <input asp-for="Location" class="form-control" placeholder="Location...">
+                <span asp-validation-for="Location" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Details"></label>
+                <input asp-for="Details" class="form-control" placeholder="Details...">
+                <span asp-validation-for="Details" class="small text-danger"></span>
+            </div>
+          
+
+            @foreach (var cb in Model.AgeGroupsCheckBoxes)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="@cb.Value" name="AgeGroups" id="@cb.Id" checked="@cb.IsChecked">
+                    <label class="form-check-label" for="">
+                        @cb.Description
+                    </label>
+                </div>
+            }
+
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+*@
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Title...">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location"></label>
+                <input asp-for="Location" class="form-control" placeholder="Content...">
+                <span asp-validation-for="Location" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Details"></label>
+                <input asp-for="Details" class="form-control" placeholder="Content...">
+                <span asp-validation-for="Details" class="small text-danger"></span>
+            </div>
+            @foreach (var cb in Model.AgeGroupsCheckBoxes)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="@cb.Value" name="AgeGroups" id="@cb.Id" checked="@cb.IsChecked">
+                    <label class="form-check-label" for="">
+                        @cb.Description
+                    </label>
+                </div>
+            }
+            @Model.Date = DateTime.Now();
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

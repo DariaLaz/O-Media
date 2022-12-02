@@ -10,7 +10,6 @@ namespace OMedia.Core.Contracts
     {
         Task<bool> ExistsById(string userId);
         Task<int> GetCompetitorId(string userId);
-        Task<string> GetUserId(int competitorId);
 
     }
 }

@@ -143,15 +143,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "41a0d833-6e88-4911-a294-2c10ae0c2ab8",
+                            ConcurrencyStamp = "29d1ed2d-139c-43b4-abfa-a65e61021f64",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN0k8qvWqkqUSwAotAvJFug271QJ6HywSudRnIHEitBHue0e7rDFLTJZdSAI6mgunQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI4eBtDiJdN8wq5739EOlBQ6RQsNbYDOh7ao9Xt669aylIkZ3bDDIT2anb2bW4Siog==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c73b46f9-6e6e-4e9a-8f52-bac135b2e24d",
+                            SecurityStamp = "256978cb-dbd6-4054-8dbc-327c7fd8ae7a",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -159,15 +159,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d98f5909-035f-45dc-856d-5edcfa7a0929",
+                            ConcurrencyStamp = "4275be56-ef7f-4c3a-adc5-278f38293997",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBhSOmupVIrKQwYCre0FbWTLEC8nmuUiSjw2cHHm9mJ3Tg+HEsfdliCnlrD1yGqDzA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMApbLNbL+O4F4KKfPB8EiAdYA7ndLUed2CzgvT54ZRy6QJW8p2s75lcGP1pubisHQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "21b10681-8fcb-47b8-ad93-a002636b0a4a",
+                            SecurityStamp = "5128ccd0-eec7-4b08-adfd-faa15b0a5533",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -280,6 +280,152 @@ namespace OMedia.Infrastructure.Migrations
                     b.HasIndex("CompetitionId");
 
                     b.ToTable("AgeGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 10,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 12,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Age = 14,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Age = 16,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Age = 18,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Age = 21,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Age = 35,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Age = 45,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Age = 55,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Age = 60,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Age = 65,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Age = 70,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Age = 10,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Age = 12,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Age = 14,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Age = 16,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Age = 18,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Age = 21,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Age = 35,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Age = 45,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Age = 55,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Age = 60,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Age = 65,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Age = 70,
+                            Gender = "Female"
+                        });
                 });
 
             modelBuilder.Entity("OMedia.Infrastructure.Data.Competition", b =>
@@ -316,7 +462,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 2, 17, 39, 45, 46, DateTimeKind.Local).AddTicks(8508),
+                            Date = new DateTime(2022, 12, 2, 19, 34, 12, 903, DateTimeKind.Local).AddTicks(9819),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
                             Location = "CoolPlace",
                             Name = "CoolRace"
@@ -472,7 +618,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 2, 17, 39, 45, 47, DateTimeKind.Local).AddTicks(2427),
+                            Date = new DateTime(2022, 12, 2, 19, 34, 12, 904, DateTimeKind.Local).AddTicks(4205),
                             Title = "Title",
                             WriterId = 1
                         });

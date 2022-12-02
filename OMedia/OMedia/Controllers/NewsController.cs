@@ -27,7 +27,7 @@ namespace OMedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            
+
             if (await userService.ExistsById(User.Id()) == false)
             {
                 return RedirectToAction("Login");
@@ -50,7 +50,7 @@ namespace OMedia.Controllers
             }
 
             int writerId = await userService.GetCompetitorId(User.Id());
-            int id = await newsService.Create(model, writerId);
+            await newsService.Create(model, writerId);
             return RedirectToAction("All");
         }
 

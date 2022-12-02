@@ -12,7 +12,7 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<AgeGroup> builder)
         {
-            builder.HasKey(ag => ag.Id);
+            builder.HasData(CreateAgeGroups());
 
         }
         private List<AgeGroup> CreateAgeGroups()

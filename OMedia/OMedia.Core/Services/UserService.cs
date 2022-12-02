@@ -30,10 +30,5 @@ namespace OMedia.Core.Services
                .FirstOrDefaultAsync(a => a.UserId == userId))?.Id ?? 0;
         }
 
-        public async Task<string> GetUserId(int competitorId)
-        {
-            return (await repo.AllReadonly<Competitor>()
-              .FirstOrDefaultAsync(a => a.Id == competitorId)).UserId ?? "";
-        }
     }
 }

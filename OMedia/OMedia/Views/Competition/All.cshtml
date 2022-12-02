@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CompetitionViewModel>
+@{
+    ViewData["Title"] = "All Competitions";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="col-md-7">
+
+    @foreach (var m in Model)
+    {
+        <div class="social-feed-box">
+            <div class="social-avatar">
+                <div class="media-body">
+                    <a href="#"></a>
+                    <small class="text-muted">@m.Date</small>
+                </div>
+            </div>
+            <div class="social-body">
+                <h3>@m.Name</h3>
+                <h4>@m.Date</h4>
+                <h4>@m.Location</h4>
+                <br />
+                <a asp-area="" asp-controller="House" asp-action="Details" asp-route-id="@m.Id" 
+                asp-route-information="" class="btn btn-success">Details</a>
+                <div class="btn-group">
+                    <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Take Part</button>
+                </div>
+            </div>
+        </div>     
+    }
+</div>
+</div>
