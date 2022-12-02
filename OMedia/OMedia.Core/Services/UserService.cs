@@ -24,10 +24,16 @@ namespace OMedia.Core.Services
                 .AnyAsync(a => a.UserId == userId);
         }
 
-        public async Task<int> GetUserId(string userId)
+        public async Task<int> GetCompetitorId(string userId)
         {
             return (await repo.AllReadonly<Competitor>()
                .FirstOrDefaultAsync(a => a.UserId == userId))?.Id ?? 0;
+        }
+
+        public async Task<string> GetUserId(int competitorId)
+        {
+            return (await repo.AllReadonly<Competitor>()
+              .FirstOrDefaultAsync(a => a.Id == competitorId)).UserId ?? "";
         }
     }
 }

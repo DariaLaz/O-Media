@@ -19,13 +19,13 @@ namespace OMedia.Core.Services
             repo = _repo;
         }
 
-        public async Task<int> Create(AddNewViewModel model, int agentId)
+        public async Task<int> Create(AddNewViewModel model, int userId)
         {
             var news = new News()
             {
                 Title = model.Title,
                 Content = model.Content,
-                WriterId = agentId,
+                WriterId = userId,
                 Date = DateTime.Now
             };
             await repo.AddAsync(news);

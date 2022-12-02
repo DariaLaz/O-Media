@@ -49,7 +49,7 @@ namespace OMedia.Controllers
                 return View(model);
             }
 
-            int writerId = await userService.GetUserId(User.Id());
+            int writerId = await userService.GetCompetitorId(User.Id());
             int id = await newsService.Create(model, writerId);
             return RedirectToAction("All");
         }

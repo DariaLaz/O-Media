@@ -9,6 +9,8 @@ namespace OMedia.Core.Contracts
     public interface IUserService
     {
         Task<bool> ExistsById(string userId);
-        Task<int> GetUserId(string userId);
+        Task<int> GetCompetitorId(string userId);
+        Task<string> GetUserId(int competitorId);
+
     }
 }

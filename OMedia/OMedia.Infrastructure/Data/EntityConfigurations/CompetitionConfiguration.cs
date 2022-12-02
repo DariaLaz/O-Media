@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
                     Location = "CoolPlace",
                     Date = DateTime.Now,
                     Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
-
+                  
                 }
 
              };

@@ -10,6 +10,6 @@ namespace OMedia.Core.Contracts
     public interface INewsService
     {
         Task<IEnumerable<NewsViewModel>> GetAllNewsSortedByDate();
-        Task<int> Create(AddNewViewModel model, int agentId);
+        Task<int> Create(AddNewViewModel model, int userId);
     }
 }

@@ -29,6 +29,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICompetitionService, CompetitionService>();
+
 
 
 
