@@ -26,6 +26,7 @@ namespace OMedia.Infrastructure.Data
             builder.ApplyConfiguration(new DistanceTypesConfiguration());
             builder.ApplyConfiguration(new NewsConfiguration());
             builder.ApplyConfiguration(new TeamConfiguration());
+            builder.ApplyConfiguration(new AgeGroupsCompetitionsConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -35,6 +36,7 @@ namespace OMedia.Infrastructure.Data
         public DbSet<DistanceType> DistanceTypes { get; set; } = null!;
         public DbSet<News> News { get; set; } = null!;
         public DbSet<Team> Teams { get; set; } = null!;
+
 
 
     }

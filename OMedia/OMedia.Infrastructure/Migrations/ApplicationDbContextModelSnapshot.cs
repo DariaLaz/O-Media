@@ -143,15 +143,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "29d1ed2d-139c-43b4-abfa-a65e61021f64",
+                            ConcurrencyStamp = "2d164a0c-7152-4c72-9493-a12c7bd89005",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI4eBtDiJdN8wq5739EOlBQ6RQsNbYDOh7ao9Xt669aylIkZ3bDDIT2anb2bW4Siog==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI5K4eHCUzwT1ZwMJybGXPifWrQAGo4VcmXAw38Xb3gdspX7i2xqvAd47KMB+O/gmQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "256978cb-dbd6-4054-8dbc-327c7fd8ae7a",
+                            SecurityStamp = "429c00c5-3042-4e42-a0c2-17899fb2d52d",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -159,15 +159,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4275be56-ef7f-4c3a-adc5-278f38293997",
+                            ConcurrencyStamp = "5beccc9b-27a2-4fe2-a576-74f3efd2c170",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMApbLNbL+O4F4KKfPB8EiAdYA7ndLUed2CzgvT54ZRy6QJW8p2s75lcGP1pubisHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG/JIFnY59/ruV3Dj2mCCX6U22hzGCC9R2rCh0LjgnBXTM9gPlkU+UyGvRgrCDgPvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5128ccd0-eec7-4b08-adfd-faa15b0a5533",
+                            SecurityStamp = "fd6ce483-24f2-4671-a8aa-8b8a6ed9e307",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -269,15 +269,10 @@ namespace OMedia.Infrastructure.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CompetitionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompetitionId");
 
                     b.ToTable("AgeGroups");
 
@@ -428,6 +423,21 @@ namespace OMedia.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OMedia.Infrastructure.Data.AgeGroupsCompetitions", b =>
+                {
+                    b.Property<int>("AgeGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AgeGroupId", "CompetitionId");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.ToTable("AgeGroupsCompetitions");
+                });
+
             modelBuilder.Entity("OMedia.Infrastructure.Data.Competition", b =>
                 {
                     b.Property<int>("Id")
@@ -462,7 +472,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 2, 19, 34, 12, 903, DateTimeKind.Local).AddTicks(9819),
+                            Date = new DateTime(2022, 12, 3, 3, 8, 8, 957, DateTimeKind.Local).AddTicks(4098),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
                             Location = "CoolPlace",
                             Name = "CoolRace"
@@ -618,7 +628,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 2, 19, 34, 12, 904, DateTimeKind.Local).AddTicks(4205),
+                            Date = new DateTime(2022, 12, 3, 3, 8, 8, 958, DateTimeKind.Local).AddTicks(3271),
                             Title = "Title",
                             WriterId = 1
                         });
@@ -702,11 +712,23 @@ namespace OMedia.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OMedia.Infrastructure.Data.AgeGroup", b =>
+            modelBuilder.Entity("OMedia.Infrastructure.Data.AgeGroupsCompetitions", b =>
                 {
-                    b.HasOne("OMedia.Infrastructure.Data.Competition", null)
+                    b.HasOne("OMedia.Infrastructure.Data.AgeGroup", "AgeGroup")
+                        .WithMany()
+                        .HasForeignKey("AgeGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OMedia.Infrastructure.Data.Competition", "Competition")
                         .WithMany("AgeGroups")
-                        .HasForeignKey("CompetitionId");
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AgeGroup");
+
+                    b.Navigation("Competition");
                 });
 
             modelBuilder.Entity("OMedia.Infrastructure.Data.CompetitionsCompetitors", b =>

@@ -13,7 +13,7 @@ namespace OMedia.Infrastructure.Data
     {
         public Competition()
         {
-            this.AgeGroups = new List<AgeGroup>();
+            this.AgeGroups = new List<AgeGroupsCompetitions>();
             this.Competitors = new List<CompetitionsCompetitors>();
         }
         [Key]
@@ -29,7 +29,7 @@ namespace OMedia.Infrastructure.Data
         [Required]
         [StringLength(500)]
         public string Details { get; set; } = null!;
-        public List<AgeGroup> AgeGroups { get; set; }
+        public List<AgeGroupsCompetitions> AgeGroups { get; set; }
         public List<CompetitionsCompetitors> Competitors { get; set; }
 
     }

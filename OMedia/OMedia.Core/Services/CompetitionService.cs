@@ -20,20 +20,24 @@ namespace OMedia.Core.Services
         }
         public async Task<int> Create(AddCompetitionViewModel model, int userId)
         {
+           
             var competition = new Competition()
             {
                 Name = model.Name,
                 Location = model.Location,
                 Date = model.Date,
-                Details = model.Details,
-                AgeGroups = model.AgeGroups.
-                    Select(c => new AgeGroup()
-                    {
-                        Id = c.Id,
-                        Age = c.Age,
-                        Gender = c.Gender
-                    }).ToList()
+                Details = model.Details
             };
+            foreach (var ag in model.AgeGroups)
+            {
+                if ((await GetAgeGroupsById(ag.Id)) != null)
+                {
+                    competition.AgeGroups.Add(new AgeGroupsCompetitions
+                    {
+                        AgeGroupId = ag.Id
+                    });
+                }
+            }
             var relation = new CompetitionsCompetitors()
             {
                 Competition = competition,
@@ -46,7 +50,10 @@ namespace OMedia.Core.Services
 
             return competition.Id;
         }
-
+        public async Task<AgeGroup> GetAgeGroupsById(int id)
+        {
+            return await repo.AllReadonly<AgeGroup>().FirstOrDefaultAsync(ag => ag.Id == id);
+        }
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups()
         {
             return await repo.AllReadonly<AgeGroup>()
@@ -73,9 +80,7 @@ namespace OMedia.Core.Services
                     Date = c.Date.ToString("dd-MM-yyyy"),
                     AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
                     {
-                        Id = g.Id,
-                        Age = g.Age ?? 0,
-                        Gender = g.Gender ?? "Open"
+                        Id = g.AgeGroupId
                     })
                 })
                 .ToListAsync();
@@ -85,6 +90,7 @@ namespace OMedia.Core.Services
         public async Task<IEnumerable<CompetitionViewModel>> GetAllPreviousCompetitionsSortedByDate()
         {
             return await repo.AllReadonly<Competition>()
+                .Include(c => c.AgeGroups)
                 .OrderByDescending(c => c.Date)
                 .Where(c => c.Date < DateTime.Now)
                 .Select(c => new CompetitionViewModel()
@@ -93,11 +99,9 @@ namespace OMedia.Core.Services
                     Name = c.Name,
                     Location = c.Location,
                     Date = c.Date.ToString("dd-MM-yyyy"),
-                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
+                    AgeGroups = c.AgeGroups.Select((g) => new CompetitionAgeGroupModel
                     {
-                        Id = g.Id,
-                        Age = g.Age ?? 0,
-                        Gender = g.Gender ?? "Open"
+                        Id = g.AgeGroupId
                     })
                 })
                 .ToListAsync();

@@ -36,13 +36,13 @@ namespace OMedia.Controllers
             var model = new AddCompetitionViewModel()
             {
                 AgeGroupsCheckBoxes =
-                arg.Select(ag => new CheckBoxOptions()
-                {
-                    Id = ag.Id,
-                    IsChecked = false,
-                    Description = $"{ag.Gender} {ag.Age}",
-                    Value = ""
-                }).ToList()
+                    arg.Select(ag => new CheckBoxOptions()
+                    {
+                        Id = ag.Id,
+                        IsChecked = true,
+                        Gender = ag.Gender,
+                        Age = ag.Age
+                    }).ToList()
             };
             
             return View(model);
@@ -55,30 +55,22 @@ namespace OMedia.Controllers
             {
                 return RedirectToAction("Login");
             }
-
-            var arg = await competitionService.GetAllAgeGroups();
-
-            model.AgeGroupsCheckBoxes =
-            arg.Select(ag => new CheckBoxOptions()
+            var ageGroups = new List<CompetitionAgeGroupModel>();
+            foreach (var agId in model.AgeGroupString)
             {
-                Id = ag.Id,
-                IsChecked = false,
-                Description = $"{ag.Gender} {ag.Age}",
-                Value = ""
-            }).ToList();
-            model.AgeGroups = model.AgeGroupsCheckBoxes.Where(c => c.IsChecked)
-            .Select(ag => new CompetitionAgeGroupModel()
-            {
-                Id = ag.Id,
-                Gender = ag.Description.Split(' ')[0],
-                Age = int.Parse(ag.Description.Split(' ')[0])
-            }).ToList();
+                var currAgeGroup = await competitionService.GetAgeGroupsById(int.Parse(agId));
+                ageGroups.Add(new CompetitionAgeGroupModel()
+                {
+                    Id=currAgeGroup.Id,
+                    Age = currAgeGroup.Age?? 0,
+                    Gender = currAgeGroup.Gender
+                });
+            }
+            model.AgeGroups = ageGroups;
 
             int userId = await userService.GetCompetitorId(User.Id());
             int id = await competitionService.Create(model, userId);
             return RedirectToAction("Login");
-
-            //return RedirectToAction(nameof(Details), new { id });
         }
 
         [AllowAnonymous]

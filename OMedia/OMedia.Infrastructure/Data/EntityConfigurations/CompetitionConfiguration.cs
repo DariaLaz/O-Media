@@ -13,6 +13,7 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Competition> builder)
         {
+            builder.HasKey(e => e.Id);
             builder.HasData(CreateCompetitions());
         }
         private List<Competition> CreateCompetitions()

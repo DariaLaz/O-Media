@@ -15,6 +15,8 @@ namespace OMedia.Core.Models.Competition
         public string Details { get; set; } = null!;
         public List<CheckBoxOptions> AgeGroupsCheckBoxes { get; set; }
         public List<CompetitionAgeGroupModel> AgeGroups { get; set; }
+        public List<string> AgeGroupString { get; set; }
+
 
     }
 }
