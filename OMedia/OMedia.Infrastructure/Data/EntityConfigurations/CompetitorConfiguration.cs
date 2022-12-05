@@ -13,6 +13,7 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
         public void Configure(EntityTypeBuilder<Competitor> builder)
         {
             builder.HasData(CreateCompetitors());
+
         }
         private List<Competitor> CreateCompetitors()
         {
@@ -23,7 +24,8 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
                     Id = 1,
                     TeamId = 1,
                     Name = "CoolName",
-                    UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+                    UserId = "dea12856-c198-4129-b3f3-b893d8395082",
+                    AgeGroupId = 1
                 }
              };
 

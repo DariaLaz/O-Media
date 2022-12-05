@@ -1,4 +1,5 @@
 ﻿using OMedia.Core.Models.Competition;
+using OMedia.Core.Models.Team;
 using OMedia.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,11 @@ namespace OMedia.Core.Contracts
         Task<IEnumerable<CompetitionViewModel>> GetAllPreviousCompetitionsSortedByDate();
         Task<IEnumerable<CompetitionViewModel>> GetAllComingCompetitionsSortedByDate();
         Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups();
+        Task<IEnumerable<TeamsViewModel>> GetAllTeams();
+
         Task<AgeGroup> GetAgeGroupsById(int id);
         Task<int> Create(AddCompetitionViewModel model, int userId);
-    }
+        Task<CompetitionDetailsModel> CompetitionDetailsById(int id);
+        Task<bool> Exists(int id);
+    } 
 }

@@ -27,10 +27,9 @@ namespace OMedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-
-            if (await userService.ExistsById(User.Id()) == false)
+            if (await userService.isCompetitorById(User.Id()) == false)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Become", "Competitor");
             }
             var model = new AddNewViewModel();
             return View(model);
@@ -39,9 +38,9 @@ namespace OMedia.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddNewViewModel model)
         {
-            if (await userService.ExistsById(User.Id()) == false)
+            if (await userService.isCompetitorById(User.Id()) == false)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Become", "Competitor");
             }
 
             if (!ModelState.IsValid)

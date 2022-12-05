@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.Competition;
+using OMedia.Core.Models.Team;
 using OMedia.Infrastructure.Data;
 using OMedia.Infrastructure.Data.Common;
 using System;
@@ -18,6 +19,33 @@ namespace OMedia.Core.Services
         {
             repo = _repo;
         }
+
+        public async Task<CompetitionDetailsModel> CompetitionDetailsById(int id)
+        {
+            return await repo.AllReadonly<Competition>()
+                .Where(h => h.Id == id)
+                .Select(h => new CompetitionDetailsModel()
+                {
+                    Id = h.Id,
+                    Name = h.Name,
+                    Location = h.Location,
+                    Date = h.Date.ToString("dd/MM/yyyy"),
+                    Details = h.Details,
+                    AgeGroups = h.AgeGroups.Select(g => g.AgeGroup.Gender == null ? "Open" : $"{g.AgeGroup.Gender[0]}{g.AgeGroup.Age}").ToList(),
+                    CompetitorsNames = h.Competitors.Select(c => c.Competitor.Name).ToList(),
+                    OrganizerName = h.Competitors
+                        .Where(c => c.Role == "Organizer")
+                        .First().Competitor.Name,
+                    OrganizerTeamName = h.Competitors
+                        .Where(c => c.Role == "Organizer")
+                        .First().Competitor.Team.Name,
+                    OrganizerId = h.Competitors
+                        .Where(c => c.Role == "Organizer")
+                        .First().CompetitorId
+                })
+                .FirstAsync();
+        }
+
         public async Task<int> Create(AddCompetitionViewModel model, int userId)
         {
            
@@ -50,9 +78,17 @@ namespace OMedia.Core.Services
 
             return competition.Id;
         }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await repo.AllReadonly<Competition>()
+               .AnyAsync(h => h.Id == id);
+        }
+
         public async Task<AgeGroup> GetAgeGroupsById(int id)
         {
-            return await repo.AllReadonly<AgeGroup>().FirstOrDefaultAsync(ag => ag.Id == id);
+            return await repo.AllReadonly<AgeGroup>()
+                .FirstOrDefaultAsync(ag => ag.Id == id);
         }
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups()
         {
@@ -105,6 +141,17 @@ namespace OMedia.Core.Services
                     })
                 })
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TeamsViewModel>> GetAllTeams()
+        { 
+            return await repo.AllReadonly<Team>()
+               .Select(t => new TeamsViewModel()
+               {
+                   Id = t.Id,
+                   Name = t.Name
+               })
+               .ToListAsync();
         }
     }
 }

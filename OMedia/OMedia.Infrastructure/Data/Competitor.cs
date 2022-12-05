@@ -31,5 +31,8 @@ namespace OMedia.Infrastructure.Data
 
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
+        public int AgeGroupId { get; set; }
+        [ForeignKey(nameof(AgeGroupId))]
+        public AgeGroup AgeGroup { get; set; }
     }
 }

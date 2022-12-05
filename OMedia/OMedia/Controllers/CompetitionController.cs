@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OMedia.Core.Constants;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models;
 using OMedia.Core.Models.Competition;
@@ -21,6 +22,11 @@ namespace OMedia.Controllers
         }
         public async Task<IActionResult> All()
         {
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                TempData[MessageConstants.WarningMessage] = "You should be Competitor to access that resourse.";
+                return RedirectToAction("Become", "Competitor");
+            }
             var model = await competitionService.GetAllComingCompetitionsSortedByDate();
 
             return View(model);
@@ -28,9 +34,9 @@ namespace OMedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            if (await userService.ExistsById(User.Id()) == false)
+            if (await userService.isCompetitorById(User.Id()) == false)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Become", "Competitor");
             }
             var arg = await competitionService.GetAllAgeGroups();
             var model = new AddCompetitionViewModel()
@@ -51,7 +57,11 @@ namespace OMedia.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddCompetitionViewModel model)
         {
-            if (await userService.ExistsById(User.Id()) == false)
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                return RedirectToAction("Become", "Competitor");
+            }
+            if (await userService.isCompetitorById(User.Id()) == false)
             {
                 return RedirectToAction("Login");
             }
@@ -76,9 +86,19 @@ namespace OMedia.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
-            var model = new CompetitionViewModel();
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                return RedirectToAction("Become", "Competitor");
+            }
+            if ((await competitionService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var model = await competitionService.CompetitionDetailsById(id);
 
             return View(model);
         }
+
     }
 }

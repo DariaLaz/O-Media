@@ -27,6 +27,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGV0aXRpb25cQWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Competition/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGV0aXRpb25cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Competitor/Become.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGV0aXRvclxCZWNvbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

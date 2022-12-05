@@ -21,11 +21,13 @@
                 <h4>@m.Date</h4>
                 <h4>@m.Location</h4>
                 <br />
-                <a asp-area="" asp-controller="House" asp-action="Details" asp-route-id="@m.Id" 
+                <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@m.Id" 
                 asp-route-information="" class="btn btn-success">Details</a>
-                <div class="btn-group">
+                 <a asp-area="" asp-controller="Competition" asp-action="All" asp-route-id="@m.Id" 
+                asp-route-information="" class="btn btn-success">Take Part</a>
+               @* <div class="btn-group">
                     <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Take Part</button>
-                </div>
+                </div>*@
             </div>
         </div>     
     }

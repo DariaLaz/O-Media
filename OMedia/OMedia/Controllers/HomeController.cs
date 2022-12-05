@@ -9,6 +9,7 @@ namespace OMedia.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
 

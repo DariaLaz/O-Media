@@ -143,15 +143,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d164a0c-7152-4c72-9493-a12c7bd89005",
+                            ConcurrencyStamp = "ae0429d4-b59e-4758-81fc-a92e64a48ce3",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI5K4eHCUzwT1ZwMJybGXPifWrQAGo4VcmXAw38Xb3gdspX7i2xqvAd47KMB+O/gmQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA28KtJWspVkL6j4eU/3H0FOIX5VybpkrAZoQMS82mKD1I78Gc8eXzpu0FMHdgiPIQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "429c00c5-3042-4e42-a0c2-17899fb2d52d",
+                            SecurityStamp = "356f4474-2ff1-4f16-8b89-b60b9b226eea",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -159,15 +159,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5beccc9b-27a2-4fe2-a576-74f3efd2c170",
+                            ConcurrencyStamp = "bc6116cd-55b0-463e-a5ee-90f0f7ef97aa",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG/JIFnY59/ruV3Dj2mCCX6U22hzGCC9R2rCh0LjgnBXTM9gPlkU+UyGvRgrCDgPvA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM1cyePPddwNiiIMSUNj/a22jGcYXliUxWnajqJd3Ref+c5EBYmvdPtxEiKzVAKj5w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fd6ce483-24f2-4671-a8aa-8b8a6ed9e307",
+                            SecurityStamp = "5dfcb2be-25fe-424f-9680-ce2499ee717d",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -472,7 +472,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 3, 3, 8, 8, 957, DateTimeKind.Local).AddTicks(4098),
+                            Date = new DateTime(2022, 12, 5, 16, 21, 10, 290, DateTimeKind.Local).AddTicks(5037),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
                             Location = "CoolPlace",
                             Name = "CoolRace"
@@ -514,6 +514,9 @@ namespace OMedia.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AgeGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -527,6 +530,8 @@ namespace OMedia.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AgeGroupId");
+
                     b.HasIndex("TeamId");
 
                     b.HasIndex("UserId");
@@ -537,6 +542,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            AgeGroupId = 1,
                             Name = "CoolName",
                             TeamId = 1,
                             UserId = "dea12856-c198-4129-b3f3-b893d8395082"
@@ -628,7 +634,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 3, 3, 8, 8, 958, DateTimeKind.Local).AddTicks(3271),
+                            Date = new DateTime(2022, 12, 5, 16, 21, 10, 290, DateTimeKind.Local).AddTicks(7876),
                             Title = "Title",
                             WriterId = 1
                         });
@@ -752,6 +758,12 @@ namespace OMedia.Infrastructure.Migrations
 
             modelBuilder.Entity("OMedia.Infrastructure.Data.Competitor", b =>
                 {
+                    b.HasOne("OMedia.Infrastructure.Data.AgeGroup", "AgeGroup")
+                        .WithMany()
+                        .HasForeignKey("AgeGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("OMedia.Infrastructure.Data.Team", "Team")
                         .WithMany("Competitors")
                         .HasForeignKey("TeamId")
@@ -763,6 +775,8 @@ namespace OMedia.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AgeGroup");
 
                     b.Navigation("Team");
 
