@@ -104,7 +104,8 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             if (((await competitionService.Exists(id)) == false)
-              ||((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id()))
+              ||((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id())
+              ||((await competitionService.GetCompetitionById(id)) == null))
             {
                 return RedirectToAction(nameof(All));
             }
@@ -146,7 +147,8 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Edit(int id, AddCompetitionViewModel model)
         {
             if (((await competitionService.Exists(id)) == false)
-             || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id()))
+             || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id())
+             || ((await competitionService.GetCompetitionById(id)) == null))
             {
                 return RedirectToAction(nameof(All));
             }
@@ -182,6 +184,55 @@ namespace OMedia.Controllers
             await competitionService.Edit(id, model);
             return RedirectToAction(nameof(Details), new { id = id });
 
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (((await competitionService.Exists(id)) == false)
+             || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id())
+             || ((await competitionService.GetCompetitionById(id)) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var competition = await competitionService.GetCompetitionById(id);
+            var arg = await competitionService.GetAllAgeGroups();
+
+
+            var model = new CompetitionViewModel()
+            {
+                Name = competition.Name,
+                Location = competition.Location,
+                Date = competition.Date.ToString("dd/MM/yyyy"),
+                AgeGroups = new List<CompetitionAgeGroupModel>()
+            };
+
+            foreach (var g in competition.AgeGroups)
+            {
+                model.AgeGroups.ToList().Add(new CompetitionAgeGroupModel()
+                {
+                    Id = g.AgeGroupId,
+                    Gender = (await competitionService.GetAgeGroupsById(g.AgeGroupId)).Gender,
+                    Age = (await competitionService.GetAgeGroupsById(g.AgeGroupId)).Age
+                });
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, CompetitionViewModel model)
+        {
+            if (((await competitionService.Exists(id)) == false)
+             || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id())
+             || ((await competitionService.GetCompetitionById(id)) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            await competitionService.Delete(id);
+
+            return RedirectToAction(nameof(All));
         }
 
     }

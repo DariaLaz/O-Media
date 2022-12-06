@@ -15,7 +15,7 @@ namespace OMedia.Core.Contracts
         Task<IEnumerable<CompetitionViewModel>> GetAllComingCompetitionsSortedByDate();
         Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups();
         Task<IEnumerable<TeamsViewModel>> GetAllTeams();
-        Task<Competition> GetCompetitionById(int id);
+        Task<Competition?> GetCompetitionById(int id);
         Task<AgeGroup> GetAgeGroupsById(int id);
         Task<int> Create(AddCompetitionViewModel model, int userId);
         Task<CompetitionDetailsModel> CompetitionDetailsById(int id);
@@ -23,6 +23,8 @@ namespace OMedia.Core.Contracts
         Task<string> GetCompetitionOrganizerUserId(int compId);
         Task Edit(int compId, AddCompetitionViewModel model);
         Task RemoveAgeGroup(int compId, int AgeGroupId);
+        Task Delete(int id);
         Task<IEnumerable<CompetitionAgeGroupModel>> GetCompetitionAgeGroups(int compId);
+
     } 
 }

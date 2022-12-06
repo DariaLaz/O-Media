@@ -32,6 +32,7 @@ namespace OMedia.Infrastructure.Data
         public List<AgeGroupsCompetitions> AgeGroups { get; set; }
         public List<CompetitionsCompetitors> Competitors { get; set; }
         public bool IsChanged { get; set; } = false;
+        public bool IsActive { get; set; }
 
     }
 }

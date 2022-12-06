@@ -12,7 +12,9 @@ namespace OMedia.Controllers
         private readonly INewsService newsService;
         private readonly IUserService userService;
 
-        public NewsController(INewsService _newsService, IUserService _userService)
+        public NewsController(
+            INewsService _newsService,
+            IUserService _userService)
         {
             newsService = _newsService;
             userService = _userService;
@@ -57,7 +59,8 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             if (((await newsService.Exists(id)) == false)
-              || ((await newsService.GetWriterUserId(id)) != User.Id()))
+              || ((await newsService.GetWriterUserId(id)) != User.Id())
+              || (await newsService.GetNewsById(id) == null))
             {
                 return RedirectToAction(nameof(All));
             }
@@ -76,7 +79,8 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Edit(int id, AddNewViewModel model)
         {
             if (((await newsService.Exists(id)) == false)
-             || ((await newsService.GetWriterUserId(id)) != User.Id()))
+             || ((await newsService.GetWriterUserId(id)) != User.Id())
+             || (await newsService.GetNewsById(id) == null))
             {
                 return RedirectToAction(nameof(All));
             }
@@ -84,6 +88,40 @@ namespace OMedia.Controllers
             await newsService.Edit(id, model);
             return RedirectToAction(nameof(All));
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (((await newsService.Exists(id)) == false)
+             || ((await newsService.GetWriterUserId(id)) != User.Id())
+             || (await newsService.GetNewsById(id) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var news = await newsService.GetNewsById(id);
+
+            var model = new NewsViewModel()
+            {
+                Content = news.Content,
+                Title = news.Title
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, NewsViewModel model)
+        {
+            if (((await newsService.Exists(id)) == false)
+             || ((await newsService.GetWriterUserId(id)) != User.Id())
+             || (await newsService.GetNewsById(id) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            await newsService.Delete(id);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

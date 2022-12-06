@@ -58,7 +58,8 @@ namespace OMedia.Core.Services
                 Name = model.Name,
                 Location = model.Location,
                 Date = model.Date,
-                Details = model.Details
+                Details = model.Details,
+                IsActive = true
             };
             foreach (var ag in model.AgeGroups)
             {
@@ -81,6 +82,15 @@ namespace OMedia.Core.Services
             await repo.SaveChangesAsync();
 
             return competition.Id;
+        }
+
+        public async Task Delete(int id)
+        {
+            var competition = await repo.GetByIdAsync<Competition>(id);
+
+            competition.IsActive = false;
+
+            await repo.SaveChangesAsync();
         }
 
         public async Task Edit(int compId, AddCompetitionViewModel model)
@@ -134,7 +144,7 @@ namespace OMedia.Core.Services
             return await repo.AllReadonly<Competition>()
                 .Include(c => c.AgeGroups)
                 .OrderByDescending(c => c.Date)
-                .Where(c => c.Date < DateTime.Now)
+                .Where(c => c.Date < DateTime.Now && c.IsActive)
                 .Select(c => new CompetitionViewModel()
                 {
                     Id = c.Id,
@@ -155,7 +165,7 @@ namespace OMedia.Core.Services
             return await repo.AllReadonly<Competition>()
                 .Include(c => c.AgeGroups)
                 .OrderByDescending(c => c.Date)
-                .Where(c => c.Date < DateTime.Now)
+                .Where(c => c.Date < DateTime.Now && c.IsActive)
                 .Select(c => new CompetitionViewModel()
                 {
                     Id = c.Id,
@@ -194,12 +204,13 @@ namespace OMedia.Core.Services
             }).ToList();
         }
 
-        public async Task<Competition> GetCompetitionById(int id)
+        public async Task<Competition?> GetCompetitionById(int id)
         {
             return await repo.AllReadonly<Competition>()
                .Include(c => c.AgeGroups)
-               .Where(h => h.Id == id)
-               .FirstAsync();
+               .Where(h => h.Id == id && h.IsActive)
+               .FirstOrDefaultAsync();
+
         }
 
         public async Task<string> GetCompetitionOrganizerUserId(int compId)

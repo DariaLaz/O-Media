@@ -15,5 +15,6 @@ namespace OMedia.Core.Contracts
         Task<bool> Exists(int id);
         Task<NewsViewModel> GetNewsById(int id);
         Task Edit(int newsId, AddNewViewModel model);
+        Task Delete(int id);
     }
 }

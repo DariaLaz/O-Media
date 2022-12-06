@@ -26,5 +26,6 @@ namespace OMedia.Infrastructure.Data
         public DateTime Date { get; set; }
 
         public bool IsChanged { get; set; } = false;
+        public bool IsActive { get; set; }
     }
 }

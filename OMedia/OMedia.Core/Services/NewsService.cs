@@ -26,7 +26,8 @@ namespace OMedia.Core.Services
                 Title = model.Title,
                 Content = model.Content,
                 WriterId = userId,
-                Date = DateTime.Now
+                Date = DateTime.Now,
+                IsActive = true
             };
             await repo.AddAsync(news);
             await repo.SaveChangesAsync();
@@ -55,6 +56,7 @@ namespace OMedia.Core.Services
         public async Task<IEnumerable<NewsViewModel>> GetAllNewsSortedByDate()
         {
             return await repo.AllReadonly<News>()
+                .Where(n => n.IsActive)
                .OrderByDescending(h => h.Id)
                .Select(n => new NewsViewModel()
                {
@@ -72,7 +74,8 @@ namespace OMedia.Core.Services
         {
             var news = await repo.AllReadonly<News>()
                 .Include(x => x.Writer)
-                .FirstAsync(x => x.Id == id);
+                .Where(n => n.IsActive)
+                .FirstOrDefaultAsync(x => x.Id == id);
             return new NewsViewModel()
             {
                 Id = news.Id,
@@ -89,7 +92,19 @@ namespace OMedia.Core.Services
             var news = await repo.AllReadonly<News>()
                 .Include(x => x.Writer)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            if (news == null)
+            {
+                return null;
+            }
             return news.Writer.UserId;
+        }
+        public async Task Delete(int id)
+        {
+            var news = await repo.GetByIdAsync<News>(id);
+
+            news.IsActive = false;
+
+            await repo.SaveChangesAsync();
         }
     }
 }
