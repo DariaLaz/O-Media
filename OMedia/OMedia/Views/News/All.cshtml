@@ -1,4 +1,5 @@
-﻿@model IEnumerable<NewsViewModel>
+﻿@using OMedia.Extensions
+@model IEnumerable<NewsViewModel>
 @{
     ViewData["Title"] = "All News";
 }
@@ -28,6 +29,17 @@
                     <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
                     <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
                 </div>
+                <div>
+               @if(this.User.Identity == null 
+               ? false 
+               : User.Id() == @m.WriterId)
+               {
+                    <a class="btn btn-warning" asp-controller="News" asp-action="Edit"
+                       asp-route-id="@m.Id">Edit</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="News" asp-action="Delete"
+                       asp-route-id="@m.Id">Delete</a>
+               }
+            </div>
             </div>
         </div>     
     }

@@ -53,5 +53,37 @@ namespace OMedia.Controllers
             return RedirectToAction("All");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (((await newsService.Exists(id)) == false)
+              || ((await newsService.GetWriterUserId(id)) != User.Id()))
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var news = await newsService.GetNewsById(id);
+
+            var model = new AddNewViewModel()
+            {
+                Content = news.Content,
+                Title = news.Title
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, AddNewViewModel model)
+        {
+            if (((await newsService.Exists(id)) == false)
+             || ((await newsService.GetWriterUserId(id)) != User.Id()))
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            await newsService.Edit(id, model);
+            return RedirectToAction(nameof(All));
+
+        }
     }
 }

@@ -143,15 +143,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ae0429d4-b59e-4758-81fc-a92e64a48ce3",
+                            ConcurrencyStamp = "31e6fd63-b02b-41c7-a165-0033e82e0520",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA28KtJWspVkL6j4eU/3H0FOIX5VybpkrAZoQMS82mKD1I78Gc8eXzpu0FMHdgiPIQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG2F/8tgVJnErQ+gLpJOoYpKh0srYOjx2Ko0icup6Lga1EYvkP1AKQuyLZSWo8PwFA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "356f4474-2ff1-4f16-8b89-b60b9b226eea",
+                            SecurityStamp = "873f79c1-613d-4b36-a151-2741d2e90791",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -159,15 +159,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bc6116cd-55b0-463e-a5ee-90f0f7ef97aa",
+                            ConcurrencyStamp = "480c19ab-0326-46d7-9a9b-b8439cd8016b",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM1cyePPddwNiiIMSUNj/a22jGcYXliUxWnajqJd3Ref+c5EBYmvdPtxEiKzVAKj5w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEHtPaegG3Hyslr9bI5mETFzBCCzn1zhnHpBHREdl/q9KjU54wTiFVIWOdkrX592LQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5dfcb2be-25fe-424f-9680-ce2499ee717d",
+                            SecurityStamp = "8d45c685-0a32-4517-8596-ed402c26c87c",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -454,6 +454,9 @@ namespace OMedia.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("IsChanged")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -472,8 +475,9 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 5, 16, 21, 10, 290, DateTimeKind.Local).AddTicks(5037),
+                            Date = new DateTime(2022, 12, 6, 20, 43, 43, 931, DateTimeKind.Local).AddTicks(8331),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
+                            IsChanged = false,
                             Location = "CoolPlace",
                             Name = "CoolRace"
                         });
@@ -614,6 +618,9 @@ namespace OMedia.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsChanged")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -634,7 +641,8 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 5, 16, 21, 10, 290, DateTimeKind.Local).AddTicks(7876),
+                            Date = new DateTime(2022, 12, 6, 20, 43, 43, 932, DateTimeKind.Local).AddTicks(9475),
+                            IsChanged = false,
                             Title = "Title",
                             WriterId = 1
                         });

@@ -11,5 +11,9 @@ namespace OMedia.Core.Contracts
     {
         Task<IEnumerable<NewsViewModel>> GetAllNewsSortedByDate();
         Task<int> Create(AddNewViewModel model, int userId);
+        Task<string> GetWriterUserId(int id);
+        Task<bool> Exists(int id);
+        Task<NewsViewModel> GetNewsById(int id);
+        Task Edit(int newsId, AddNewViewModel model);
     }
 }

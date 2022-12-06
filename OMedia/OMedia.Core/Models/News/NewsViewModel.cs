@@ -11,7 +11,7 @@ namespace OMedia.Core.Models.News
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
-
+        public string WriterId { get; set; } = null!;
         public string WriterName { get; set; } = null!;
         public string Date { get; set; } = null!;
     }

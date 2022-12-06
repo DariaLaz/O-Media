@@ -24,5 +24,7 @@ namespace OMedia.Infrastructure.Data
         [ForeignKey(nameof(WriterId))]
         public Competitor Writer { get; set; } = null!;
         public DateTime Date { get; set; }
+
+        public bool IsChanged { get; set; } = false;
     }
 }

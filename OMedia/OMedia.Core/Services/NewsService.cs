@@ -34,6 +34,24 @@ namespace OMedia.Core.Services
             return news.Id;
         }
 
+        public async Task Edit(int newsId, AddNewViewModel model)
+        {
+            var news = await repo.GetByIdAsync<News>(newsId);
+            news.Title = model.Title;
+            news.Content = model.Content;
+
+            news.Date = DateTime.Now;
+            news.IsChanged = true;
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await repo.AllReadonly<News>()
+                .AnyAsync(x => x.Id == id);
+        }
+
         public async Task<IEnumerable<NewsViewModel>> GetAllNewsSortedByDate()
         {
             return await repo.AllReadonly<News>()
@@ -43,10 +61,35 @@ namespace OMedia.Core.Services
                    Id = n.Id,
                    Title = n.Title,
                    Content = n.Content,
+                   WriterId = n.Writer.UserId,
                    WriterName = n.Writer.Name,
                    Date = n.Date.ToString("dd-MM-yyyy")
                })
                .ToListAsync();
+        }
+
+        public async Task<NewsViewModel> GetNewsById(int id)
+        {
+            var news = await repo.AllReadonly<News>()
+                .Include(x => x.Writer)
+                .FirstAsync(x => x.Id == id);
+            return new NewsViewModel()
+            {
+                Id = news.Id,
+                Title = news.Title,
+                Content = news.Content,
+                WriterId = news.Writer.UserId,
+                Date = news.Date.ToString("dd/MM/yyyy")
+            };
+            
+        }
+
+        public async Task<string> GetWriterUserId(int id)
+        {
+            var news = await repo.AllReadonly<News>()
+                .Include(x => x.Writer)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            return news.Writer.UserId;
         }
     }
 }

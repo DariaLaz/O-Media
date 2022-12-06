@@ -15,6 +15,7 @@ namespace OMedia.Core.Services
     public class CompetitionService : ICompetitionService
     {
         private readonly IRepository repo;
+
         public CompetitionService(IRepository _repo)
         {
             repo = _repo;
@@ -41,7 +42,10 @@ namespace OMedia.Core.Services
                         .First().Competitor.Team.Name,
                     OrganizerId = h.Competitors
                         .Where(c => c.Role == "Organizer")
-                        .First().CompetitorId
+                        .First().CompetitorId,
+                    OrganizerUserId = h.Competitors
+                        .Where(c => c.Role == "Organizer")
+                        .First().Competitor.UserId
                 })
                 .FirstAsync();
         }
@@ -77,6 +81,29 @@ namespace OMedia.Core.Services
             await repo.SaveChangesAsync();
 
             return competition.Id;
+        }
+
+        public async Task Edit(int compId, AddCompetitionViewModel model)
+        {
+            var competition = await repo.GetByIdAsync<Competition>(compId);
+
+            competition.Name = model.Name;
+            competition.Location = model.Location;
+            competition.Date = model.Date;
+            competition.Details = model.Details;
+            competition.AgeGroups = new List<AgeGroupsCompetitions>();
+            foreach (var ag in model.AgeGroups)
+            {
+                if ((await GetAgeGroupsById(ag.Id)) != null)
+                {
+                    competition.AgeGroups.Add(new AgeGroupsCompetitions
+                    {
+                        AgeGroupId = ag.Id
+                    });
+                }
+            }
+            competition.IsChanged = true;
+            await repo.SaveChangesAsync();
         }
 
         public async Task<bool> Exists(int id)
@@ -152,6 +179,46 @@ namespace OMedia.Core.Services
                    Name = t.Name
                })
                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<CompetitionAgeGroupModel>> GetCompetitionAgeGroups(int compId)
+        {
+            var comp = await repo.AllReadonly<Competition>()
+                .Include(c => c.AgeGroups)
+                .FirstAsync(x => x.Id == compId);
+            return comp.AgeGroups.Select(g => new CompetitionAgeGroupModel()
+            { 
+                Id = g.AgeGroupId,
+                Gender = g.AgeGroup.Gender,
+                Age = g.AgeGroup.Age
+            }).ToList();
+        }
+
+        public async Task<Competition> GetCompetitionById(int id)
+        {
+            return await repo.AllReadonly<Competition>()
+               .Include(c => c.AgeGroups)
+               .Where(h => h.Id == id)
+               .FirstAsync();
+        }
+
+        public async Task<string> GetCompetitionOrganizerUserId(int compId)
+        {
+            return await repo.AllReadonly<Competition>()
+                .Where(h => h.Id == compId)
+                .Select(h => h.Competitors
+                    .Where(h => h.Role == "Organizer")
+                    .First().Competitor.UserId)
+                .FirstAsync();
+        }
+
+        public async Task RemoveAgeGroup(int compId, int AgeGroupId)
+        {
+            var competition = await repo.All<AgeGroupsCompetitions>()
+                .Where(x => x.AgeGroupId == AgeGroupId && x.CompetitionId == compId)
+                .FirstAsync();
+            await repo.DeleteAsync<AgeGroupsCompetitions>(competition);
+            await repo.SaveChangesAsync();
         }
     }
 }
