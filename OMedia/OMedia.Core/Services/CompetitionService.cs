@@ -49,7 +49,6 @@ namespace OMedia.Core.Services
                 })
                 .FirstAsync();
         }
-
         public async Task<int> Create(AddCompetitionViewModel model, int userId)
         {
            
@@ -83,7 +82,6 @@ namespace OMedia.Core.Services
 
             return competition.Id;
         }
-
         public async Task Delete(int id)
         {
             var competition = await repo.GetByIdAsync<Competition>(id);
@@ -92,7 +90,6 @@ namespace OMedia.Core.Services
 
             await repo.SaveChangesAsync();
         }
-
         public async Task Edit(int compId, AddCompetitionViewModel model)
         {
             var competition = await repo.GetByIdAsync<Competition>(compId);
@@ -115,13 +112,11 @@ namespace OMedia.Core.Services
             competition.IsChanged = true;
             await repo.SaveChangesAsync();
         }
-
         public async Task<bool> Exists(int id)
         {
             return await repo.AllReadonly<Competition>()
                .AnyAsync(h => h.Id == id);
         }
-
         public async Task<AgeGroup> GetAgeGroupsById(int id)
         {
             return await repo.AllReadonly<AgeGroup>()
@@ -138,7 +133,6 @@ namespace OMedia.Core.Services
                 })
                 .ToListAsync();
         }
-
         public async Task<IEnumerable<CompetitionViewModel>> GetAllComingCompetitionsSortedByDate()
         {
             return await repo.AllReadonly<Competition>()
@@ -159,7 +153,6 @@ namespace OMedia.Core.Services
                 .ToListAsync();
                 
         }
-
         public async Task<IEnumerable<CompetitionViewModel>> GetAllPreviousCompetitionsSortedByDate()
         {
             return await repo.AllReadonly<Competition>()
@@ -179,7 +172,6 @@ namespace OMedia.Core.Services
                 })
                 .ToListAsync();
         }
-
         public async Task<IEnumerable<TeamsViewModel>> GetAllTeams()
         { 
             return await repo.AllReadonly<Team>()
@@ -190,7 +182,6 @@ namespace OMedia.Core.Services
                })
                .ToListAsync();
         }
-
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetCompetitionAgeGroups(int compId)
         {
             var comp = await repo.AllReadonly<Competition>()
@@ -203,7 +194,6 @@ namespace OMedia.Core.Services
                 Age = g.AgeGroup.Age
             }).ToList();
         }
-
         public async Task<Competition?> GetCompetitionById(int id)
         {
             return await repo.AllReadonly<Competition>()
@@ -212,7 +202,6 @@ namespace OMedia.Core.Services
                .FirstOrDefaultAsync();
 
         }
-
         public async Task<string> GetCompetitionOrganizerUserId(int compId)
         {
             return await repo.AllReadonly<Competition>()
@@ -222,7 +211,6 @@ namespace OMedia.Core.Services
                     .First().Competitor.UserId)
                 .FirstAsync();
         }
-
         public async Task RemoveAgeGroup(int compId, int AgeGroupId)
         {
             var competition = await repo.All<AgeGroupsCompetitions>()
