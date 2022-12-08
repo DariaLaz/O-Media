@@ -55,16 +55,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xBbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/News/Comment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xDb21tZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/News/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/News/DeleteComment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xEZWxldGVDb21tZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/News/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/News/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/News/EditComment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xFZGl0Q29tbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/_AddCommentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZGRDb21tZW50UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/_CommentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db21tZW50UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/_CompetitionFormPartial.cshtml]
@@ -77,6 +101,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/_NewsFormPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OZXdzRm9ybVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/_NewsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OZXdzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/softuni/SoftUni/O-Media/OMedia/OMedia/Views/Shared/_ValidationScriptsPartial.cshtml]

@@ -16,5 +16,11 @@ namespace OMedia.Core.Contracts
         Task<NewsViewModel> GetNewsById(int id);
         Task Edit(int newsId, AddNewViewModel model);
         Task Delete(int id);
+        Task<int> CreateComment(AddCommentModel model, int authorId, int newsId);
+        Task EditComment(int commentId, EditCommentModel model);
+        Task<bool> ExistsComment(int id);
+        Task<CommentViewModel> GetCommentById(int id);
+        Task<string> GetCommentAuthorUserId(int id);
+        Task DeleteComment(int id);
     }
 }

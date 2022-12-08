@@ -143,15 +143,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ebd13b8-a72b-4fe6-8c82-31372974981a",
+                            ConcurrencyStamp = "3d8d9d1c-6616-4fe2-b0e3-683da577f468",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGU1+uEtw1FvlIbakOt97BUw50Uo0avfhXnk0qHEF2fZ/lRL7iM+0THZthv9XOkk7A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP3O3MsfMHTtAvEtKSVoygYdc2GIxgfufF0IPHZyGogPB0tbeUshRH8RpBiM1FFvVA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6a00c7c1-7843-46b7-8b1d-f04d2929fb83",
+                            SecurityStamp = "80c6bb20-10bd-4568-ba46-f28b10502b10",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -159,15 +159,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3dc7e69b-715e-48ac-a312-616846bb734a",
+                            ConcurrencyStamp = "13ad0522-47f9-4c51-a65a-19d559903704",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPhUMUYhIXofSDAG586j5OXx28w/w4aZvYpeBV4Zkrr72ucMpvkocta9QRAXmw99rg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHPzStmTHyIpX6S/bDWmlHLomWeNoG1NchtPQOmgnRvhJEI4IANKtkOdZe3QevKzXg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5bd88b64-979f-45b0-b1f8-767e0725a9d9",
+                            SecurityStamp = "14f521b0-5f5a-45b4-887d-1f390f1881de",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -438,6 +438,42 @@ namespace OMedia.Infrastructure.Migrations
                     b.ToTable("AgeGroupsCompetitions");
                 });
 
+            modelBuilder.Entity("OMedia.Infrastructure.Data.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsChanged")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("NewsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("OMedia.Infrastructure.Data.Competition", b =>
                 {
                     b.Property<int>("Id")
@@ -478,7 +514,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 6, 22, 28, 11, 36, DateTimeKind.Local).AddTicks(2802),
+                            Date = new DateTime(2022, 12, 7, 19, 51, 56, 114, DateTimeKind.Local).AddTicks(8155),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
                             IsActive = false,
                             IsChanged = false,
@@ -648,7 +684,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 6, 22, 28, 11, 36, DateTimeKind.Local).AddTicks(7459),
+                            Date = new DateTime(2022, 12, 7, 19, 51, 56, 78, DateTimeKind.Local).AddTicks(9871),
                             IsActive = false,
                             IsChanged = false,
                             Title = "Title",
@@ -753,6 +789,21 @@ namespace OMedia.Infrastructure.Migrations
                     b.Navigation("Competition");
                 });
 
+            modelBuilder.Entity("OMedia.Infrastructure.Data.Comment", b =>
+                {
+                    b.HasOne("OMedia.Infrastructure.Data.Competitor", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OMedia.Infrastructure.Data.News", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("NewsId");
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("OMedia.Infrastructure.Data.CompetitionsCompetitors", b =>
                 {
                     b.HasOne("OMedia.Infrastructure.Data.Competition", "Competition")
@@ -820,6 +871,11 @@ namespace OMedia.Infrastructure.Migrations
             modelBuilder.Entity("OMedia.Infrastructure.Data.Competitor", b =>
                 {
                     b.Navigation("Competitions");
+                });
+
+            modelBuilder.Entity("OMedia.Infrastructure.Data.News", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("OMedia.Infrastructure.Data.Team", b =>

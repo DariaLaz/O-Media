@@ -23,7 +23,6 @@ namespace OMedia.Controllers
         public async Task<IActionResult> All()
         {
             var model = await newsService.GetAllNewsSortedByDate();
-
             return View(model);
         }
         [HttpGet]
@@ -86,8 +85,23 @@ namespace OMedia.Controllers
             }
 
             await newsService.Edit(id, model);
-            return RedirectToAction(nameof(All));
 
+            return RedirectToAction(nameof(Details), new { id = id });
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                return RedirectToAction("Become", "Competitor");
+            }
+            if ((await newsService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var model = await newsService.GetNewsById(id);
+
+            return View(model);
         }
 
         [HttpGet]
@@ -122,6 +136,109 @@ namespace OMedia.Controllers
             await newsService.Delete(id);
 
             return RedirectToAction(nameof(All));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Comment(int id)
+        {
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                return RedirectToAction("Become", "Competitor");
+            }
+            var model = new AddCommentModel()
+            {
+                NewsId = id
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Comment(int id, AddCommentModel model)
+        {
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                return RedirectToAction("Become", "Competitor");
+            }
+            if (!(await newsService.Exists(id)))
+            {
+                return RedirectToAction("udshvusf");
+            }
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+
+            int authorId = await userService.GetCompetitorId(User.Id());
+
+            await newsService.CreateComment(model, authorId, id);
+
+            return RedirectToAction(nameof(Details), new { id = model.NewsId });
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditComment(int id)
+        {
+            if (((await newsService.ExistsComment(id)) == false)
+              || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
+              || (await newsService.GetCommentById(id) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var comment = await newsService.GetCommentById(id);
+
+            var model = new EditCommentModel()
+            {
+                Id = id,
+                Content = comment.Content,
+                IsChanged = true,
+                Date = DateTime.Now.ToString("dd/MM/yyyy")
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditComment(int id, EditCommentModel model)
+        {
+
+            await newsService.EditComment(id, model);
+
+            return RedirectToAction(nameof(Details), new { id = model.NewsId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            if (((await newsService.ExistsComment(id)) == false)
+              || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
+              || (await newsService.GetCommentById(id) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var comment = await newsService.GetCommentById(id);
+
+            var model = new CommentViewModel()
+            {
+                Id = comment.Id,
+                Content = comment.Content,
+                AuthorId = comment.AuthorId,
+                NewsId = comment.NewsId
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(int id, CommentViewModel model)
+        {
+            if (((await newsService.ExistsComment(id)) == false)
+              || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
+              || (await newsService.GetCommentById(id) == null))
+            {
+                return RedirectToAction(nameof(All));
+            }
+            await newsService.DeleteComment(id);
+
+            return RedirectToAction(nameof(Details), new { id = model.NewsId });
         }
     }
 }

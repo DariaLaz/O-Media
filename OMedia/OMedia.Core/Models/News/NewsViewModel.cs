@@ -14,5 +14,6 @@ namespace OMedia.Core.Models.News
         public string WriterId { get; set; } = null!;
         public string WriterName { get; set; } = null!;
         public string Date { get; set; } = null!;
+        public List<CommentViewModel> Comments { get; set; }
     }
 }

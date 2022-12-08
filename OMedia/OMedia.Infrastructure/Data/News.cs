@@ -10,9 +10,13 @@ namespace OMedia.Infrastructure.Data
 {
     public class News
     {
+        public News()
+        {
+            this.Comments = new List<Comment>();
+        }
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required] 
         [StringLength(50)]
         public string Title { get; set; } = null!;
         [Required]
@@ -24,8 +28,8 @@ namespace OMedia.Infrastructure.Data
         [ForeignKey(nameof(WriterId))]
         public Competitor Writer { get; set; } = null!;
         public DateTime Date { get; set; }
-
         public bool IsChanged { get; set; } = false;
         public bool IsActive { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

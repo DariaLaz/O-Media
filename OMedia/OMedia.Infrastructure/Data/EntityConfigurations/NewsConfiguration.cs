@@ -12,6 +12,10 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<News> builder)
         {
+            //builder.HasMany(c => c.Comments)
+            //    .WithOne(c => c.News)
+            //    .HasForeignKey(c => c.NewsId);
+
             builder.HasData(CreateNews());
         }
         private List<News> CreateNews()

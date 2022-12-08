@@ -18,26 +18,28 @@ namespace OMedia.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new NewsConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new AgeGroupConfiguration());
             builder.ApplyConfiguration(new CompetitionConfiguration());
+           
             builder.ApplyConfiguration(new CompetitionsCompetitorsConfiguration());
             builder.ApplyConfiguration(new CompetitorConfiguration());
             builder.ApplyConfiguration(new DistanceTypesConfiguration());
-            builder.ApplyConfiguration(new NewsConfiguration());
             builder.ApplyConfiguration(new TeamConfiguration());
             builder.ApplyConfiguration(new AgeGroupsCompetitionsConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
+          //  builder.ApplyConfiguration(new NewsCommentsConfiguration());
 
             base.OnModelCreating(builder);
         }
+        public DbSet<News> News { get; set; } = null!;
+        public DbSet<Team> Teams { get; set; } = null!;
+        public DbSet<Comment> Comments { get; set; } = null!;
         public DbSet<AgeGroup> AgeGroups { get; set; } = null!;
         public DbSet<Competition> Competitions { get; set; } = null!;
         public DbSet<Competitor> Competitors { get; set; } = null!;
         public DbSet<DistanceType> DistanceTypes { get; set; } = null!;
-        public DbSet<News> News { get; set; } = null!;
-        public DbSet<Team> Teams { get; set; } = null!;
-
-
 
     }
 
