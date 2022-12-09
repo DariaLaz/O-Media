@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OMedia.Core.Services
@@ -122,6 +123,70 @@ namespace OMedia.Core.Services
             return await repo.AllReadonly<AgeGroup>()
                 .FirstOrDefaultAsync(ag => ag.Id == id);
         }
+        public async Task<List<int>> GetAllCompetitionYears()
+        {
+            return await repo.AllReadonly<Competition>()
+                .Select(x => x.Date.Year)
+                .Distinct().ToListAsync();
+        }
+        public async Task<CompetitionQueryModel> GetAll(
+            string? searchTerm = null,
+            int year = 0,
+            CompetitionSorting sorting = CompetitionSorting.Newest,
+            int currentPage = 1, 
+            int compPerPage = 1)
+        {
+            var competitions = await repo.AllReadonly<Competition>()
+                .Include(c => c.Competitors)
+                .ToListAsync();
+            var result = new CompetitionQueryModel();
+
+            if (year != 0)
+            {
+                competitions = competitions.Where(x => (x.Date.Year) == year).ToList();
+            }
+
+            if (string.IsNullOrEmpty(searchTerm) == false)
+            {
+                competitions = competitions.Where(x =>
+                   (x.Name.ToLower()).Split(" ").Contains(searchTerm.ToLower()) ||
+                   (x.Details.ToLower()).Split(" ").Contains(searchTerm.ToLower()))
+                   .ToList();
+            }
+
+            switch (sorting)
+            {
+                case CompetitionSorting.Oldest:
+                    competitions = competitions.OrderBy(c => c.Date).ToList();
+                    break;
+                case CompetitionSorting.Newest:
+                    competitions = competitions.OrderByDescending(c => c.Date).ToList();
+                    break;
+                default:
+                    competitions = competitions.OrderByDescending(h => h.Id).ToList();
+                    break;
+            }
+
+            result.Competitions = competitions
+                .Skip((currentPage - 1) * compPerPage)
+                .Take(compPerPage)
+                .Select(c => new CompetitionViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Location = c.Location,
+                    Date = c.Date.ToString("dd-MM-yyyy"),
+                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
+                    {
+                        Id = g.AgeGroupId
+                    })
+                }).ToList();
+
+            result.TotalCompetitionsCount = competitions.Count();
+
+            return result;
+        }
+
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups()
         {
             return await repo.AllReadonly<AgeGroup>()
@@ -133,25 +198,11 @@ namespace OMedia.Core.Services
                 })
                 .ToListAsync();
         }
-        public async Task<IEnumerable<CompetitionViewModel>> GetAllComingCompetitionsSortedByDate()
+        public async Task<IEnumerable<Competition>> GetAllComingCompetitionsSortedByDate()
         {
             return await repo.AllReadonly<Competition>()
                 .Include(c => c.AgeGroups)
-                .OrderByDescending(c => c.Date)
-                .Where(c => c.Date < DateTime.Now && c.IsActive)
-                .Select(c => new CompetitionViewModel()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Location = c.Location,
-                    Date = c.Date.ToString("dd-MM-yyyy"),
-                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
-                    {
-                        Id = g.AgeGroupId
-                    })
-                })
                 .ToListAsync();
-                
         }
         public async Task<IEnumerable<CompetitionViewModel>> GetAllPreviousCompetitionsSortedByDate()
         {

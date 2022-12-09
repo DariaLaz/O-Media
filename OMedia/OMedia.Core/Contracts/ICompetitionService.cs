@@ -11,8 +11,13 @@ namespace OMedia.Core.Contracts
 {
     public interface ICompetitionService
     {
-        Task<IEnumerable<CompetitionViewModel>> GetAllPreviousCompetitionsSortedByDate();
-        Task<IEnumerable<CompetitionViewModel>> GetAllComingCompetitionsSortedByDate();
+        //Task<IEnumerable<CompetitionViewModel>> GetAllCompetitions(string? teamId = null, DateTime date, int currentPage = 1, int housesPerPage = 1);
+        Task<CompetitionQueryModel> GetAll(
+                string? searchTerm = null,
+                int year = 0,
+                CompetitionSorting sorting = CompetitionSorting.Newest,
+                int currentPage = 1,
+                int compsPerPage = 1);
         Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups();
         Task<IEnumerable<TeamsViewModel>> GetAllTeams();
         Task<Competition?> GetCompetitionById(int id);
@@ -24,6 +29,7 @@ namespace OMedia.Core.Contracts
         Task Edit(int compId, AddCompetitionViewModel model);
         Task RemoveAgeGroup(int compId, int AgeGroupId);
         Task Delete(int id);
+        Task<List<int>> GetAllCompetitionYears();
         Task<IEnumerable<CompetitionAgeGroupModel>> GetCompetitionAgeGroups(int compId);
 
     } 

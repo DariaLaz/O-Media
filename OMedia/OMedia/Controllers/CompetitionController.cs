@@ -20,16 +20,20 @@ namespace OMedia.Controllers
             userService = _userService;
             competitionService = _competitionService;
         }
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllCompetitionsQueryModel q)
         {
-            if (await userService.isCompetitorById(User.Id()) == false)
-            {
-                TempData[MessageConstants.WarningMessage] = "You should be Competitor to access that resourse.";
-                return RedirectToAction("Become", "Competitor");
-            }
-            var model = await competitionService.GetAllComingCompetitionsSortedByDate();
+            var result = await  competitionService.GetAll(
+                q.SearchTerm,
+                q.Year,
+                q.Sorting,
+                q.CurrentPage,
+                AllCompetitionsQueryModel.CompetitionsPerPage);
 
-            return View(model);
+            q.TotalCompetitionsCount = result.TotalCompetitionsCount;
+            q.Competitions = result.Competitions;
+            q.Years = await competitionService.GetAllCompetitionYears();
+
+            return View(q);
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -185,8 +189,6 @@ namespace OMedia.Controllers
             return RedirectToAction(nameof(Details), new { id = id });
 
         }
-
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

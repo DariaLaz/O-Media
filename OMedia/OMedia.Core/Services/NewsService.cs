@@ -206,5 +206,65 @@ namespace OMedia.Core.Services
 
             await repo.SaveChangesAsync();
         }
+
+        public async Task<NewsQueryModel> GetAll(
+            string? searchTerm = null, 
+            int year = 0, 
+            int currentPage = 1, 
+            int newsPerPage = 1)
+        {
+            var news = await repo.AllReadonly<News>()
+                .Include(n => n.Writer)
+                .Include(n => n.Comments)
+                .ThenInclude(c => c.Author)
+                .ToListAsync();
+            var result = new NewsQueryModel();
+
+            if (year != 0)
+            {
+                news = news.Where(x => (x.Date.Year) == year).ToList();
+            }
+
+            if (string.IsNullOrEmpty(searchTerm) == false)
+            {
+                news = news.Where(x =>
+                   (x.Title.ToLower()).Split(" ").Contains(searchTerm.ToLower()) ||
+                   (x.Content.ToLower()).Split(" ").Contains(searchTerm.ToLower()))
+                   .ToList();
+            }
+
+            result.News = news
+                .Skip((currentPage - 1) * newsPerPage)
+                .Take(newsPerPage)
+                .Select(c => new NewsViewModel()
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Content = c.Content,
+                    WriterId = c.Writer.UserId,
+                    Date = c.Date.ToString("dd/MM/yyyy"),
+                    Comments = c.Comments
+                       .Where(x => x.IsActive)
+                       .Select(x => new CommentViewModel()
+                       {
+                           Id = x.Id,
+                           AuthorId = x.Author.UserId,
+                           AuthorName = x.Author.Name,
+                           Content = x.Content,
+                           IsChanged = x.IsChanged
+                       }).ToList()
+                }).ToList();
+
+            result.TotalNewsCount = news.Count();
+
+            return result; 
+        }
+
+        public async Task<List<int>> GetAllNewsYears()
+        {
+            return await repo.AllReadonly<News>()
+                .Select(x => x.Date.Year)
+                .Distinct().ToListAsync();
+        }
     }
 }

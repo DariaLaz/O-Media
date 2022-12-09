@@ -9,5 +9,9 @@ namespace OMedia.Core.Models.Competition
 {
     public class CompetitionQueryModel
     {
+        public int TotalCompetitionsCount { get; set; }
+
+        public List<CompetitionViewModel> Competitions { get; set; }
+            = new List<CompetitionViewModel>();
     }
 }

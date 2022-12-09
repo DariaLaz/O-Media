@@ -20,11 +20,21 @@ namespace OMedia.Controllers
             userService = _userService;
         }
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllNewsQueryModel q)
         {
-            var model = await newsService.GetAllNewsSortedByDate();
-            return View(model);
+            var result = await newsService.GetAll(
+                q.SearchTerm,
+                q.Year,
+                q.CurrentPage,
+                AllNewsQueryModel.NewsPerPage);
+
+            q.TotalNewsCount = result.TotalNewsCount;
+            q.News = result.News;
+            q.Years = await newsService.GetAllNewsYears();
+
+            return View(q);
         }
+
         [HttpGet]
         public async Task<IActionResult> Add()
         {

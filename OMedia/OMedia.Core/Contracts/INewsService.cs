@@ -9,8 +9,13 @@ namespace OMedia.Core.Contracts
 {
     public interface INewsService
     {
-        Task<IEnumerable<NewsViewModel>> GetAllNewsSortedByDate();
+        Task<NewsQueryModel> GetAll(
+                string? searchTerm = null,
+                int year = 0,
+                int currentPage = 1,
+                int newsPerPage = 1);
         Task<int> Create(AddNewViewModel model, int userId);
+        Task<List<int>> GetAllNewsYears();
         Task<string> GetWriterUserId(int id);
         Task<bool> Exists(int id);
         Task<NewsViewModel> GetNewsById(int id);
