@@ -134,7 +134,8 @@ namespace OMedia.Core.Services
             int year = 0,
             CompetitionSorting sorting = CompetitionSorting.Newest,
             int currentPage = 1, 
-            int compPerPage = 1)
+            int compPerPage = 1,
+            int userId = 0)
         {
             var competitions = await repo.AllReadonly<Competition>()
                 .Include(c => c.Competitors)
@@ -179,14 +180,14 @@ namespace OMedia.Core.Services
                     AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
                     {
                         Id = g.AgeGroupId
-                    })
+                    }),
+                    IsCurrUserTakingPart = c.Competitors.Any(x => x.CompetitorId == userId && x.IsActive)
                 }).ToList();
 
             result.TotalCompetitionsCount = competitions.Count();
 
             return result;
         }
-
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups()
         {
             return await repo.AllReadonly<AgeGroup>()
@@ -195,31 +196,6 @@ namespace OMedia.Core.Services
                     Id = g.Id,
                     Gender = g.Gender?? "Open",
                     Age = g.Age?? -1
-                })
-                .ToListAsync();
-        }
-        public async Task<IEnumerable<Competition>> GetAllComingCompetitionsSortedByDate()
-        {
-            return await repo.AllReadonly<Competition>()
-                .Include(c => c.AgeGroups)
-                .ToListAsync();
-        }
-        public async Task<IEnumerable<CompetitionViewModel>> GetAllPreviousCompetitionsSortedByDate()
-        {
-            return await repo.AllReadonly<Competition>()
-                .Include(c => c.AgeGroups)
-                .OrderByDescending(c => c.Date)
-                .Where(c => c.Date < DateTime.Now && c.IsActive)
-                .Select(c => new CompetitionViewModel()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Location = c.Location,
-                    Date = c.Date.ToString("dd-MM-yyyy"),
-                    AgeGroups = c.AgeGroups.Select((g) => new CompetitionAgeGroupModel
-                    {
-                        Id = g.AgeGroupId
-                    })
                 })
                 .ToListAsync();
         }
@@ -269,6 +245,48 @@ namespace OMedia.Core.Services
                 .FirstAsync();
             await repo.DeleteAsync<AgeGroupsCompetitions>(competition);
             await repo.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsAlreadyParticipant(int competitionId, string competitorId)
+        {
+            var cc = await repo.All<CompetitionsCompetitors>()
+                .Include(c => c.Competitor)
+                .FirstOrDefaultAsync(x => x.CompetitionId == competitionId && 
+                                x.Competitor.UserId == competitorId &&
+                                !x.IsActive);
+            return (cc != null);
+        }
+
+        public async Task TakePart(int competitionId, int competitorId)
+        {
+            var cc = await repo.All<CompetitionsCompetitors>()
+                .FirstOrDefaultAsync(x => x.CompetitionId == competitionId &&
+                                    x.CompetitorId == competitorId);
+            if (cc != null)
+            {
+                cc.IsActive = true;
+            }
+            else
+            {
+                var newCc = new CompetitionsCompetitors();
+                newCc.CompetitionId = competitionId;
+                newCc.CompetitorId = competitorId;
+
+                await repo.AddAsync(newCc);
+            }
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task Cancel(int competitionId, int competitorId)
+        {
+            var cc = await repo.All<CompetitionsCompetitors>()
+                .FirstOrDefaultAsync(x => x.CompetitionId == competitionId &&
+                                    x.CompetitorId == competitorId);
+            if (cc != null)
+            {
+                cc.IsActive = false;
+                await repo.SaveChangesAsync();
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ namespace OMedia.Core.Models.Competition
         public string Location { get; set; }
         public string Date { get; set; }
         public IEnumerable<CompetitionAgeGroupModel> AgeGroups { get; set; }
+        public bool IsCurrUserTakingPart { get; set; }
     }
 }

@@ -27,7 +27,8 @@ namespace OMedia.Controllers
                 q.Year,
                 q.Sorting,
                 q.CurrentPage,
-                AllCompetitionsQueryModel.CompetitionsPerPage);
+                AllCompetitionsQueryModel.CompetitionsPerPage,
+                await userService.GetCompetitorId(User.Id()));
 
             q.TotalCompetitionsCount = result.TotalCompetitionsCount;
             q.Competitions = result.Competitions;
@@ -237,6 +238,30 @@ namespace OMedia.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> TakePart(int id)
+        {
+            if ((await competitionService.Exists(id)) == false ||
+                (await competitionService.IsAlreadyParticipant(id, User.Id())))
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var competitorId = await userService.GetCompetitorId(User.Id());
+            await competitionService.TakePart(id, competitorId);
+            //ToDO Mine
+            return RedirectToAction(nameof(All));
+        }
 
+        public async Task<IActionResult> Cancel(int id)
+        {
+            if ((await competitionService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var competitorId = await userService.GetCompetitorId(User.Id());
+            await competitionService.Cancel(id, competitorId);
+            //ToDO Mine
+            return RedirectToAction(nameof(All));
+        }
     }
 }

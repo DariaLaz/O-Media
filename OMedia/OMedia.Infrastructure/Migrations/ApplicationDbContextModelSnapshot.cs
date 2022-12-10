@@ -143,15 +143,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3d8d9d1c-6616-4fe2-b0e3-683da577f468",
+                            ConcurrencyStamp = "a7d5245a-41fc-48ed-ac60-362242b11423",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP3O3MsfMHTtAvEtKSVoygYdc2GIxgfufF0IPHZyGogPB0tbeUshRH8RpBiM1FFvVA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOLXCewcXsvaTIWJV7rvyrd7frue/DbLX55wfujjNGJbYE5db2hshv/sN3loLUSEtQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "80c6bb20-10bd-4568-ba46-f28b10502b10",
+                            SecurityStamp = "00466ee4-9809-4401-9bbc-f5ed0da00cf3",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -159,15 +159,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "13ad0522-47f9-4c51-a65a-19d559903704",
+                            ConcurrencyStamp = "d3ace41b-75dd-46b9-a4cf-ef890f7913db",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHPzStmTHyIpX6S/bDWmlHLomWeNoG1NchtPQOmgnRvhJEI4IANKtkOdZe3QevKzXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP/lXbI8tGkMQRT941MTKCRBFQJKGKGw0hMXPDTmROG/j6LwXsdRoCJ7xsGYnemu9w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "14f521b0-5f5a-45b4-887d-1f390f1881de",
+                            SecurityStamp = "6164a7e9-e183-4d33-9efd-bcabf99c50de",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -514,7 +514,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 7, 19, 51, 56, 114, DateTimeKind.Local).AddTicks(8155),
+                            Date = new DateTime(2022, 12, 9, 22, 33, 43, 835, DateTimeKind.Local).AddTicks(5078),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
                             IsActive = false,
                             IsChanged = false,
@@ -531,6 +531,9 @@ namespace OMedia.Infrastructure.Migrations
                     b.Property<int>("CompetitionId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -546,6 +549,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             CompetitorId = 1,
                             CompetitionId = 1,
+                            IsActive = true,
                             Role = "Participant"
                         });
                 });
@@ -684,7 +688,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 7, 19, 51, 56, 78, DateTimeKind.Local).AddTicks(9871),
+                            Date = new DateTime(2022, 12, 9, 22, 33, 43, 800, DateTimeKind.Local).AddTicks(67),
                             IsActive = false,
                             IsChanged = false,
                             Title = "Title",

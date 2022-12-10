@@ -216,7 +216,28 @@ namespace OMedia.Controllers
             return RedirectToAction(nameof(Details), new { id = model.NewsId });
         }
 
-        [HttpGet]
+        //[HttpGet]
+        //public async Task<IActionResult> DeleteComment(int id)
+        //{
+        //    if (((await newsService.ExistsComment(id)) == false)
+        //      || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
+        //      || (await newsService.GetCommentById(id) == null))
+        //    {
+        //        return RedirectToAction(nameof(All));
+        //    }
+        //    var comment = await newsService.GetCommentById(id);
+
+        //    var model = new CommentViewModel()
+        //    {
+        //        Id = comment.Id,
+        //        Content = comment.Content,
+        //        AuthorId = comment.AuthorId,
+        //        NewsId = comment.NewsId
+        //    };
+
+        //    return View(model);
+        //}
+        [HttpPost]
         public async Task<IActionResult> DeleteComment(int id)
         {
             if (((await newsService.ExistsComment(id)) == false)
@@ -226,29 +247,10 @@ namespace OMedia.Controllers
                 return RedirectToAction(nameof(All));
             }
             var comment = await newsService.GetCommentById(id);
-
-            var model = new CommentViewModel()
-            {
-                Id = comment.Id,
-                Content = comment.Content,
-                AuthorId = comment.AuthorId,
-                NewsId = comment.NewsId
-            };
-
-            return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> DeleteComment(int id, CommentViewModel model)
-        {
-            if (((await newsService.ExistsComment(id)) == false)
-              || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
-              || (await newsService.GetCommentById(id) == null))
-            {
-                return RedirectToAction(nameof(All));
-            }
+            int newId = comment.NewsId;
             await newsService.DeleteComment(id);
 
-            return RedirectToAction(nameof(Details), new { id = model.NewsId });
+            return RedirectToAction(nameof(Details), new { id = newId });
         }
     }
 }

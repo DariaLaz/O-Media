@@ -17,7 +17,8 @@ namespace OMedia.Core.Contracts
                 int year = 0,
                 CompetitionSorting sorting = CompetitionSorting.Newest,
                 int currentPage = 1,
-                int compsPerPage = 1);
+                int compsPerPage = 1,
+                int userId = 0);
         Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups();
         Task<IEnumerable<TeamsViewModel>> GetAllTeams();
         Task<Competition?> GetCompetitionById(int id);
@@ -31,6 +32,8 @@ namespace OMedia.Core.Contracts
         Task Delete(int id);
         Task<List<int>> GetAllCompetitionYears();
         Task<IEnumerable<CompetitionAgeGroupModel>> GetCompetitionAgeGroups(int compId);
-
-    } 
+        Task<bool> IsAlreadyParticipant(int competitionId, string competitorId);
+        Task TakePart(int competitionId, int competitorId);
+        Task Cancel(int competitionId, int competitorId);
+    }
 }

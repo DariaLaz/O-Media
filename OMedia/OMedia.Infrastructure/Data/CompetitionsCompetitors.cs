@@ -18,5 +18,6 @@ namespace OMedia.Infrastructure.Data
         public Competition Competition { get; set; } = null!;
         [ForeignKey(nameof(CompetitorId))]
         public Competitor Competitor { get; set; } = null!;
+        public bool IsActive { get; set; } = true;
     }
 }
