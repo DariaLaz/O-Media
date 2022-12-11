@@ -1,0 +1,34 @@
+﻿@model CompetitionViewModel
+<div class="container">
+        <div class="social-feed-box">
+            <div class="social-avatar">
+                <div class="media-body">
+                    <a href="#"></a>
+                    <small class="text-muted">@Model.Date</small>
+                </div>
+            </div>
+            <div class="social-body">
+                <h3>@Model.Name</h3>
+                <h4>@Model.Date</h4>
+                <h4>@Model.Location</h4>
+                <br />
+                <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@Model.Id" 
+                asp-route-information="" class="btn btn-success">Details</a>
+               
+                @if (Model.IsCurrUserTakingPart)
+                {
+                     <form class="input-group-sm" asp-area="" asp-controller="Competition"
+                     asp-action="Cancel" asp-route-id="@Model.Id" method="post">
+                          <input class="btn btn-primary" type="submit" value="Cancel" />
+                    </form>
+                }
+                else
+                {
+                    <form class="input-group-sm" asp-area="" asp-controller="Competition"
+                     asp-action="TakePart" asp-route-id="@Model.Id" method="post">
+                          <input class="btn btn-primary" type="submit" value="Take Part" />
+                     </form>
+                }
+            </div>
+        </div> 
+        </div>           

@@ -1,0 +1,18 @@
+﻿@model CommentViewModel
+
+<div class="d-flex flex-start mt-4">
+  <a class="me-3" href="#">
+  </a>
+  <div class="flex-grow-1 flex-shrink-1">
+    <div>
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1">
+          @Model.AuthorName <span class="small">- @Model.Date</span>
+        </p>
+      </div>
+      <p class="small mb-0">
+        @Model.Content
+      </p>
+    </div>
+  </div>
+</div>

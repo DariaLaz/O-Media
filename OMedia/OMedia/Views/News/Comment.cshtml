@@ -1,0 +1,13 @@
+﻿@model AddCommentModel
+@{
+    ViewBag.Title = "Add New";
+}
+
+<h2 class="text-center" mt-7>@ViewBag.Title</h2>
+<hr />
+
+<partial name="_AddCommentPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

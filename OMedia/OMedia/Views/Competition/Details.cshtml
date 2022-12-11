@@ -1,0 +1,51 @@
+﻿@using OMedia.Extensions
+
+@model CompetitionDetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="container-fluid">
+<div class="container">
+  <!-- Title -->
+  <div class="d-flex justify-content-between align-items-center py-3">
+    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> @Model.Name</h2>
+  </div>
+
+  <!-- Main content -->
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Details -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="mb-3 d-flex justify-content-between">
+            <div>
+              <span class="me-3">@Model.Date</span>
+              <span class="me-3">@(Model.OrganizerName ?? "")</span>
+              <span class="me-3">@(Model.OrganizerTeamName ?? "")</span>
+
+            </div>
+          </div>
+          <table class="table table-borderless">
+            <tbody>
+               @Model.Details
+            </tbody>
+            <div>
+              @if(this.User.Identity == null 
+               ? false 
+               : User.Id() == @Model.OrganizerUserId)
+               {
+                    <a class="btn btn-warning" asp-controller="Competition" asp-action="Edit"
+                       asp-route-id="@Model.Id">Edit</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="Competition" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
+               }
+            </div>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

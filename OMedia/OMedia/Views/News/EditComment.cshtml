@@ -1,0 +1,22 @@
+﻿@model EditCommentModel
+@{
+    ViewBag.Title = "Edit Comment";
+}
+
+<h2 class="text-center" mt-7>@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Content"></label>
+                <input asp-for="Content" class="form-control" placeholder="Title...">
+                <span asp-validation-for="Content" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <input type="submit" asp-route-id="@Model.Id" class="btn btn-primary mt-3" value="Edit"/>
+            </div>
+        </form>
+    </div>
+</div>

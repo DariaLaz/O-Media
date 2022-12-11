@@ -1,0 +1,13 @@
+﻿@model AddCompetitionViewModel
+
+@{
+    ViewBag.Title = "Edit Competition";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_CompetitionFormPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
