@@ -123,7 +123,7 @@ namespace OMedia.Controllers
             {
                 Name = competition.Name,
                 Location = competition.Location,
-                Date = competition.Date,
+                Date = competition.Date.ToString("dd/MM/yyyy"),
                 Details = competition.Details,
                 AgeGroups = new List<CompetitionAgeGroupModel>()
             };

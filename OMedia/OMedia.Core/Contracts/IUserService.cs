@@ -19,9 +19,11 @@ namespace OMedia.Core.Contracts
             int ageGroupId);
         Task<ProfileViewModel> GetCompetitor(int id);
         Task<IEnumerable<UserViewModel>> All();
-        Task<bool> Forget(string userId);
+        Task<bool> Forget(IdentityUser user);
         Task<IdentityUser> GetUser(string id);
         Task<bool> RemoveAdmin(IdentityUser user);
         Task<bool> AddAdmin(IdentityUser user);
+        Task<bool> IsTheLastAdmin();
+
     }
 }

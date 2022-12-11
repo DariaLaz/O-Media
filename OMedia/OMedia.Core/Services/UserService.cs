@@ -25,13 +25,11 @@ namespace OMedia.Core.Services
             return await repo.All<Competitor>()
                 .AnyAsync(a => a.UserId == userId);
         }
-
         public async Task<int> GetCompetitorId(string userId)
         {
             return (await repo.AllReadonly<Competitor>()
                .FirstOrDefaultAsync(a => a.UserId == userId))?.Id ?? 0;
         }
-
         public async Task Create(string userId, string name, int teamId, int ageGroupId)
         {
             var competitor = new Competitor()
@@ -44,10 +42,10 @@ namespace OMedia.Core.Services
             await repo.AddAsync(competitor);
             await repo.SaveChangesAsync();
         }
-
         public async Task<ProfileViewModel> GetCompetitor(int id)
         {
             var competitior = (await repo.AllReadonly<Competitor>()
+                .Include(x => x.User)
                 .Include(x => x.Team)
                 .Include(x => x.Competitions)
                 .ThenInclude(x => x.Competition)
@@ -76,7 +74,7 @@ namespace OMedia.Core.Services
                     AgeGroups = c.Competition.AgeGroups.Select(g => new CompetitionAgeGroupModel
                     {
                         Id = g.AgeGroupId
-                    })
+                    }),
                 }).ToList();
             return new ProfileViewModel()
             {
@@ -84,15 +82,15 @@ namespace OMedia.Core.Services
                 TeamId = competitior.TeamId,
                 TeamName = competitior.Team.Name,
                 Competitions = competitions,
-                CompetitionsOrganized = competitionsOrganized
+                CompetitionsOrganized = competitionsOrganized,
+                Email = competitior.User.Email
             };
         }
-
         public async Task<IEnumerable<UserViewModel>> All()
         {
             var all = await repo.AllReadonly<Competitor>()
                 .Include(c => c.User)
-                .Where(c => c.IsActive)
+                .Where(c => c.IsActive && c.User.Email != null)
                 .Select(c => new UserViewModel()
                 {
                     UserId =c.UserId,
@@ -109,14 +107,25 @@ namespace OMedia.Core.Services
             }
             return all;
         }
-
-        
-
-        public Task<bool> Forget(string userId)
+        public async Task<bool> Forget(IdentityUser user)
         {
-            throw new NotImplementedException();
+           
+            user.NormalizedUserName = null;
+            user.Email = null;
+            user.NormalizedEmail = null;
+            user.PasswordHash = null;
+            user.UserName = $"forgottenUser-{DateTime.Now.Ticks}";
+            var result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                var competitor = (await repo.All<Competitor>()
+                    .FirstOrDefaultAsync(a => a.UserId == user.Id));
+                competitor.IsActive = false;
+                competitor.Name = null;
+                await repo.SaveChangesAsync();
+            }
+            return result.Succeeded;
         }
-
         public async Task<IdentityUser> GetUser(string id)
         {
             var user = await repo.AllReadonly<Competitor>()
@@ -129,12 +138,15 @@ namespace OMedia.Core.Services
             var roles = new List<string>();
             roles.Add("Administrator");
             await userManager.AddToRolesAsync(user, roles);
+
             var result = await userManager.UpdateAsync(user);
 
             return result.Succeeded;
         }
         public async Task<bool> RemoveAdmin(IdentityUser user)
         {
+
+
             var userRoles = await userManager.GetRolesAsync(user);
 
             await userManager.RemoveFromRolesAsync(user, userRoles);
@@ -142,6 +154,22 @@ namespace OMedia.Core.Services
 
             return result.Succeeded;
 
+        }
+
+        public async Task<bool> IsTheLastAdmin()
+        {
+            var allCompetitiors = await repo.AllReadonly<Competitor>()
+                                .Include(x => x.User)
+                                .ToListAsync();
+            var counter = 0;
+            foreach (var c in allCompetitiors)
+            {
+                if (await userManager.IsInRoleAsync(c.User, "Administrator"))
+                {
+                    counter++;
+                }
+            }
+            return counter == 1;
         }
     }
 }

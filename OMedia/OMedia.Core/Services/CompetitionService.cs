@@ -57,7 +57,7 @@ namespace OMedia.Core.Services
             {
                 Name = model.Name,
                 Location = model.Location,
-                Date = model.Date,
+                Date = Convert.ToDateTime(model.Date),
                 Details = model.Details,
                 IsActive = true
             };
@@ -97,7 +97,7 @@ namespace OMedia.Core.Services
 
             competition.Name = model.Name;
             competition.Location = model.Location;
-            competition.Date = model.Date;
+            competition.Date = Convert.ToDateTime(model.Date);
             competition.Details = model.Details;
             competition.AgeGroups = new List<AgeGroupsCompetitions>();
             foreach (var ag in model.AgeGroups)

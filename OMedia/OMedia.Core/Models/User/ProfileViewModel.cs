@@ -11,6 +11,8 @@ namespace OMedia.Core.Models.User
     public class ProfileViewModel
     {
         public string Name { get; set; }
+        public string Email { get; set; }
+
         public List<CompetitionViewModel> CompetitionsOrganized { get; set; }
         public List<CompetitionViewModel> Competitions { get; set; }
 
