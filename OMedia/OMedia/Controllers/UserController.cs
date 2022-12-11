@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OMedia.Core.Contracts;
+using OMedia.Core.Models.User;
 using OMedia.Extensions;
 
 namespace OMedia.Controllers
@@ -8,13 +10,16 @@ namespace OMedia.Controllers
     {
         private readonly INewsService newsService;
         private readonly IUserService userService;
-
+        private readonly UserManager<IdentityUser> userManager;
         public UserController(
            INewsService _newsService,
-            IUserService _userService)
+            IUserService _userService,
+            UserManager<IdentityUser> _userManager)
         {
             newsService = _newsService;
             userService = _userService;
+            userManager = _userManager;
+
         }
 
         public async Task<IActionResult> Profile(string id)
@@ -34,5 +39,7 @@ namespace OMedia.Controllers
 
             return View(competitior);
         }
+
+        
     }
 }

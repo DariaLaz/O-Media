@@ -2,6 +2,7 @@
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.Team;
 using OMedia.Extensions;
+using static OMedia.Areas.Admin.Constants.AdminConstants;
 
 namespace OMedia.Controllers
 {
@@ -19,6 +20,10 @@ namespace OMedia.Controllers
         }
         public async Task<IActionResult> All()
         {
+            if (User.IsInRole(AdminRoleName))
+            {
+                return RedirectToAction("All", "Team", new { area = "Admin" });
+            }
             var model = await teamService.GetAllTeams();
             return View(model);
         }

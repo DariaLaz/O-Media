@@ -1,24 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.Competition;
 using OMedia.Core.Models.User;
 using OMedia.Infrastructure.Data;
 using OMedia.Infrastructure.Data.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMedia.Core.Services
 {
     public class UserService : IUserService
     {
         private readonly IRepository repo;
-
-        public UserService(IRepository _repo)
+        private readonly UserManager<IdentityUser> userManager;
+        public UserService(IRepository _repo,
+            UserManager<IdentityUser> _userManager)
         {
             repo = _repo;
+            userManager = _userManager;
         }
 
 
@@ -88,6 +86,62 @@ namespace OMedia.Core.Services
                 Competitions = competitions,
                 CompetitionsOrganized = competitionsOrganized
             };
+        }
+
+        public async Task<IEnumerable<UserViewModel>> All()
+        {
+            var all = await repo.AllReadonly<Competitor>()
+                .Include(c => c.User)
+                .Where(c => c.IsActive)
+                .Select(c => new UserViewModel()
+                {
+                    UserId =c.UserId,
+                    Email = c.User.Email,
+                    Name = c.Name
+                })
+                .ToListAsync();
+            foreach (var user in all)
+            {
+                var u = await repo.AllReadonly<Competitor>()
+                    .Include(x => x.User)
+                    .FirstAsync(x => x.UserId == user.UserId);
+                user.IsAdministrator = await userManager.IsInRoleAsync(u.User, "Administrator");
+            }
+            return all;
+        }
+
+        
+
+        public Task<bool> Forget(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IdentityUser> GetUser(string id)
+        {
+            var user = await repo.AllReadonly<Competitor>()
+                .Include(x => x.User)
+                .FirstAsync(x => x.UserId == id);
+            return user.User;
+        }
+        public async Task<bool> AddAdmin(IdentityUser user)
+        {
+            var roles = new List<string>();
+            roles.Add("Administrator");
+            await userManager.AddToRolesAsync(user, roles);
+            var result = await userManager.UpdateAsync(user);
+
+            return result.Succeeded;
+        }
+        public async Task<bool> RemoveAdmin(IdentityUser user)
+        {
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            await userManager.RemoveFromRolesAsync(user, userRoles);
+            var result = await userManager.UpdateAsync(user);
+
+            return result.Succeeded;
+
         }
     }
 }

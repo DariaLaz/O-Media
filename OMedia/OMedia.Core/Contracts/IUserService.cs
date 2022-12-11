@@ -1,4 +1,5 @@
-﻿using OMedia.Core.Models.User;
+﻿using Microsoft.AspNetCore.Identity;
+using OMedia.Core.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace OMedia.Core.Contracts
             int TeamId,
             int ageGroupId);
         Task<ProfileViewModel> GetCompetitor(int id);
-
+        Task<IEnumerable<UserViewModel>> All();
+        Task<bool> Forget(string userId);
+        Task<IdentityUser> GetUser(string id);
+        Task<bool> RemoveAdmin(IdentityUser user);
+        Task<bool> AddAdmin(IdentityUser user);
     }
 }

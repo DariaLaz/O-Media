@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OMedia.Core.Contracts;
+using OMedia.Extensions;
 using OMedia.Models;
 using System.Diagnostics;
+using static OMedia.Areas.Admin.Constants.AdminConstants;
 
 namespace OMedia.Controllers
 {
@@ -9,7 +12,10 @@ namespace OMedia.Controllers
     {
         public IActionResult Index()
         {
-
+            if (User.IsInRole(AdminRoleName))
+            {
+                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+            }
             return View();
         }
 

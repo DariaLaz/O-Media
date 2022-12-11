@@ -15,7 +15,7 @@ namespace OMedia.Core.Models.User
         public List<CompetitionViewModel> Competitions { get; set; }
 
         public List<NewsViewModel> News { get; set; }
-        public AgeGroupViewModel AgeGroup { get; set; }
+        public UserAgeGroupViewModel AgeGroup { get; set; }
         public int TeamId { get; set; }
         public string TeamName { get; set; }
     }

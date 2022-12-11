@@ -22,7 +22,7 @@ namespace OMedia.Infrastructure.Data
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new AgeGroupConfiguration());
             builder.ApplyConfiguration(new CompetitionConfiguration());
-           
+            builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new CompetitionsCompetitorsConfiguration());
             builder.ApplyConfiguration(new CompetitorConfiguration());
             builder.ApplyConfiguration(new DistanceTypesConfiguration());

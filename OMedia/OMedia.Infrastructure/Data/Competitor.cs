@@ -34,5 +34,6 @@ namespace OMedia.Infrastructure.Data
         public int AgeGroupId { get; set; }
         [ForeignKey(nameof(AgeGroupId))]
         public AgeGroup AgeGroup { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

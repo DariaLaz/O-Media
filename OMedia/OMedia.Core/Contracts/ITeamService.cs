@@ -17,5 +17,7 @@ namespace OMedia.Core.Contracts
         Task<bool> Exists(int id);
         Task<Team> GetTeamById(int id);
         Task<TeamDetailsModel> TeamDetailsById(int id);
+        Task<int> Create(AddTeamModel model);
+        Task<bool> Exists(AddTeamModel model);
     }
 }
