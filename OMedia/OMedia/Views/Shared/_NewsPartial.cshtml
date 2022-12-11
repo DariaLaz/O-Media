@@ -20,11 +20,24 @@
                             <a asp-route-id="@Model.WriterId" asp-area="" asp-controller="User" asp-action="Profile">@Model.WriterName</a>
                            <span class="small">- @Model.Date</span>
                         </h6>
+                        @if (@Model.WriterId == @User.Id())
+                        {
+                            <div class="row">
+                            <form class="input-group-sm" asp-area="" asp-controller="News"
+                             asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-primary" type="submit" value="Delete" />
+                            </form>
+                            <a asp-area="" asp-controller="News" asp-action="Edit" asp-route-id="@Model.Id" 
+                            asp-route-information="" class="btn btn-warning">Edit</a>
+                            </div>
+                        }
                       </div>
                       <p class="small mb-0">
                         @Model.Content
                       </p>
                     </div>
+
+                    
                     <a asp-area="" asp-controller="News" asp-action="Comment" asp-route-id="@Model.Id" 
                     asp-route-information="" class="btn btn-success">Add Comment</a>
                     @if (Model.Comments.Count == 0)

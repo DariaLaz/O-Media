@@ -69,7 +69,8 @@ namespace OMedia.Controllers
         {
             if (((await newsService.Exists(id)) == false)
               || ((await newsService.GetWriterUserId(id)) != User.Id())
-              || (await newsService.GetNewsById(id) == null))
+              || (await newsService.GetNewsById(id) == null)
+                    )
             {
                 return RedirectToAction(nameof(All));
             }
@@ -114,27 +115,8 @@ namespace OMedia.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
-        {
-            if (((await newsService.Exists(id)) == false)
-             || ((await newsService.GetWriterUserId(id)) != User.Id())
-             || (await newsService.GetNewsById(id) == null))
-            {
-                return RedirectToAction(nameof(All));
-            }
-            var news = await newsService.GetNewsById(id);
-
-            var model = new NewsViewModel()
-            {
-                Content = news.Content,
-                Title = news.Title
-            };
-
-            return View(model);
-        }
         [HttpPost]
-        public async Task<IActionResult> Delete(int id, NewsViewModel model)
+        public async Task<IActionResult> Delete(int id)
         {
             if (((await newsService.Exists(id)) == false)
              || ((await newsService.GetWriterUserId(id)) != User.Id())

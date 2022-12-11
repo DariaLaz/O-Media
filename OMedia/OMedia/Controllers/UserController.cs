@@ -22,7 +22,7 @@ namespace OMedia.Controllers
             if (id == null)
             {
                 return RedirectToAction("Login");
-            }
+            }   
             if (await userService.isCompetitorById(id) == false)
             {
                 return RedirectToAction("Become", "Competition");

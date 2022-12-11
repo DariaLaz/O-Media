@@ -76,7 +76,7 @@ namespace OMedia.Core.Services
                })
                .ToListAsync();
         }
-        public async Task<NewsViewModel> GetNewsById(int id)
+        public async Task<NewsViewModel?> GetNewsById(int id)
         {
             var news = await repo.AllReadonly<News>()
                 .Include(x => x.Writer)
@@ -84,24 +84,26 @@ namespace OMedia.Core.Services
                 .ThenInclude(x => x.Author)
                 .Where(n => n.IsActive)
                 .FirstOrDefaultAsync(x => x.Id == id);
-            return new NewsViewModel()
-            {
-                Id = news.Id,
-                Title = news.Title,
-                Content = news.Content,
-                WriterId = news.Writer.UserId,
-                Date = news.Date.ToString("dd/MM/yyyy"),
-                Comments = news.Comments
-                       .Where(c => c.IsActive)
-                       .Select(x => new CommentViewModel()
-                       {
-                           Id = x.Id,
-                           AuthorId = x.Author.UserId,
-                           AuthorName = x.Author.Name,
-                           Content = x.Content,
-                           IsChanged = x.IsChanged
-                       }).ToList()
-            };
+            return news == null ?
+                null:
+                new NewsViewModel()
+                {
+                    Id = news.Id,
+                    Title = news.Title,
+                    Content = news.Content,
+                    WriterId = news.Writer.UserId,
+                    Date = news.Date.ToString("dd/MM/yyyy"),
+                    Comments = news.Comments
+                           .Where(c => c.IsActive)
+                           .Select(x => new CommentViewModel()
+                           {
+                               Id = x.Id,
+                               AuthorId = x.Author.UserId,
+                               AuthorName = x.Author.Name,
+                               Content = x.Content,
+                               IsChanged = x.IsChanged
+                           }).ToList()
+                };
 
         }
         public async Task<string> GetWriterUserId(int id)
@@ -217,6 +219,7 @@ namespace OMedia.Core.Services
                 .Include(n => n.Writer)
                 .Include(n => n.Comments)
                 .ThenInclude(c => c.Author)
+                .Where(n => n.IsActive)
                 .ToListAsync();
             var result = new NewsQueryModel();
 
