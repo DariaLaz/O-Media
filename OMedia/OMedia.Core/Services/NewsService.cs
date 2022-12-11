@@ -242,6 +242,7 @@ namespace OMedia.Core.Services
                     Title = c.Title,
                     Content = c.Content,
                     WriterId = c.Writer.UserId,
+                    WriterName = c.Writer.Name,
                     Date = c.Date.ToString("dd/MM/yyyy"),
                     Comments = c.Comments
                        .Where(x => x.IsActive)
@@ -265,6 +266,36 @@ namespace OMedia.Core.Services
             return await repo.AllReadonly<News>()
                 .Select(x => x.Date.Year)
                 .Distinct().ToListAsync();
+        }
+
+        public async Task<IEnumerable<NewsViewModel>> GetNewsByUserId(string id)
+        {
+            var news = await repo.AllReadonly<News>()
+                .Include(n => n.Writer)
+                .Include(n => n.Comments)
+                .ThenInclude(c => c.Author)
+                .Where(x => x.Writer.UserId == id && x.IsActive)
+                .ToListAsync();
+
+            return news.Select(x => new NewsViewModel()
+                    {
+                        Id = x.Id,
+                        Comments = x.Comments
+                           .Where(x => x.IsActive)
+                           .Select(x => new CommentViewModel()
+                           {
+                               Id = x.Id,
+                               AuthorId = x.Author.UserId,
+                               AuthorName = x.Author.Name,
+                               Content = x.Content,
+                               IsChanged = x.IsChanged
+                           }).ToList(),
+                        Content = x.Content,
+                        Date = x.Date.ToString("dd/MM/yyyy"),
+                        Title = x.Title,
+                        WriterId = x.Writer.UserId,
+                        WriterName = x.Writer.Name
+                    }).ToList();
         }
     }
 }

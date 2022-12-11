@@ -27,7 +27,7 @@ namespace OMedia.Controllers
                 q.Year,
                 q.CurrentPage,
                 AllNewsQueryModel.NewsPerPage);
-
+            
             q.TotalNewsCount = result.TotalNewsCount;
             q.News = result.News;
             q.Years = await newsService.GetAllNewsYears();
@@ -216,27 +216,6 @@ namespace OMedia.Controllers
             return RedirectToAction(nameof(Details), new { id = model.NewsId });
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> DeleteComment(int id)
-        //{
-        //    if (((await newsService.ExistsComment(id)) == false)
-        //      || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
-        //      || (await newsService.GetCommentById(id) == null))
-        //    {
-        //        return RedirectToAction(nameof(All));
-        //    }
-        //    var comment = await newsService.GetCommentById(id);
-
-        //    var model = new CommentViewModel()
-        //    {
-        //        Id = comment.Id,
-        //        Content = comment.Content,
-        //        AuthorId = comment.AuthorId,
-        //        NewsId = comment.NewsId
-        //    };
-
-        //    return View(model);
-        //}
         [HttpPost]
         public async Task<IActionResult> DeleteComment(int id)
         {

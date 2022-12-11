@@ -27,5 +27,6 @@ namespace OMedia.Core.Contracts
         Task<CommentViewModel> GetCommentById(int id);
         Task<string> GetCommentAuthorUserId(int id);
         Task DeleteComment(int id);
+        Task<IEnumerable<NewsViewModel>> GetNewsByUserId(string id);
     }
 }
