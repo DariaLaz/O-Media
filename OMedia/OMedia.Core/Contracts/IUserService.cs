@@ -24,6 +24,6 @@ namespace OMedia.Core.Contracts
         Task<bool> RemoveAdmin(IdentityUser user);
         Task<bool> AddAdmin(IdentityUser user);
         Task<bool> IsTheLastAdmin();
-
+        Task Edit(int competitiorId, EditViewModel model);
     }
 }

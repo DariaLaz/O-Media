@@ -24,7 +24,7 @@ namespace OMedia.Controllers
 
         public async Task<IActionResult> Profile(string id)
         {
-            if (id == null)
+            if (User.Id == null)
             {
                 return RedirectToAction("Login");
             }   
@@ -40,6 +40,5 @@ namespace OMedia.Controllers
             return View(competitior);
         }
 
-        
     }
 }

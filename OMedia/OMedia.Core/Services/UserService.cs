@@ -155,7 +155,6 @@ namespace OMedia.Core.Services
             return result.Succeeded;
 
         }
-
         public async Task<bool> IsTheLastAdmin()
         {
             var allCompetitiors = await repo.AllReadonly<Competitor>()
@@ -170,6 +169,15 @@ namespace OMedia.Core.Services
                 }
             }
             return counter == 1;
+        }
+
+        public async Task Edit(int competitiorId, EditViewModel model)
+        {
+            var user = await repo.GetByIdAsync<Competitor>(competitiorId);
+
+            user.Name = model.Name;
+
+            await repo.SaveChangesAsync();
         }
     }
 }
