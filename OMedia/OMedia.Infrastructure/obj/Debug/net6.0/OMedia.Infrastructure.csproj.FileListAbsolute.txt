@@ -12,3 +12,11 @@ E:\softuni\SoftUni\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\refint\
 E:\softuni\SoftUni\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.pdb
 E:\softuni\SoftUni\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.genruntimeconfig.cache
 E:\softuni\SoftUni\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\ref\OMedia.Infrastructure.dll
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.csproj.AssemblyReference.cache
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.AssemblyInfoInputs.cache
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.AssemblyInfo.cs
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.csproj.CoreCompileInputs.cache
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.dll
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\refint\OMedia.Infrastructure.dll
+E:\OMedia\O-Media\OMedia\OMedia.Infrastructure\obj\Debug\net6.0\OMedia.Infrastructure.pdb

@@ -275,3 +275,15 @@ E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\refint\OMedia.dll
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.pdb
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.genruntimeconfig.cache
 E:\softuni\SoftUni\O-Media\OMedia\OMedia\obj\Debug\net6.0\ref\OMedia.dll
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.csproj.AssemblyReference.cache
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.GeneratedMSBuildEditorConfig.editorconfig
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.AssemblyInfoInputs.cache
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.AssemblyInfo.cs
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.csproj.CoreCompileInputs.cache
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.MvcApplicationPartsAssemblyInfo.cs
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.MvcApplicationPartsAssemblyInfo.cache
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.RazorAssemblyInfo.cache
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.RazorAssemblyInfo.cs
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.dll
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\refint\OMedia.dll
+E:\OMedia\O-Media\OMedia\OMedia\obj\Debug\net6.0\OMedia.pdb
