@@ -9694,11 +9694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Core\\OMedia.Core.csproj",
+      "projectUniqueName": "E:\\OMedia\\O-Media\\OMedia\\OMedia.Core\\OMedia.Core.csproj",
       "projectName": "OMedia.Core",
-      "projectPath": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Core\\OMedia.Core.csproj",
+      "projectPath": "E:\\OMedia\\O-Media\\OMedia\\OMedia.Core\\OMedia.Core.csproj",
       "packagesPath": "C:\\Users\\daria\\.nuget\\packages\\",
-      "outputPath": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Core\\obj\\",
+      "outputPath": "E:\\OMedia\\O-Media\\OMedia\\OMedia.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -9720,8 +9720,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Infrastructure\\OMedia.Infrastructure.csproj": {
-              "projectPath": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Infrastructure\\OMedia.Infrastructure.csproj"
+            "E:\\OMedia\\O-Media\\OMedia\\OMedia.Infrastructure\\OMedia.Infrastructure.csproj": {
+              "projectPath": "E:\\OMedia\\O-Media\\OMedia\\OMedia.Infrastructure\\OMedia.Infrastructure.csproj"
             }
           }
         }
