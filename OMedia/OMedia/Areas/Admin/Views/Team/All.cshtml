@@ -1,0 +1,13 @@
+﻿@using OMedia.Extensions
+@model IEnumerable<TeamsViewModel>
+@{
+    ViewData["Title"] = "All Teams";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <a asp-area="Admin" asp-controller="Team" asp-action="Add"  
+     asp-route-information="" class="btn btn-success">Add</a>
+    @foreach (var m in Model)
+    {
+        <partial name="_TeamPartial" model="@m" />
+    }

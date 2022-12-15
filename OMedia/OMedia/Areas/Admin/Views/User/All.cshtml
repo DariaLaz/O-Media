@@ -1,0 +1,51 @@
+﻿@model IEnumerable<UserViewModel>
+@using static OMedia.Areas.Admin.Constants.AdminConstants;
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Email</label></th>
+            <th><label>Full Name</label></th>
+            <th><label>Actions</label></th>
+            <th><label>Actions</label></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td><label>@user.Email</label></td>
+                <td><label>@user.Name</label></td>
+                @if (@user.IsAdministrator)
+                {
+                     <td>
+                        <form asp-area="Admin" asp-controller="User" asp-action="RemoveAdmin" asp-route-userId="@user.UserId"  method="post">
+                            <button type="submit" class="btn btn-danger">Remove Admin</button>
+                        </form>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-area="Admin" asp-controller="User" asp-action="AddAdmin" asp-route-userId="@user.UserId"  method="post">
+                            <button type="submit" class="btn btn-danger">Add Admin</button>
+                        </form>
+                    </td>
+                }
+                <td>
+                    <form asp-area="Admin" asp-controller="User" asp-action="Forget" asp-route-userId="@user.UserId"  method="post">
+                        <button type="submit" class="btn btn-danger">Forget</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

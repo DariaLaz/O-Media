@@ -1,0 +1,19 @@
+﻿@model IEnumerable<AgeGroupViewModel>
+@{
+    ViewData["Title"] = "All Age Groups";
+}
+
+
+
+<div class="row">
+     <a asp-area="Admin" asp-controller="AgeGroup" asp-action="Add"  
+     asp-route-information="" class="btn btn-success">Add</a>
+    <ul>
+         @foreach (var ag in Model)
+        {
+            <li>
+                @ag.Gender @ag.Age
+            </li>
+        }
+    </ul>
+</div>

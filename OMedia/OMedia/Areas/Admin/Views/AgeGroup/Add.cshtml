@@ -1,0 +1,26 @@
+﻿@model AgeGroupViewModel
+@{
+    ViewData["Title"] = "Add Age Groups";
+}
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Gender"></label>
+                <select asp-for="Gender" class="form-control">
+                     <option value="Male">Male</option>
+                     <option value="Female">Female</option>
+                     <option value="Open">Open</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age"></label>
+                <input asp-for="Age" class="form-control" placeholder="Age...">
+                <span asp-validation-for="Age" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
