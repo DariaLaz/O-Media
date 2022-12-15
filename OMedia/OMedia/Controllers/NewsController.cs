@@ -166,7 +166,6 @@ namespace OMedia.Controllers
             return RedirectToAction(nameof(Details), new { id = model.NewsId });
 
         }
-
         [HttpGet]
         public async Task<IActionResult> EditComment(int id)
         {
@@ -197,7 +196,6 @@ namespace OMedia.Controllers
 
             return RedirectToAction(nameof(Details), new { id = model.NewsId });
         }
-
         [HttpPost]
         public async Task<IActionResult> DeleteComment(int id)
         {

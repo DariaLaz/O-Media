@@ -12,18 +12,15 @@ namespace OMedia.Core.Contracts
     {
         Task<bool> isCompetitorById(string userId);
         Task<int> GetCompetitorId(string userId);
-        Task Create(
-            string userId, 
-            string name, 
-            int TeamId,
-            int ageGroupId);
+        
         Task<ProfileViewModel> GetCompetitor(int id);
         Task<IEnumerable<UserViewModel>> All();
         Task<bool> Forget(IdentityUser user);
         Task<IdentityUser> GetUser(string id);
         Task<bool> RemoveAdmin(IdentityUser user);
-        Task<bool> AddAdmin(IdentityUser user);
+        Task<bool> AddAdmin(string id);
         Task<bool> IsTheLastAdmin();
-        Task Edit(int competitiorId, EditViewModel model);
+        Task Edit(int id, ProfileViewModel model);
+        Task<UserViewModel> GetInfo(string id);
     }
 }

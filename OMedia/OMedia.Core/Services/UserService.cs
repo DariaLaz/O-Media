@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.Competition;
@@ -12,11 +13,14 @@ namespace OMedia.Core.Services
     {
         private readonly IRepository repo;
         private readonly UserManager<IdentityUser> userManager;
+        public IWebHostEnvironment webHostEnviroment;
         public UserService(IRepository _repo,
-            UserManager<IdentityUser> _userManager)
+            UserManager<IdentityUser> _userManager,
+            IWebHostEnvironment _webHostEnviroment)
         {
             repo = _repo;
             userManager = _userManager;
+            webHostEnviroment = _webHostEnviroment;
         }
 
 
@@ -29,18 +33,6 @@ namespace OMedia.Core.Services
         {
             return (await repo.AllReadonly<Competitor>()
                .FirstOrDefaultAsync(a => a.UserId == userId))?.Id ?? 0;
-        }
-        public async Task Create(string userId, string name, int teamId, int ageGroupId)
-        {
-            var competitor = new Competitor()
-            {
-                UserId = userId,
-                Name = name,
-                TeamId = teamId,
-                AgeGroupId = ageGroupId
-            };
-            await repo.AddAsync(competitor);
-            await repo.SaveChangesAsync();
         }
         public async Task<ProfileViewModel> GetCompetitor(int id)
         {
@@ -78,6 +70,7 @@ namespace OMedia.Core.Services
                 }).ToList();
             return new ProfileViewModel()
             {
+                Id = competitior.Id,
                 Name = competitior.Name,
                 TeamId = competitior.TeamId,
                 TeamName = competitior.Team.Name,
@@ -133,12 +126,18 @@ namespace OMedia.Core.Services
                 .FirstAsync(x => x.UserId == id);
             return user.User;
         }
-        public async Task<bool> AddAdmin(IdentityUser user)
+        public async Task<bool> AddAdmin(string id)
         {
+            var user = await repo.All<Competitor>()
+                .Include(x => x.User)
+                .AsNoTracking()
+                .Select(x => x.User)
+                .FirstAsync(x => x.Id == id);
+
             var roles = new List<string>();
             roles.Add("Administrator");
-            await userManager.AddToRolesAsync(user, roles);
-
+            await userManager
+                .AddToRolesAsync(user, roles);
             var result = await userManager.UpdateAsync(user);
 
             return result.Succeeded;
@@ -170,14 +169,31 @@ namespace OMedia.Core.Services
             }
             return counter == 1;
         }
-
-        public async Task Edit(int competitiorId, EditViewModel model)
+        public async Task Edit(int id, ProfileViewModel model)
         {
-            var user = await repo.GetByIdAsync<Competitor>(competitiorId);
+            var competitor = await repo.All<Competitor>()
+                .Include(x => x.User)
+                .FirstAsync(x => x.Id == id);
+            var user = competitor.User;
+            user.UserName = model.Name;
 
-            user.Name = model.Name;
+            var result = await userManager.UpdateAsync(user);
+        }
 
-            await repo.SaveChangesAsync();
+        public async Task<UserViewModel> GetInfo(string id)
+        {
+            var competitor = await repo.AllReadonly<Competitor>()
+                .Include(x => x.User)
+                .FirstAsync(x => x.UserId == id);
+            var isAdmin = await userManager.IsInRoleAsync(competitor.User, "Administrator");
+
+            return new UserViewModel()
+            {
+                UserId = competitor.UserId,
+                Email = competitor.User.Email,
+                Name = competitor.Name,
+                IsAdministrator = isAdmin
+            };
         }
     }
 }

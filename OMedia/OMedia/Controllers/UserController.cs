@@ -27,7 +27,7 @@ namespace OMedia.Controllers
             if (User.Id == null)
             {
                 return RedirectToAction("Login");
-            }   
+            }
             if (await userService.isCompetitorById(id) == false)
             {
                 return RedirectToAction("Become", "Competition");
@@ -39,6 +39,5 @@ namespace OMedia.Controllers
 
             return View(competitior);
         }
-
     }
 }

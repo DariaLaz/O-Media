@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="#">O-Media</a>
+          <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">O-Media</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -23,30 +23,31 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light menu" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-light menu" asp-area="" asp-controller="News" asp-action="All">All News</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light menu" asp-area="" asp-controller="Competition" asp-action="All">All Competitions</a>
-                        </li>
-                         <li class="nav-item">
-                                <a class="nav-link text-light menu" asp-area="" asp-controller="Team" asp-action="All">Teams</a>
-                            </li>
-                        
                         @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light menu" asp-area="" asp-controller="News" asp-action="Add">My Competitions</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-light menu" asp-area="" asp-controller="News" asp-action="Add">Add News</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-light menu" asp-area="" asp-controller="Competition" asp-action="All">All Competitions</a>
+                        </li>
+                        @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light menu" asp-area="" asp-controller="Competition" asp-action="Mine">My Competitions</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light menu" asp-area="" asp-controller="Competition" asp-action="Add">Add Competition</a>
                             </li>
                         }
+                         <li class="nav-item">
+                                <a class="nav-link text-light menu" asp-area="" asp-controller="Team" asp-action="All">Teams</a>
+                            </li>
+                        
+                        
                     </ul>
                     <partial name="_LoginPartial" />
 

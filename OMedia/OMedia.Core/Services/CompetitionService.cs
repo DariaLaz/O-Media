@@ -6,6 +6,7 @@ using OMedia.Infrastructure.Data;
 using OMedia.Infrastructure.Data.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -97,7 +98,7 @@ namespace OMedia.Core.Services
 
             competition.Name = model.Name;
             competition.Location = model.Location;
-            competition.Date = Convert.ToDateTime(model.Date);
+            competition.Date = DateTime.Now;
             competition.Details = model.Details;
             competition.AgeGroups = new List<AgeGroupsCompetitions>();
             foreach (var ag in model.AgeGroups)
@@ -123,11 +124,11 @@ namespace OMedia.Core.Services
             return await repo.AllReadonly<AgeGroup>()
                 .FirstOrDefaultAsync(ag => ag.Id == id);
         }
-        public async Task<List<int>> GetAllCompetitionYears()
+        public async Task<List<int>> GetAllCompetitionYears(IEnumerable<CompetitionViewModel> competitions)
         {
-            return await repo.AllReadonly<Competition>()
-                .Select(x => x.Date.Year)
-                .Distinct().ToListAsync();
+            return competitions
+                .Select(x => DateTime.Parse(x.Date, CultureInfo.CreateSpecificCulture("de-DE")).Year)
+                .Distinct().ToList();
         }
         public async Task<CompetitionQueryModel> GetAll(
             string? searchTerm = null,
@@ -140,54 +141,47 @@ namespace OMedia.Core.Services
             var competitions = await repo.AllReadonly<Competition>()
                 .Include(c => c.Competitors)
                 .ToListAsync();
-            var result = new CompetitionQueryModel();
-
-            if (year != 0)
-            {
-                competitions = competitions.Where(x => (x.Date.Year) == year).ToList();
-            }
-
-            if (string.IsNullOrEmpty(searchTerm) == false)
-            {
-                competitions = competitions.Where(x =>
-                   (x.Name.ToLower()).Split(" ").Contains(searchTerm.ToLower()) ||
-                   (x.Details.ToLower()).Split(" ").Contains(searchTerm.ToLower()))
-                   .ToList();
-            }
-
-            switch (sorting)
-            {
-                case CompetitionSorting.Oldest:
-                    competitions = competitions.OrderBy(c => c.Date).ToList();
-                    break;
-                case CompetitionSorting.Newest:
-                    competitions = competitions.OrderByDescending(c => c.Date).ToList();
-                    break;
-                default:
-                    competitions = competitions.OrderByDescending(h => h.Id).ToList();
-                    break;
-            }
-
-            result.Competitions = competitions
-                .Skip((currentPage - 1) * compPerPage)
-                .Take(compPerPage)
-                .Select(c => new CompetitionViewModel()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Location = c.Location,
-                    Date = c.Date.ToString("dd-MM-yyyy"),
-                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
-                    {
-                        Id = g.AgeGroupId
-                    }),
-                    IsCurrUserTakingPart = c.Competitors.Any(x => x.CompetitorId == userId && x.IsActive)
-                }).ToList();
-
-            result.TotalCompetitionsCount = competitions.Count();
-
-            return result;
+            return CompetitionsView(competitions,
+                                   searchTerm,
+                                   year,
+                                   sorting,
+                                   currentPage,
+                                   compPerPage,
+                                   userId);
         }
+
+
+        public async Task<CompetitionQueryModel> Mine(
+            string? searchTerm = null,
+            int year = 0,
+            CompetitionSorting sorting = CompetitionSorting.Newest,
+            int currentPage = 1,
+            int compPerPage = 1,
+            int userId = 0,
+            string role = "Organizer")
+        {
+            var isOrganizer = role == "Organizer";
+            var competitior = (await repo.AllReadonly<Competitor>()
+                .Include(x => x.Competitions)
+                .ThenInclude(x => x.Competition)
+                .FirstOrDefaultAsync(a => a.Id == userId));
+            var competitions = competitior.Competitions
+                .Where(x => ((isOrganizer && x.Role == "Organizer") || (!isOrganizer && x.Role != "Organizer")) && x.Competitor.Id == userId)
+                .Select(x => x.Competition)
+                .ToList();
+                
+            return CompetitionsView(competitions,
+                                   searchTerm,
+                                   year,
+                                   sorting,
+                                   currentPage,
+                                   compPerPage,
+                                   userId);
+        }
+       
+
+
+
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups()
         {
             return await repo.AllReadonly<AgeGroup>()
@@ -287,6 +281,66 @@ namespace OMedia.Core.Services
                 cc.IsActive = false;
                 await repo.SaveChangesAsync();
             }
+        }
+
+
+
+        private CompetitionQueryModel CompetitionsView(List<Competition> competitions,
+                                                        string? searchTerm = null,
+                                                        int year = 0,
+                                                        CompetitionSorting sorting = CompetitionSorting.Newest,
+                                                        int currentPage = 1,
+                                                        int compPerPage = 1,
+                                                        int userId = 0)
+        {
+            var result = new CompetitionQueryModel();
+
+            if (year != 0)
+            {
+                competitions = competitions.Where(x => (x.Date.Year) == year).ToList();
+            }
+
+            if (string.IsNullOrEmpty(searchTerm) == false)
+            {
+                competitions = competitions.Where(x =>
+                   (x.Name.ToLower()).Split(" ").Contains(searchTerm.ToLower()) ||
+                   (x.Details.ToLower()).Split(" ").Contains(searchTerm.ToLower()))
+                   .ToList();
+            }
+
+            switch (sorting)
+            {
+                case CompetitionSorting.Oldest:
+                    competitions = competitions.OrderBy(c => c.Date).ToList();
+                    break;
+                case CompetitionSorting.Newest:
+                    competitions = competitions.OrderByDescending(c => c.Date).ToList();
+                    break;
+                default:
+                    competitions = competitions.OrderByDescending(h => h.Id).ToList();
+                    break;
+            }
+
+            result.Competitions = competitions
+                .Skip((currentPage - 1) * compPerPage)
+                .Take(compPerPage)
+                .Select(c => new CompetitionViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Location = c.Location,
+                    Date = c.Date.ToString("dd-MM-yyyy"),
+                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
+                    {
+                        Id = g.AgeGroupId
+                    }),
+                    IsCurrUserTakingPart = c.Competitors.Any(x => x.CompetitorId == userId && x.IsActive),
+                    IsEdited = c.IsChanged
+                }).ToList();
+
+            result.TotalCompetitionsCount = competitions.Count();
+
+            return result;
         }
     }
 }

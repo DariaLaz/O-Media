@@ -1,5 +1,40 @@
-﻿@model IEnumerable<NewsViewModel>
+﻿@using OMedia.Extensions
+@model UserViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
+<div class="mt-4 p-5 bg-light text-center">
+    @{
+        var name = User.Id() == null ? "Guest" : Model.Name;
+        var action = User.Id() == null ? "Login" : "Profile";
+        var controller = User.Id() == null ? "Account" : "User";
+        var area = User.Id() == null ? "Identity" : "";
+    }
+    
+    <h2 class="display-4">Hello, <a asp-area="@area" asp-controller="@controller" asp-action="@action">@name</a>!</h2>
+ 
+    <hr class="my-4">
+    <p>
+        You have chosen the best place where ypu will always feel part of the community.
+    </p>
+    <div>
+        @if(User.Id() == null)
+        {
+        <p>
+            Join here:  <a asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>!
+        </p>
+         <p>
+            If you already have account:  <a asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>!
+        </p>
+        }
+        else
+        {
+            <h3>See how much you have alredy donne for our growing community:</h3>
+            <div class="row">
+                <a type="button" class="btn btn-secondary w-5" asp-area="" asp-controller="Competition" asp-action="Mine">My Competitions</a>
+            </div>
+        }
+    </div>
+    
+</div>

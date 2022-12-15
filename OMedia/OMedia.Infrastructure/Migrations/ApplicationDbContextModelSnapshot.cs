@@ -51,8 +51,8 @@ namespace OMedia.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1ed5c75f-525a-42b8-88d5-0a4160f29389",
-                            ConcurrencyStamp = "e2370f30-27e6-4db1-8654-0bee7285dd6c",
+                            Id = "e10fe54b-3bf8-4546-8cf8-e075f8df11de",
+                            ConcurrencyStamp = "27447e53-7428-42b7-bfa4-cd0a8eace5ad",
                             Name = "Administrator"
                         });
                 });
@@ -151,15 +151,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b739ba3-1a0d-4f05-97c9-c5bea2731a2b",
+                            ConcurrencyStamp = "7965071c-fe44-4187-b059-869293af57e4",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDsWM0YxYggHTq9xFxKA/cwWYGDy0VDEXWHKp1YNWe17oXaWLVIykjJzPnqvpUOXkw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ3Kj2waujl0r1P6VhE9XszgKV5WBXGyEzYJ+2JBhJEq4keria97f4Df9QIyksmrjg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cbc2d917-9957-4eaf-b9d0-46d20e69a912",
+                            SecurityStamp = "23cba7e3-e8fa-4ada-8b16-5bb1084a14f0",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -167,15 +167,15 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cffa3d4a-6a37-49c7-b299-f7e50bdc1ea2",
+                            ConcurrencyStamp = "a02ca162-32d8-4f17-a5f1-26297d12b99d",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPhpK6HqVyLIai5a+dmqogzm8wwnrllwHo9ctP6x+1+0ZrnS+UZzIdEBjdyaLubutw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP+RZ+xCQY/W1uoh8RNIGhhGIVFQRPIb1MNy7X7kd4ymtJ4+8QgdTgwpQlLfHHQ4hQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "74975ea7-e9aa-4bc6-984c-ddd1e7890afe",
+                            SecurityStamp = "c211823d-484c-4407-abeb-1c3ad81bd156",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });
@@ -278,7 +278,8 @@ namespace OMedia.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.HasKey("Id");
 
@@ -522,7 +523,7 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 11, 20, 31, 4, 949, DateTimeKind.Local).AddTicks(2872),
+                            Date = new DateTime(2022, 12, 15, 0, 3, 33, 516, DateTimeKind.Local).AddTicks(1386),
                             Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
                             IsActive = false,
                             IsChanged = false,
@@ -609,55 +610,6 @@ namespace OMedia.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OMedia.Infrastructure.Data.DistanceType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DistanceTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            TypeName = "Sprint"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            TypeName = "Middle"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            TypeName = "Long"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            TypeName = "Relay"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            TypeName = "Sky"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            TypeName = "O-Bike"
-                        });
-                });
-
             modelBuilder.Entity("OMedia.Infrastructure.Data.News", b =>
                 {
                     b.Property<int>("Id")
@@ -700,7 +652,7 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 11, 20, 31, 4, 834, DateTimeKind.Local).AddTicks(8708),
+                            Date = new DateTime(2022, 12, 15, 0, 3, 33, 498, DateTimeKind.Local).AddTicks(3036),
                             IsActive = false,
                             IsChanged = false,
                             Title = "Title",

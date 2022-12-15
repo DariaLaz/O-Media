@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "k2D1wAQrHO+sI3jog/PE6TlU0nUDPXpBmSM5eowLWZI=",
+  "Hash": "SStvhK6Er6en4iNK/hNCspgOHl65w8bQRQk3VbzbPK8=",
   "Source": "OMedia",
   "BasePath": "_content/OMedia",
   "Mode": "Default",
@@ -1120,6 +1120,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia\\wwwroot\\images\\blank.jpg",
+      "SourceId": "OMedia",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia\\wwwroot\\",
+      "BasePath": "_content/OMedia",
+      "RelativePath": "images/blank.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\blank.jpg"
     },
     {
       "Identity": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia\\wwwroot\\js\\site.js",

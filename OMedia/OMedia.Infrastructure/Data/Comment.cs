@@ -12,10 +12,13 @@ namespace OMedia.Infrastructure.Data
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Content { get; set; }
+        [Required]
         public int AuthorId { get; set; }
         [ForeignKey(nameof(AuthorId))]
         public Competitor Author { get; set; }
+        [Required]
         public DateTime Date { get; set; }
         public bool IsActive { get; set; }
         public bool IsChanged { get; set; }

@@ -11,15 +11,48 @@ namespace OMedia.Controllers
     {
         private readonly IUserService userService;
         private readonly ICompetitionService competitionService;
+        private readonly ICompetitorService competitorService;
+
         public CompetitorController(
             IUserService _userService,
-            ICompetitionService _competitionService)
+            ICompetitionService _competitionService,
+            ICompetitorService _competitorService)
         {
             userService = _userService;
             competitionService = _competitionService;
+            competitorService = _competitorService;
         }
 
         public object MessageConstant { get; private set; }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var competitor = await userService.GetCompetitor(id);
+            var competitorAGeGroup = await competitorService.GetAgeGroupId(id);
+            var model = new CompetitorViewModel()
+            {
+                Name = competitor.Name,
+                TeamId = competitor.Id,
+                AgeGroupId = competitorAGeGroup,
+                AgeGroups = await competitionService.GetAllAgeGroups(),
+                Teams = await competitionService.GetAllTeams()
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(CompetitorViewModel model)
+        {
+            var competitorId = await userService.GetCompetitorId(User.Id());
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await competitorService.Edit(competitorId, model.Name, model.TeamId, model.AgeGroupId);
+
+            return RedirectToAction("Profile", "User", new {id = User.Id()});
+        }
 
         public async Task<IActionResult> Become()
         {
@@ -28,7 +61,7 @@ namespace OMedia.Controllers
                 TempData[MessageConstants.WarningMessage] = "You are already a competitor";
                 return RedirectToAction("Index", "Home");
             }
-            var model = new BecomeCompetitorModel()
+            var model = new CompetitorViewModel()
             {
                 AgeGroups = await competitionService.GetAllAgeGroups(),
                 Teams = await competitionService.GetAllTeams()
@@ -37,7 +70,7 @@ namespace OMedia.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Become(BecomeCompetitorModel model)
+        public async Task<IActionResult> Become(CompetitorViewModel model)
         {
             var userId = User.Id();
 
@@ -46,9 +79,11 @@ namespace OMedia.Controllers
                 return View(model);
             }
 
-            await userService.Create(userId, model.Name, model.TeamId, model.AgeGroupId);
+            await competitorService.Create(userId, model.Name, model.TeamId, model.AgeGroupId);
 
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }

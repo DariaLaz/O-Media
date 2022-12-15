@@ -1,34 +1,43 @@
 ﻿@model CompetitionViewModel
-<div class="container">
-        <div class="social-feed-box">
+<div class="container inline">
+     <div class="card">
+        <div class="card-body p-1">
+        <div class="social-feed-box col-md-auto">
             <div class="social-avatar">
                 <div class="media-body">
                     <a href="#"></a>
                     <small class="text-muted">@Model.Date</small>
                 </div>
             </div>
-            <div class="social-body">
-                <h3>@Model.Name</h3>
-                <h4>@Model.Date</h4>
-                <h4>@Model.Location</h4>
-                <br />
-                <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@Model.Id" 
-                asp-route-information="" class="btn btn-success">Details</a>
-               
-                @if (Model.IsCurrUserTakingPart)
+            @if (Model.IsCurrUserTakingPart)
                 {
                      <form class="input-group-sm" asp-area="" asp-controller="Competition"
                      asp-action="Cancel" asp-route-id="@Model.Id" method="post">
-                          <input class="btn btn-primary" type="submit" value="Cancel" />
+                          <input class="btn btn-danger" type="submit" value="Cancel" />
                     </form>
                 }
                 else
                 {
                     <form class="input-group-sm" asp-area="" asp-controller="Competition"
                      asp-action="TakePart" asp-route-id="@Model.Id" method="post">
-                          <input class="btn btn-primary" type="submit" value="Take Part" />
+                          <input class="btn btn-primary" type="submit" value="⨭ Take part" />
                      </form>
                 }
+            <div class="social-body">
+                <h3>@Model.Name</h3>
+                <h4>@Model.Date</h4>
+                @if (Model.IsEdited)
+                {
+                    <p>(edited)</p>
+                }
+                <h4>@Model.Location</h4>
+                <br />
+                <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@Model.Id" 
+                asp-route-information="" class="btn btn-secondary gap-md-3">Details</a>
+               
+                
             </div>
         </div> 
-        </div>           
+        </div>       
+         </div> 
+        </div>  

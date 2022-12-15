@@ -1,4 +1,5 @@
-﻿using OMedia.Core.Models.Competition;
+﻿using Microsoft.AspNetCore.Http;
+using OMedia.Core.Models.Competition;
 using OMedia.Core.Models.News;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace OMedia.Core.Models.User
 {
     public class ProfileViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
@@ -20,5 +22,6 @@ namespace OMedia.Core.Models.User
         public UserAgeGroupViewModel AgeGroup { get; set; }
         public int TeamId { get; set; }
         public string TeamName { get; set; }
+        public IFormFile ProfilePicture { get; set; }
     }
 }

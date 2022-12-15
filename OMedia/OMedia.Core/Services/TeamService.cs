@@ -85,7 +85,8 @@ namespace OMedia.Core.Services
                 Competitors = (await GetTeamsMembersById(id)).Select(c => new TeamMemberView()
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    UserId = c.UserId
                 }).ToList(),
                 Competitions = (await GetTeamsCompetitionsId(id)).Select(x => new TeamCompetitionModel()
                 {

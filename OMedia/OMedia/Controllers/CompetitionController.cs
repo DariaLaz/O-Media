@@ -32,7 +32,24 @@ namespace OMedia.Controllers
 
             q.TotalCompetitionsCount = result.TotalCompetitionsCount;
             q.Competitions = result.Competitions;
-            q.Years = await competitionService.GetAllCompetitionYears();
+            q.Years = await competitionService.GetAllCompetitionYears(q.Competitions);
+
+            return View(q);
+        }
+        public async Task<IActionResult> Mine([FromQuery] MyCompetitionsQueryModel q)
+        {
+            var result = await competitionService.Mine(
+                q.SearchTerm,
+                q.Year,
+                q.Sorting,
+                q.CurrentPage,
+                MyCompetitionsQueryModel.CompetitionsPerPage,
+                await userService.GetCompetitorId(User.Id()),
+                q.Role);
+
+            q.TotalCompetitionsCount = result.TotalCompetitionsCount;
+            q.Competitions = result.Competitions;
+            q.Years = await competitionService.GetAllCompetitionYears(q.Competitions);
 
             return View(q);
         }
@@ -58,7 +75,6 @@ namespace OMedia.Controllers
             
             return View(model);
         }
-
         [HttpPost]
         public async Task<IActionResult> Add(AddCompetitionViewModel model)
         {
@@ -87,7 +103,6 @@ namespace OMedia.Controllers
             int id = await competitionService.Create(model, userId);
             return RedirectToAction(nameof(Details), new {id = id});
         }
-
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
@@ -104,7 +119,6 @@ namespace OMedia.Controllers
 
             return View(model);
         }
-
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -151,6 +165,7 @@ namespace OMedia.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AddCompetitionViewModel model)
         {
+            model.AgeGroups = new List<CompetitionAgeGroupModel>();
             if (((await competitionService.Exists(id)) == false)
              || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id())
              || ((await competitionService.GetCompetitionById(id)) == null))
@@ -161,7 +176,6 @@ namespace OMedia.Controllers
             {
                 return View(model);
             }
-
             var validIds = new List<int>();
             model.AgeGroups = new List<CompetitionAgeGroupModel>();
             foreach (var agId in model.AgeGroupString)
@@ -185,7 +199,7 @@ namespace OMedia.Controllers
                     await competitionService.RemoveAgeGroup(id, ag.Id);
                 }
             }
-
+           
             await competitionService.Edit(id, model);
             return RedirectToAction(nameof(Details), new { id = id });
 
@@ -237,7 +251,6 @@ namespace OMedia.Controllers
 
             return RedirectToAction(nameof(All));
         }
-
         [HttpPost]
         public async Task<IActionResult> TakePart(int id)
         {
@@ -251,7 +264,7 @@ namespace OMedia.Controllers
             //ToDO Mine
             return RedirectToAction(nameof(All));
         }
-
+        [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
             if ((await competitionService.Exists(id)) == false)

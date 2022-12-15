@@ -11,6 +11,7 @@ namespace OMedia.Infrastructure.Data
     {
         [Key]
         public int Id { get; set; }
+        [StringLength(6)]
         public string? Gender { get; set; }
         public int? Age { get; set; }
     }

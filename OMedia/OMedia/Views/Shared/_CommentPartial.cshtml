@@ -1,4 +1,5 @@
-﻿@model CommentViewModel
+﻿@using OMedia.Extensions
+@model CommentViewModel
 
 <div class="d-flex flex-start mt-4">
   <a class="me-3" href="#">
@@ -9,6 +10,31 @@
         <p class="mb-1">
           @Model.AuthorName <span class="small">- @Model.Date</span>
         </p>
+        @if(this.User.Identity == null 
+                               ? false 
+                               : User.Id() == Model.AuthorId)
+                               {
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                 <div >
+                                                    <form class="input-group-sm" asp-area="" asp-controller="News"
+                                                      asp-action="DeleteComment" asp-route-id="@Model.Id" method="post">
+                                                           <input class="btn btn-danger" type="submit" value="X"/>
+                                                     </form>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div >
+                                                    <a asp-area="" asp-controller="News" asp-action="EditComment" asp-route-id="@Model.Id" 
+                                                    asp-route-information="" >
+                                                         <input class="btn btn-warning" type="submit" icon="bi:pencil" value="✏️"/>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                               }
       </div>
       <p class="small mb-0">
         @Model.Content

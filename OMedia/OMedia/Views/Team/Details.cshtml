@@ -30,7 +30,8 @@
                             @foreach (var member in @Model.Competitors)
                             {
                                 <li>
-                                    <a>@member.Name</a>
+                                    <a asp-area="" asp-controller="User" asp-action="Profile" asp-route-id="@member.UserId" 
+                                        asp-route-information="" >@member.Name</a>
                                 </li>
                             }
                         </ol>
