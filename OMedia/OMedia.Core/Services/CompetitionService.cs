@@ -34,7 +34,7 @@ namespace OMedia.Core.Services
                     Location = h.Location,
                     Date = h.Date.ToString("dd/MM/yyyy"),
                     Details = h.Details,
-                    AgeGroups = h.AgeGroups.Select(g => g.AgeGroup.Gender == null ? "Open" : $"{g.AgeGroup.Gender[0]}{g.AgeGroup.Age}").ToList(),
+                    AgeGroups = h.AgeGroups.Select(g => $"{g.AgeGroup.Gender.ToString()} {g.AgeGroup.Age}").ToList(),
                     CompetitorsNames = h.Competitors.Select(c => c.Competitor.Name).ToList(),
                     OrganizerName = h.Competitors
                         .Where(c => c.Role == "Organizer")
@@ -140,6 +140,7 @@ namespace OMedia.Core.Services
         {
             var competitions = await repo.AllReadonly<Competition>()
                 .Include(c => c.Competitors)
+                .Where(x => x.IsActive)
                 .ToListAsync();
             return CompetitionsView(competitions,
                                    searchTerm,
@@ -188,8 +189,10 @@ namespace OMedia.Core.Services
                 .Select(g => new CompetitionAgeGroupModel()
                 {
                     Id = g.Id,
-                    Gender = g.Gender?? "Open",
-                    Age = g.Age?? -1
+                    Gender = (g.Gender == "Male") ?
+                            Infrastructure.Enums.Gender.Male
+                            : Infrastructure.Enums.Gender.Female,
+                    Age = g.Age
                 })
                 .ToListAsync();
         }
@@ -211,7 +214,9 @@ namespace OMedia.Core.Services
             return comp.AgeGroups.Select(g => new CompetitionAgeGroupModel()
             { 
                 Id = g.AgeGroupId,
-                Gender = g.AgeGroup.Gender,
+                Gender = (g.AgeGroup.Gender == "Male") ?
+                            Infrastructure.Enums.Gender.Male
+                            : Infrastructure.Enums.Gender.Female,
                 Age = g.AgeGroup.Age
             }).ToList();
         }

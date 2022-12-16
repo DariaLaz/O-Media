@@ -68,7 +68,7 @@ namespace OMedia.Controllers
                     {
                         Id = ag.Id,
                         IsChecked = true,
-                        Gender = ag.Gender,
+                        Gender = ag.Gender.ToString(),
                         Age = ag.Age
                     }).ToList()
             };
@@ -93,8 +93,10 @@ namespace OMedia.Controllers
                 ageGroups.Add(new CompetitionAgeGroupModel()
                 {
                     Id=currAgeGroup.Id,
-                    Age = currAgeGroup.Age?? 0,
-                    Gender = currAgeGroup.Gender
+                    Age = currAgeGroup.Age,
+                    Gender = (currAgeGroup.Gender == "Male") ?
+                            Infrastructure.Enums.Gender.Male
+                            : Infrastructure.Enums.Gender.Female,
                 });
             }
             model.AgeGroups = ageGroups;
@@ -147,7 +149,9 @@ namespace OMedia.Controllers
                 model.AgeGroups.Add(new CompetitionAgeGroupModel()
                 {
                     Id = g.AgeGroupId,
-                    Gender = (await competitionService.GetAgeGroupsById(g.AgeGroupId)).Gender,
+                    Gender =((await competitionService.GetAgeGroupsById(g.AgeGroupId)).Gender  == "Male") ?
+                            Infrastructure.Enums.Gender.Male
+                            : Infrastructure.Enums.Gender.Female,
                     Age = (await competitionService.GetAgeGroupsById(g.AgeGroupId)).Age
                 });
             }
@@ -157,7 +161,7 @@ namespace OMedia.Controllers
                     {
                         Id = ag.Id,
                         IsChecked = (competition.AgeGroups.Any(x => x.AgeGroupId == ag.Id)),
-                        Gender = ag.Gender,
+                        Gender = ag.Gender.ToString(),
                         Age = ag.Age
                     }).ToList();
             return View(model);
@@ -187,8 +191,10 @@ namespace OMedia.Controllers
                     model.AgeGroups.Add(new CompetitionAgeGroupModel()
                     {
                         Id = currAgeGroup.Id,
-                        Age = currAgeGroup.Age ?? 0,
-                        Gender = currAgeGroup.Gender == null ? "Open" : currAgeGroup.Gender
+                        Age = currAgeGroup.Age,
+                        Gender = (currAgeGroup.Gender == "Male") ?
+                            Infrastructure.Enums.Gender.Male
+                            : Infrastructure.Enums.Gender.Female,
                     });
                 }
             }
@@ -230,7 +236,9 @@ namespace OMedia.Controllers
                 model.AgeGroups.ToList().Add(new CompetitionAgeGroupModel()
                 {
                     Id = g.AgeGroupId,
-                    Gender = (await competitionService.GetAgeGroupsById(g.AgeGroupId)).Gender,
+                    Gender = ((await competitionService.GetAgeGroupsById(g.AgeGroupId)).Gender == "Male") ?
+                            Infrastructure.Enums.Gender.Male
+                            : Infrastructure.Enums.Gender.Female,
                     Age = (await competitionService.GetAgeGroupsById(g.AgeGroupId)).Age
                 });
             }

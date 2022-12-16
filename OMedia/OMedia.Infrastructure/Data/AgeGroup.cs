@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OMedia.Infrastructure.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace OMedia.Infrastructure.Data
         [Key]
         public int Id { get; set; }
         [StringLength(6)]
-        public string? Gender { get; set; }
-        public int? Age { get; set; }
+        public string Gender { get; set; }
+        public int Age { get; set; }
     }
 }

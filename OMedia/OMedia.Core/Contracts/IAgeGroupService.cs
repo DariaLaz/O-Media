@@ -12,5 +12,7 @@ namespace OMedia.Core.Contracts
         Task<IEnumerable<AgeGroupViewModel>> All();
         Task<int> Create(AgeGroupViewModel model);
         Task<bool> Exists(AgeGroupViewModel model);
+        Task<int> GetAgeGroupId(int id);
+
     }
 }

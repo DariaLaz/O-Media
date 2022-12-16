@@ -7,14 +7,11 @@ namespace OMedia.Areas.Admin.Controllers
     public class AgeGroupController : BaseController
     {
         private readonly IAgeGroupService ageGroupService;
-        private readonly IUserService userService;
 
         public AgeGroupController(
-            IAgeGroupService _ageGroupService,
-            IUserService _userService)
+            IAgeGroupService _ageGroupService)
         {
             ageGroupService = _ageGroupService;
-            userService = _userService;
         }
         [HttpGet]
         public async Task<IActionResult> All()

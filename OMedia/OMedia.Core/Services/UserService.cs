@@ -41,7 +41,7 @@ namespace OMedia.Core.Services
                 .Include(x => x.Team)
                 .Include(x => x.Competitions)
                 .ThenInclude(x => x.Competition)
-                .FirstOrDefaultAsync(a => a.Id == id));
+                .FirstOrDefaultAsync(a => a.Id == id && a.IsActive));
             var competitions = competitior.Competitions
                 .Where(x => x.Role != "Organizer" && x.Competitor.Id == id)
                 .Select(c => new CompetitionViewModel()
@@ -169,17 +169,6 @@ namespace OMedia.Core.Services
             }
             return counter == 1;
         }
-        public async Task Edit(int id, ProfileViewModel model)
-        {
-            var competitor = await repo.All<Competitor>()
-                .Include(x => x.User)
-                .FirstAsync(x => x.Id == id);
-            var user = competitor.User;
-            user.UserName = model.Name;
-
-            var result = await userManager.UpdateAsync(user);
-        }
-
         public async Task<UserViewModel> GetInfo(string id)
         {
             var competitor = await repo.AllReadonly<Competitor>()

@@ -14,6 +14,5 @@ namespace OMedia.Core.Contracts
             int TeamId,
             int ageGroupId);
         Task Edit(int id, string name, int teamId, int ageGroupId);
-        Task<int> GetAgeGroupId(int id);
     }
 }

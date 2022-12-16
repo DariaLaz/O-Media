@@ -25,7 +25,9 @@ namespace OMedia.Core.Services
                    .Select(g => new AgeGroupViewModel()
                    {
                        Id = g.Id,
-                       Gender = g.Gender,
+                       Gender = (g.Gender == "Male") ? 
+                            Infrastructure.Enums.Gender.Male 
+                            : Infrastructure.Enums.Gender.Female,
                        Age = g.Age
                    }).ToListAsync();
         }
@@ -34,7 +36,7 @@ namespace OMedia.Core.Services
         {
             var ageGroup = new AgeGroup()
             {
-                Gender = model.Gender,
+                Gender = model.Gender.ToString(),
                 Age = model.Age
             };
             await repo.AddAsync(ageGroup);
@@ -46,7 +48,13 @@ namespace OMedia.Core.Services
         public async Task<bool> Exists(AgeGroupViewModel model)
         {
             return await repo.AllReadonly<AgeGroup>()
-                .AnyAsync(g => g.Gender == model.Gender && g.Age == model.Age);
+                .AnyAsync(g => g.Gender == model.Gender.ToString() && g.Age == model.Age);
+        }
+
+        public async Task<int> GetAgeGroupId(int id)
+        {
+            var competitor = await repo.GetByIdAsync<Competitor>(id);
+            return competitor.AgeGroupId;
         }
     }
 }

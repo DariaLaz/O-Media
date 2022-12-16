@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AkDEzpcq5QMcthlAyrF4rBx74NQ6seXitIgNPVoa7A7u8Ne/KsWSi/p1+fyBU7x304U+OfxQAPp+BhohkVY+Cg==",
+  "dgSpecHash": "5AY+V8uLYMFYVFn+d3n42a4j+wyUpsh7n8BJ31TMDkEyD6Wh7aRFm4Py0wWKiTKmrv4z0f1/WJEruOt1peUmlg==",
   "success": true,
-  "projectFilePath": "E:\\OMedia\\O-Media\\OMedia\\OMedia.Infrastructure\\OMedia.Infrastructure.csproj",
+  "projectFilePath": "E:\\softuni\\SoftUni\\O-Media\\OMedia\\OMedia.Infrastructure\\OMedia.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\daria\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\daria\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

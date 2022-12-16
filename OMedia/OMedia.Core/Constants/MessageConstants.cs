@@ -12,4 +12,8 @@ namespace OMedia.Core.Constants
         public const string WarningMessage = "WarningMessage";
         public const string SuccessMessage = "SuccessMessage";
     }
+    public class AgeGroups 
+    {
+        public const string AgeRangeError = "Age must be a positive number and less than 100";
+    }
 }

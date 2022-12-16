@@ -40,10 +40,6 @@ namespace OMedia.Core.Services
 
             await repo.SaveChangesAsync();
         }
-        public async Task<int> GetAgeGroupId(int id)
-        {
-            var competitor = await repo.GetByIdAsync<Competitor>(id);
-            return competitor.AgeGroupId;
-        }
+       
     }
 }

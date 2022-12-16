@@ -20,7 +20,6 @@ namespace OMedia.Core.Contracts
         Task<bool> RemoveAdmin(IdentityUser user);
         Task<bool> AddAdmin(string id);
         Task<bool> IsTheLastAdmin();
-        Task Edit(int id, ProfileViewModel model);
         Task<UserViewModel> GetInfo(string id);
     }
 }

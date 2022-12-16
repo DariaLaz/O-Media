@@ -12,15 +12,20 @@ namespace OMedia.Controllers
         private readonly IUserService userService;
         private readonly ICompetitionService competitionService;
         private readonly ICompetitorService competitorService;
+        private readonly IAgeGroupService ageGroupService;
+
 
         public CompetitorController(
             IUserService _userService,
             ICompetitionService _competitionService,
-            ICompetitorService _competitorService)
+            ICompetitorService _competitorService,
+            IAgeGroupService _ageGroupService)
         {
             userService = _userService;
             competitionService = _competitionService;
             competitorService = _competitorService;
+            ageGroupService = _ageGroupService;
+
         }
 
         public object MessageConstant { get; private set; }
@@ -28,7 +33,7 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var competitor = await userService.GetCompetitor(id);
-            var competitorAGeGroup = await competitorService.GetAgeGroupId(id);
+            var competitorAGeGroup = await ageGroupService.GetAgeGroupId(id);
             var model = new CompetitorViewModel()
             {
                 Name = competitor.Name,

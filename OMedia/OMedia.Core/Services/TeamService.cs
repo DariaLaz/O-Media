@@ -97,7 +97,6 @@ namespace OMedia.Core.Services
                 }).ToList()
             };
         }
-
         public async Task<int> Create(AddTeamModel model)
         {
             var team = new Team()
@@ -110,7 +109,6 @@ namespace OMedia.Core.Services
 
             return team.Id;
         }
-
         public async Task<bool> Exists(AddTeamModel model)
         {
             return await repo.AllReadonly<Team>().AnyAsync(t => t.Name == model.Name);
