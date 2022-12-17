@@ -13,8 +13,6 @@ namespace OMedia.UnitTests.TestUserArea
 {
     public class CompetitionServiceTests
     {
-        private CompetitionService _competitionService;
-        private IRepository repo;
         [Fact]
         public async Task AllSuccessfully()
         {
@@ -23,7 +21,7 @@ namespace OMedia.UnitTests.TestUserArea
             var service = new CompetitionService(repo);
 
             //Act
-            await service.Create(new AddCompetitionViewModel()
+            var a = await service.Create(new AddCompetitionViewModel()
             {
                 AgeGroups = new List<CompetitionAgeGroupModel>(),
                 AgeGroupString = new List<string>(),
@@ -33,7 +31,7 @@ namespace OMedia.UnitTests.TestUserArea
                 Location = "",
                 Name = ""
             }, 1);
-            await service.Create(new AddCompetitionViewModel()
+            var b = await service.Create(new AddCompetitionViewModel()
             {
                 AgeGroups = new List<CompetitionAgeGroupModel>(),
                 AgeGroupString = new List<string>(),
@@ -47,6 +45,8 @@ namespace OMedia.UnitTests.TestUserArea
 
             //Assert
             Assert.True(result.TotalCompetitionsCount == 2);
+            Assert.True(await service.Exists(a));
+            Assert.True(await service.Exists(b));
         }
         [Fact]
         public async Task GetAllAgeGroupsSuccessfully()
@@ -56,13 +56,13 @@ namespace OMedia.UnitTests.TestUserArea
             var service = new AgeGroupService(repo);
 
             //Act
-            await service.Create(new Core.Models.AgeGroup.AgeGroupViewModel()
+            var a = await service.Create(new Core.Models.AgeGroup.AgeGroupViewModel()
             {
                 Age = 12,
                 Gender = Infrastructure.Enums.Gender.Male,
                 Id = 1
             });
-            await service.Create(new Core.Models.AgeGroup.AgeGroupViewModel()
+            var b = await service.Create(new Core.Models.AgeGroup.AgeGroupViewModel()
             {
                 Age = 21,
                 Gender = Infrastructure.Enums.Gender.Male,

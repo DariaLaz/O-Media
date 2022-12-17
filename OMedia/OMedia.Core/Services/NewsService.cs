@@ -79,11 +79,12 @@ namespace OMedia.Core.Services
         public async Task<NewsViewModel?> GetNewsById(int id)
         {
             var news = await repo.AllReadonly<News>()
-                .Include(x => x.Writer)
                 .Include(x => x.Comments)
                 .ThenInclude(x => x.Author)
-                .Where(n => n.IsActive)
+                .Where(n => n.IsActive != false)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            var writerUserId = await GetWriterUserId((news == null) ? 0:news.Id);
             return news == null ?
                 null:
                 new NewsViewModel()
@@ -91,7 +92,7 @@ namespace OMedia.Core.Services
                     Id = news.Id,
                     Title = news.Title,
                     Content = news.Content,
-                    WriterId = news.Writer.UserId,
+                    WriterId = writerUserId,
                     Date = news.Date.ToString("dd/MM/yyyy"),
                     Comments = news.Comments
                            .Where(c => c.IsActive)
@@ -164,7 +165,7 @@ namespace OMedia.Core.Services
         public async Task<bool> ExistsComment(int id)
         {
             return await repo.AllReadonly<Comment>()
-               .AnyAsync(x => x.Id == id);
+               .AnyAsync(x => x.Id == id && x.IsActive);
         }
         public async Task<CommentViewModel> GetCommentById(int id)
         {
