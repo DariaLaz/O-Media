@@ -17,7 +17,7 @@ namespace OMedia.Core.Contracts
         Task<IEnumerable<UserViewModel>> All();
         Task<bool> Forget(IdentityUser user);
         Task<IdentityUser> GetUser(string id);
-        Task<bool> RemoveAdmin(IdentityUser user);
+        Task<bool> RemoveAdmin(string id);
         Task<bool> AddAdmin(string id);
         Task<bool> IsTheLastAdmin();
         Task<UserViewModel> GetInfo(string id);

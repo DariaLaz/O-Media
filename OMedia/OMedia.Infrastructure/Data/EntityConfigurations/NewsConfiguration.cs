@@ -12,10 +12,6 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<News> builder)
         {
-            //builder.HasMany(c => c.Comments)
-            //    .WithOne(c => c.News)
-            //    .HasForeignKey(c => c.NewsId);
-
             builder.HasData(CreateNews());
         }
         private List<News> CreateNews()
@@ -25,10 +21,10 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
                 new News()
                 {
                     Id = 1,
-                    Title = "Title",
-                    Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
+                    Title = "A wonderful year",
+                    Content = "This year was very nice for me. I have taken part in more than 15 competitions and met a lof of new people from the community",
                     WriterId = 1,
-                    Date = DateTime.Now
+                    Date = DateTime.Parse("12/15/2022")
                 },
              };
 

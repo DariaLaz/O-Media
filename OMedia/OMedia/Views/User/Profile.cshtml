@@ -8,9 +8,9 @@
 
 
 <div class="container-fluid">
-<div class="container">
-  <!-- Title -->
-  <div class="d-flex justify-content-between align-items-center py-3">
+ <div class="container">
+    @if(Model.IsActive){
+        <div class="d-flex justify-content-between align-items-center py-3">
     <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> @Model.Name</h2>
     <h6 class="h5 mb-0"><a href="#" class="text-muted"></a> @Model.Email</h6>
      <a class="btn btn-secondary" asp-area="" asp-controller="Competitor" asp-action="Edit"asp-route-information="" asp-route-id="@Model.Id">Edit</a>
@@ -18,62 +18,52 @@
      <a class="btn btn-secondary" asp-area="Identity" asp-controller="Account" asp-action="Manage"asp-route-information="" >Account Settings</a>
   </div>
 
-  <!-- Main content -->
-  <div class="row">
-    <div class=@*"col-lg-8"*@>
-      <!-- Details -->
-      <div@* class="card mb-4"*@>
-        <div class="card-body">
-          <div class="mb-3 d-flex justify-content-between">
-          </div>
-          <div class="form-group">
-              
-          </div>
-          <table class="table table-borderless">
-            <tbody>
-               
-                <tr>
-                    <td>
-                        <ul>
-                            @Model.Competitions.Count competitions
-                            @foreach (var comp in @Model.Competitions)
-                            {
-                                <li>
-                                    <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@comp.Id" 
-                                        asp-route-information="" >@comp.Name</a>
-                                </li>
-                            }
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            @Model.CompetitionsOrganized.Count competitions organized:
-                            @foreach (var comp in @Model.CompetitionsOrganized)
-                            {
-                                <li>
-                                    <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@comp.Id" 
-                                        asp-route-information="" >@comp.Name</a>
-                                </li>
-                            }
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            @Model.News.Count news:
-                            @foreach (var news in @Model.News)
-                            {
-                                <li>
-                                    <partial name="_NewsPartial" model="@news" />
-                                </li>
-                            }
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-          </table>
+  <div class="container">
+      <div class="row">
+        <div class="col-sm card p-2 m-2">
+          <ul>
+              <h4 style="text-align: center;">@Model.Competitions.Count competitions:</h4>
+                    @foreach (var comp in @Model.Competitions)
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@comp.Id" 
+                                asp-route-information="" >@comp.Name</a>
+                        </li>
+                    }
+                </ul>
+        </div>
+        <div class="col-sm card p-2 m-2">
+          <ul>
+              <h4 style="text-align: center;">@Model.CompetitionsOrganized.Count organized competitions:</h4>
+
+                    @foreach (var comp in @Model.CompetitionsOrganized)
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Competition" asp-action="Details" asp-route-id="@comp.Id" 
+                                asp-route-information="" >@comp.Name</a>
+                        </li>
+                    }
+                </ul>
         </div>
       </div>
+       <div>
+            <h4 style="text-align: center;">My News:</h4>
+            <ul style="list-style: none;">
+                @foreach (var news in @Model.News)
+                {
+                    <li>
+                        <partial name="_NewsPartial" model="@news" />
+                    </li>
+                }
+            </ul>
+       </div>
+            </div>
+        }
+        else
+        {
+            
+        <h2 class="display-4">Deleted User!</h2>
+         <hr class="my-4">
+        }
     </div>
-  </div>
-</div>
 </div>

@@ -29,7 +29,9 @@ namespace OMedia.Core.Services
                             Infrastructure.Enums.Gender.Male 
                             : Infrastructure.Enums.Gender.Female,
                        Age = g.Age
-                   }).ToListAsync();
+                   })
+                   .OrderBy(x => x.Gender)
+                   .ThenBy(x => x.Age).ToListAsync();
         }
 
         public async Task<int> Create(AgeGroupViewModel model)

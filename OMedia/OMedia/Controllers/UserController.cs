@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.User;
@@ -6,6 +7,7 @@ using OMedia.Extensions;
 
 namespace OMedia.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly INewsService newsService;
@@ -30,7 +32,7 @@ namespace OMedia.Controllers
             }
             if (await userService.isCompetitorById(id) == false)
             {
-                return RedirectToAction("Become", "Competition");
+                return RedirectToAction("Become", "Competitor");
             }
             var compId = await userService.GetCompetitorId(id);
             var competitior = await userService.GetCompetitor(compId);

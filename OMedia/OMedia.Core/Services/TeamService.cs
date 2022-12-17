@@ -26,7 +26,7 @@ namespace OMedia.Core.Services
         }
         public async Task<IEnumerable<TeamsViewModel>> GetAllTeams()
         {
-            return await repo.AllReadonly<Team>()
+            var teams = await repo.AllReadonly<Team>()
                .Include(t => t.Competitors)
                .ThenInclude(c => c.Competitions)
                .Select(c => new TeamsViewModel()
@@ -34,11 +34,15 @@ namespace OMedia.Core.Services
                    Id = c.Id,
                    Name = c.Name,
                    CountOfMembers = c.Competitors.Count,
-                   CountOfCompetitions = c.Competitors.Where(x => x.Competitions.Count > 0)
-                        .Select(x => x.Competitions.Where(cc => cc.Role == "Organizer"))
-                        .Count()
                })
                .ToListAsync();
+
+            foreach (var team in teams)
+            {
+                team.CountOfCompetitions = (await GetTeamsCompetitionsId(team.Id)).Count();
+            }
+
+            return teams;
         }
         public async Task<Team> GetTeamById(int id)
         {
@@ -51,8 +55,8 @@ namespace OMedia.Core.Services
                  .Include(x => x.Competitors)
                  .ThenInclude(x => x.Competitions)
                  .ThenInclude(x => x.Competition)
-                 .FirstOrDefaultAsync(t => t.Id == id);
-            return team.Competitors;
+                 .FirstAsync(t => t.Id == id);
+            return team.Competitors.Where(x => x.IsActive).ToList();
         }
         public async Task<List<Competition>> GetTeamsCompetitionsId(int id)
         {
@@ -61,7 +65,7 @@ namespace OMedia.Core.Services
             var competitions = new List<Competition>();
             foreach (var c in competitors)
             {
-                foreach (var comp in c.Competitions)
+                foreach (var comp in c.Competitions.Where(x => x.IsActive))
                 {
                     if (comp.Role == "Organizer")
                     {

@@ -11,8 +11,12 @@
         var controller = User.Id() == null ? "Account" : "User";
         var area = User.Id() == null ? "Identity" : "";
     }
-    
-    <h2 class="display-4">Hello, <a asp-area="@area" asp-controller="@controller" asp-action="@action">@name</a>!</h2>
+    @if(User.Id() == null){
+        <h2 class="display-4">Hello, <a asp-area="Identity" asp-controller="Account" asp-action="Login">Guest</a>!</h2>
+    }
+    else{
+        <h2 class="display-4">Hello, <a asp-area="" asp-controller="User" asp-action="Profile" asp-route-id="@User.Id()">@Model.Name</a>!</h2>
+    }  
  
     <hr class="my-4">
     <p>

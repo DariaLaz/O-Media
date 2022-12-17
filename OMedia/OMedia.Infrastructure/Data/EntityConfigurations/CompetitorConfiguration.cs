@@ -23,9 +23,9 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
                 {
                     Id = 1,
                     TeamId = 1,
-                    Name = "CoolName",
+                    Name = "Ivan Petrov",
                     UserId = "dea12856-c198-4129-b3f3-b893d8395082",
-                    AgeGroupId = 1
+                    AgeGroupId = 8
                 }
              };
 

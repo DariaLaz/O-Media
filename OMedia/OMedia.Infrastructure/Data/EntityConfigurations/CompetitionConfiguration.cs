@@ -23,13 +23,11 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
                 new Competition()
                 {
                     Id = 1,
-                    Name = "CoolRace",
-                    Location = "CoolPlace",
-                    Date = DateTime.Now,
-                    Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
-                  
+                    Name = "Christmas run",
+                    Location = "Vitosha",
+                    Date = DateTime.Parse("12/24/2022"),
+                    Details = "This is the last competition of the year.",
                 }
-
              };
 
             return competitions;

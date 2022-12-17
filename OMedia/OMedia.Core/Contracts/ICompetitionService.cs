@@ -34,7 +34,7 @@ namespace OMedia.Core.Contracts
         Task<Competition?> GetCompetitionById(int id);
         Task<AgeGroup> GetAgeGroupsById(int id);
         Task<int> Create(AddCompetitionViewModel model, int userId);
-        Task<CompetitionDetailsModel> CompetitionDetailsById(int id);
+        Task<CompetitionDetailsModel> CompetitionDetailsById(int id, string userId);
         Task<bool> Exists(int id);
         Task<string> GetCompetitionOrganizerUserId(int compId);
         Task Edit(int compId, AddCompetitionViewModel model);

@@ -11,6 +11,6 @@ namespace OMedia.Core.Models.Competition
     {
         public int Id { get; set; }
         public Gender Gender { get; set; }
-        public int? Age { get; set; }
+        public int Age { get; set; }
     }
 }

@@ -15,7 +15,8 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
         {
             builder.HasData(new IdentityRole()
             {
-                Name = "Administrator"
+                Name = "Administrator",
+                NormalizedName = "ADMINISTRATOR"
             });
         }
     }

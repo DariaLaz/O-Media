@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.Team;
 using OMedia.Extensions;
@@ -6,6 +7,7 @@ using static OMedia.Areas.Admin.Constants.AdminConstants;
 
 namespace OMedia.Controllers
 {
+    [Authorize]
     public class TeamController : Controller
     {
         private readonly ITeamService teamService;
@@ -18,6 +20,7 @@ namespace OMedia.Controllers
             teamService = _teamService;
             userService = _userService;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             if (User.IsInRole(AdminRoleName))

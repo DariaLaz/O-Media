@@ -68,9 +68,8 @@ namespace OMedia.Areas.Admin.Controllers
             {
                 TempData[MessageConstants.SuccessMessage] = "You can not remove the last Admin";
             }
-            var user = await userService.GetUser(userId);
 
-            bool result = await userService.RemoveAdmin(user);
+            bool result = await userService.RemoveAdmin(userId);
 
             if (result)
             {

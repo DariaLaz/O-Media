@@ -1,5 +1,5 @@
 ﻿@model CompetitionViewModel
-<div class="container inline">
+<div class="container ">
      <div class="card">
         <div class="card-body p-1">
         <div class="social-feed-box col-md-auto">
@@ -9,14 +9,14 @@
                     <small class="text-muted">@Model.Date</small>
                 </div>
             </div>
-            @if (Model.IsCurrUserTakingPart)
+            @if (Model.IsCurrUserTakingPart && !Model.IsOrganizer)
                 {
                      <form class="input-group-sm" asp-area="" asp-controller="Competition"
                      asp-action="Cancel" asp-route-id="@Model.Id" method="post">
                           <input class="btn btn-danger" type="submit" value="Cancel" />
                     </form>
                 }
-                else
+                else if(Model.IsMyAgeGroup && Model.IsComming && !Model.IsOrganizer)
                 {
                     <form class="input-group-sm" asp-area="" asp-controller="Competition"
                      asp-action="TakePart" asp-route-id="@Model.Id" method="post">

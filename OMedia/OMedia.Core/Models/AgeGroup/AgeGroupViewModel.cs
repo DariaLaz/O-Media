@@ -12,6 +12,7 @@ namespace OMedia.Core.Models.AgeGroup
     public class AgeGroupViewModel
     {
         public int Id { get; set; }
+
         public Gender Gender { get; set; }
         [Range(0, 100, ErrorMessage = AgeRangeError)]
         public int Age { get; set; }

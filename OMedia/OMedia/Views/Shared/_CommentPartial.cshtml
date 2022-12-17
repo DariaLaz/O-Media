@@ -1,4 +1,6 @@
 ﻿@using OMedia.Extensions
+@using static OMedia.Areas.Admin.Constants.AdminConstants;
+
 @model CommentViewModel
 
 <div class="d-flex flex-start mt-4">
@@ -8,33 +10,54 @@
     <div>
       <div class="d-flex justify-content-between align-items-center">
         <p class="mb-1">
-          @Model.AuthorName <span class="small">- @Model.Date</span>
+          <a asp-route-id="@Model.AuthorId" asp-area="" asp-controller="User" asp-action="Profile">@Model.AuthorName</a>
+
+          <span class="small">- @Model.Date
+          @if(Model.IsChanged){
+              <i>(edited)</i>
+          }
+          </span>
         </p>
         @if(this.User.Identity == null 
-                               ? false 
-                               : User.Id() == Model.AuthorId)
-                               {
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                 <div >
-                                                    <form class="input-group-sm" asp-area="" asp-controller="News"
-                                                      asp-action="DeleteComment" asp-route-id="@Model.Id" method="post">
-                                                           <input class="btn btn-danger" type="submit" value="X"/>
-                                                     </form>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div >
-                                                    <a asp-area="" asp-controller="News" asp-action="EditComment" asp-route-id="@Model.Id" 
-                                                    asp-route-information="" >
-                                                         <input class="btn btn-warning" type="submit" icon="bi:pencil" value="✏️"/>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                               }
+          ? false 
+          : User.Id() == Model.AuthorId)
+          {
+               <table>
+                   <tr>
+                       <td>
+                            <div >
+                               <form class="input-group-sm" asp-area="" asp-controller="News"
+                                 asp-action="DeleteComment" asp-route-id="@Model.Id" method="post">
+                                      <input class="btn btn-danger" type="submit" value="X"/>
+                                </form>
+                           </div>
+                       </td>
+                       <td>
+                           <div >
+                               <a asp-area="" asp-controller="News" asp-action="EditComment" asp-route-id="@Model.Id" 
+                               asp-route-information="" >
+                                    <input class="btn btn-warning" type="submit" icon="bi:pencil" value="✏️"/>
+                               </a>
+                           </div>
+                       </td>
+                   </tr>
+               </table>
+          }
+         else if(User.IsInRole(AdminRoleName)){
+             <table>
+                   <tr>
+                       <td>
+                            <div >
+                               <form class="input-group-sm" asp-area="" asp-controller="News"
+                                 asp-action="DeleteComment" asp-route-id="@Model.Id" method="post">
+                                      <input class="btn btn-danger" type="submit" value="X"/>
+                                </form>
+                           </div>
+                       </td>
+                   </tr>
+               </table>
+         }
+
       </div>
       <p class="small mb-0">
         @Model.Content

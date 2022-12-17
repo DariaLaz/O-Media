@@ -16,4 +16,11 @@ namespace OMedia.Core.Constants
     {
         public const string AgeRangeError = "Age must be a positive number and less than 100";
     }
+    public class Competitions
+    {
+        public const string NameLenRangeError = "Name is required and must have lenght up to 50 characters";
+        public const string LocationLenRangeError = "Name is required and must have lenght up to 50 characters";
+        public const string DetailsLenRangeError = "Name is required and must have lenght up to 50 characters";
+
+    }
 }

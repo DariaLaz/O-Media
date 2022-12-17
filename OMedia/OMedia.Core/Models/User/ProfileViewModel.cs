@@ -23,5 +23,6 @@ namespace OMedia.Core.Models.User
         public int TeamId { get; set; }
         public string TeamName { get; set; }
         public IFormFile ProfilePicture { get; set; }
+        public bool IsActive { get; set; }
     }
 }

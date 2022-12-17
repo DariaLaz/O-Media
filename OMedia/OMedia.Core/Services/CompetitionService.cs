@@ -23,9 +23,9 @@ namespace OMedia.Core.Services
             repo = _repo;
         }
 
-        public async Task<CompetitionDetailsModel> CompetitionDetailsById(int id)
+        public async Task<CompetitionDetailsModel> CompetitionDetailsById(int id, string userId)
         {
-            return await repo.AllReadonly<Competition>()
+            var competition = await repo.AllReadonly<Competition>()
                 .Where(h => h.Id == id)
                 .Select(h => new CompetitionDetailsModel()
                 {
@@ -47,9 +47,18 @@ namespace OMedia.Core.Services
                         .First().CompetitorId,
                     OrganizerUserId = h.Competitors
                         .Where(c => c.Role == "Organizer")
-                        .First().Competitor.UserId
+                        .First().Competitor.UserId,
+                    IsOrganizer = ((h.Competitors
+                        .Where(c => c.Role == "Organizer")
+                        .First().Competitor.UserId) == userId)
                 })
                 .FirstAsync();
+
+            competition.IsCurrUserTakingPart = (await repo.AllReadonly<CompetitionsCompetitors>()
+                .Include(x => x.Competitor)
+                .FirstOrDefaultAsync(x => x.Competitor.UserId == userId && x.CompetitionId == id && x.IsActive) != null);
+
+            return competition;
         }
         public async Task<int> Create(AddCompetitionViewModel model, int userId)
         {
@@ -135,14 +144,19 @@ namespace OMedia.Core.Services
             int year = 0,
             CompetitionSorting sorting = CompetitionSorting.Newest,
             int currentPage = 1, 
-            int compPerPage = 1,
+            int compPerPage = 5,
             int userId = 0)
         {
             var competitions = await repo.AllReadonly<Competition>()
                 .Include(c => c.Competitors)
+                .Include(c => c.AgeGroups)
                 .Where(x => x.IsActive)
                 .ToListAsync();
+            var competitior = await repo.AllReadonly<Competitor>()
+                .FirstOrDefaultAsync(x => x.Id == userId);
+            var ageGroup = competitior == null ? 0 : competitior.AgeGroupId;
             return CompetitionsView(competitions,
+                                   ageGroup,
                                    searchTerm,
                                    year,
                                    sorting,
@@ -157,7 +171,7 @@ namespace OMedia.Core.Services
             int year = 0,
             CompetitionSorting sorting = CompetitionSorting.Newest,
             int currentPage = 1,
-            int compPerPage = 1,
+            int compPerPage = 5,
             int userId = 0,
             string role = "Organizer")
         {
@@ -165,13 +179,22 @@ namespace OMedia.Core.Services
             var competitior = (await repo.AllReadonly<Competitor>()
                 .Include(x => x.Competitions)
                 .ThenInclude(x => x.Competition)
-                .FirstOrDefaultAsync(a => a.Id == userId));
-            var competitions = competitior.Competitions
-                .Where(x => ((isOrganizer && x.Role == "Organizer") || (!isOrganizer && x.Role != "Organizer")) && x.Competitor.Id == userId)
-                .Select(x => x.Competition)
-                .ToList();
-                
+                .FirstOrDefaultAsync(a => a.Id == userId && a.IsActive));
+            var competitions = new List<Competition>();
+            if (competitior != null && competitior.Competitions.Any())
+            {
+                competitions = competitior.Competitions
+                    .Where(x => ((isOrganizer && x.Role == "Organizer") 
+                        || (!isOrganizer && x.Role != "Organizer")) 
+                        && x.Competitor.Id == userId
+                        && x.IsActive
+                        && x.Competition.IsActive)
+                    .Select(x => x.Competition)
+                    .ToList();
+            }
+
             return CompetitionsView(competitions,
+                                   competitior.AgeGroupId,
                                    searchTerm,
                                    year,
                                    sorting,
@@ -179,10 +202,6 @@ namespace OMedia.Core.Services
                                    compPerPage,
                                    userId);
         }
-       
-
-
-
         public async Task<IEnumerable<CompetitionAgeGroupModel>> GetAllAgeGroups()
         {
             return await repo.AllReadonly<AgeGroup>()
@@ -252,7 +271,7 @@ namespace OMedia.Core.Services
                 .Include(c => c.Competitor)
                 .FirstOrDefaultAsync(x => x.CompetitionId == competitionId && 
                                 x.Competitor.UserId == competitorId &&
-                                !x.IsActive);
+                                x.IsActive);
             return (cc != null);
         }
 
@@ -275,7 +294,6 @@ namespace OMedia.Core.Services
             }
             await repo.SaveChangesAsync();
         }
-
         public async Task Cancel(int competitionId, int competitorId)
         {
             var cc = await repo.All<CompetitionsCompetitors>()
@@ -287,19 +305,20 @@ namespace OMedia.Core.Services
                 await repo.SaveChangesAsync();
             }
         }
-
-
-
         private CompetitionQueryModel CompetitionsView(List<Competition> competitions,
+                                                        int AgeGroupId = 0,
                                                         string? searchTerm = null,
                                                         int year = 0,
                                                         CompetitionSorting sorting = CompetitionSorting.Newest,
                                                         int currentPage = 1,
-                                                        int compPerPage = 1,
+                                                        int compPerPage = 5,
                                                         int userId = 0)
         {
             var result = new CompetitionQueryModel();
-
+            if (!competitions.Any())
+            {
+                return result;
+            }
             if (year != 0)
             {
                 competitions = competitions.Where(x => (x.Date.Year) == year).ToList();
@@ -335,12 +354,15 @@ namespace OMedia.Core.Services
                     Name = c.Name,
                     Location = c.Location,
                     Date = c.Date.ToString("dd-MM-yyyy"),
-                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel
+                    AgeGroups = c.AgeGroups.Select(g => new CompetitionAgeGroupModel()
                     {
                         Id = g.AgeGroupId
                     }),
                     IsCurrUserTakingPart = c.Competitors.Any(x => x.CompetitorId == userId && x.IsActive),
-                    IsEdited = c.IsChanged
+                    IsEdited = c.IsChanged,
+                    IsMyAgeGroup = (AgeGroupId == 0) ? true : c.AgeGroups.Select(x => x.AgeGroupId).ToList().Contains(AgeGroupId),
+                    IsComming = c.Date > DateTime.Now,
+                   // IsOrganizer = ((c.Competitors.First(x => x.Role=="Organizer")).CompetitorId) == userId
                 }).ToList();
 
             result.TotalCompetitionsCount = competitions.Count();

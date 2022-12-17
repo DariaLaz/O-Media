@@ -51,9 +51,10 @@ namespace OMedia.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fe6506ba-8b3b-478d-b4b5-15e12ab6decf",
-                            ConcurrencyStamp = "c57bc35e-54b7-490c-88fc-471acec02bc9",
-                            Name = "Administrator"
+                            Id = "332fd497-f837-422a-8f0c-bd3cbd0a97d6",
+                            ConcurrencyStamp = "c54976f2-19ef-4a22-b597-b0c9a07d1a8f",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
                         });
                 });
 
@@ -151,33 +152,33 @@ namespace OMedia.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d44bee8e-e888-4832-8cce-ac1acd554b29",
-                            Email = "agent@mail.com",
+                            ConcurrencyStamp = "e0b84b2d-743d-4fb4-86d8-dcba6e1d5bfb",
+                            Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "agent@mail.com",
-                            NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN2f3DgcefMBcnTFC3Z8f1evD/g4bZMwM24nITzqoJBtJOYiI+oZQsLIdRiJ1w8qBQ==",
+                            NormalizedEmail = "admin@mail.com",
+                            NormalizedUserName = "admin@mail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPAeydFNUvehYgg9sKotQz9uKTZd6s1BlVnO8diADVWikfMa8mN63csRiIR5Dw+nlQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8bc411b2-2ad6-4bd7-a4bb-789417bec42a",
+                            SecurityStamp = "d5c8f6c0-c25e-4418-a014-7a90afadbf19",
                             TwoFactorEnabled = false,
-                            UserName = "agent@mail.com"
+                            UserName = "admin@mail.com"
                         },
                         new
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a9bc509d-690f-4706-afb8-37d95b6c1144",
-                            Email = "guest@mail.com",
+                            ConcurrencyStamp = "e9720183-ca93-4df1-96c2-57138a72eabd",
+                            Email = "user@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "guest@mail.com",
-                            NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAENb14c0QeLDvM604JMMyOV3ZpnBOZg3/GmMLgQvVCkQg/FaX+uEjwVa1sBjuAmiobg==",
+                            NormalizedEmail = "user@mail.com",
+                            NormalizedUserName = "user@mail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI2QIOd74BhH8lArluyBnhdXFF6h+/TnDHfC5yDC4tkJD7AdtzuoQ/l3emMYQi0WOg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bcf0b032-d5a6-4327-b068-1c2606f90f27",
+                            SecurityStamp = "605391f0-3cbb-4bb7-ab11-b2224211db97",
                             TwoFactorEnabled = false,
-                            UserName = "guest@mail.com"
+                            UserName = "user@mail.com"
                         });
                 });
 
@@ -274,7 +275,7 @@ namespace OMedia.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Age")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("Gender")
@@ -319,116 +320,122 @@ namespace OMedia.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 24,
-                            Age = 21,
-                            Gender = "Male"
-                        },
-                        new
-                        {
                             Id = 6,
-                            Age = 35,
+                            Age = 21,
                             Gender = "Male"
                         },
                         new
                         {
                             Id = 7,
-                            Age = 45,
+                            Age = 35,
                             Gender = "Male"
                         },
                         new
                         {
                             Id = 8,
-                            Age = 55,
+                            Age = 40,
                             Gender = "Male"
                         },
                         new
                         {
                             Id = 9,
-                            Age = 60,
+                            Age = 45,
                             Gender = "Male"
                         },
                         new
                         {
                             Id = 10,
-                            Age = 65,
+                            Age = 50,
                             Gender = "Male"
                         },
                         new
                         {
                             Id = 11,
-                            Age = 70,
+                            Age = 55,
                             Gender = "Male"
                         },
                         new
                         {
                             Id = 12,
-                            Age = 10,
-                            Gender = "Female"
+                            Age = 60,
+                            Gender = "Male"
                         },
                         new
                         {
                             Id = 13,
+                            Age = 65,
+                            Gender = "Male"
+                        },
+                        new
+                        {
+                            Id = 14,
                             Age = 12,
                             Gender = "Female"
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 15,
                             Age = 14,
                             Gender = "Female"
                         },
                         new
                         {
-                            Id = 15,
+                            Id = 16,
                             Age = 16,
                             Gender = "Female"
                         },
                         new
                         {
-                            Id = 16,
+                            Id = 17,
                             Age = 18,
                             Gender = "Female"
                         },
                         new
                         {
-                            Id = 17,
+                            Id = 18,
                             Age = 21,
                             Gender = "Female"
                         },
                         new
                         {
-                            Id = 18,
+                            Id = 19,
                             Age = 35,
                             Gender = "Female"
                         },
                         new
                         {
-                            Id = 19,
-                            Age = 45,
-                            Gender = "Female"
-                        },
-                        new
-                        {
                             Id = 20,
-                            Age = 55,
+                            Age = 40,
                             Gender = "Female"
                         },
                         new
                         {
                             Id = 21,
-                            Age = 60,
+                            Age = 45,
                             Gender = "Female"
                         },
                         new
                         {
                             Id = 22,
-                            Age = 65,
+                            Age = 50,
                             Gender = "Female"
                         },
                         new
                         {
                             Id = 23,
-                            Age = 70,
+                            Age = 55,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Age = 60,
+                            Gender = "Female"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Age = 65,
                             Gender = "Female"
                         });
                 });
@@ -524,12 +531,12 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 12, 16, 3, 25, 43, 591, DateTimeKind.Local).AddTicks(1719),
-                            Details = "Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details ",
+                            Date = new DateTime(2022, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Details = "This is the last competition of the year.",
                             IsActive = false,
                             IsChanged = false,
-                            Location = "CoolPlace",
-                            Name = "CoolRace"
+                            Location = "Vitosha",
+                            Name = "Christmas run"
                         });
                 });
 
@@ -603,9 +610,9 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            AgeGroupId = 1,
+                            AgeGroupId = 8,
                             IsActive = true,
-                            Name = "CoolName",
+                            Name = "Ivan Petrov",
                             TeamId = 1,
                             UserId = "dea12856-c198-4129-b3f3-b893d8395082"
                         });
@@ -652,11 +659,11 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Content = "Content Content Content Content Content Content Content Content Content Content Content Content Content",
-                            Date = new DateTime(2022, 12, 16, 3, 25, 43, 451, DateTimeKind.Local).AddTicks(9965),
+                            Content = "This year was very nice for me. I have taken part in more than 15 competitions and met a lof of new people from the community",
+                            Date = new DateTime(2022, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = false,
                             IsChanged = false,
-                            Title = "Title",
+                            Title = "A wonderful year",
                             WriterId = 1
                         });
                 });
@@ -684,7 +691,22 @@ namespace OMedia.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "CoolTeam"
+                            Name = "Runners"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Tourists"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Sliven"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Uno"
                         });
                 });
 

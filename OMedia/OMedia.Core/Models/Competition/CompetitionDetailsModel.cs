@@ -16,6 +16,8 @@ namespace OMedia.Core.Models.Competition
         public string OrganizerName { get; set; }
         public int? OrganizerId { get; set; }
         public string? OrganizerUserId { get; set; }
+        public bool IsCurrUserTakingPart { get; set; }
+        public bool IsOrganizer { get; set; }
 
         public string OrganizerTeamName { get; set; }
         public List<string> AgeGroups { get; set; }

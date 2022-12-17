@@ -5,6 +5,8 @@ using OMedia.Core.Contracts;
 using OMedia.Core.Models;
 using OMedia.Core.Models.Competition;
 using OMedia.Extensions;
+using static OMedia.Areas.Admin.Constants.AdminConstants;
+
 
 namespace OMedia.Controllers
 {
@@ -20,6 +22,7 @@ namespace OMedia.Controllers
             userService = _userService;
             competitionService = _competitionService;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]AllCompetitionsQueryModel q)
         {
             var result = await  competitionService.GetAll(
@@ -33,11 +36,17 @@ namespace OMedia.Controllers
             q.TotalCompetitionsCount = result.TotalCompetitionsCount;
             q.Competitions = result.Competitions;
             q.Years = await competitionService.GetAllCompetitionYears(q.Competitions);
+            
 
             return View(q);
         }
         public async Task<IActionResult> Mine([FromQuery] MyCompetitionsQueryModel q)
         {
+            if (await userService.isCompetitorById(User.Id()) == false)
+            {
+                return RedirectToAction("Become", "Competitor");
+            }
+
             var result = await competitionService.Mine(
                 q.SearchTerm,
                 q.Year,
@@ -105,7 +114,6 @@ namespace OMedia.Controllers
             int id = await competitionService.Create(model, userId);
             return RedirectToAction(nameof(Details), new {id = id});
         }
-        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             if (await userService.isCompetitorById(User.Id()) == false)
@@ -117,7 +125,7 @@ namespace OMedia.Controllers
                 return RedirectToAction(nameof(All));
             }
 
-            var model = await competitionService.CompetitionDetailsById(id);
+            var model = await competitionService.CompetitionDetailsById(id, User.Id());
 
             return View(model);
         }
@@ -249,7 +257,7 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Delete(int id, CompetitionViewModel model)
         {
             if (((await competitionService.Exists(id)) == false)
-             || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id())
+             || ((await competitionService.GetCompetitionOrganizerUserId(id)) != User.Id() && !User.IsInRole(AdminRoleName))
              || ((await competitionService.GetCompetitionById(id)) == null))
             {
                 return RedirectToAction(nameof(All));

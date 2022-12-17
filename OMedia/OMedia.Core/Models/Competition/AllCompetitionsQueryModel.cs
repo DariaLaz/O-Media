@@ -8,7 +8,7 @@ namespace OMedia.Core.Models.Competition
 {
     public class AllCompetitionsQueryModel
     {
-        public const int CompetitionsPerPage = 5;
+        public const int CompetitionsPerPage = 3;
         public string? SearchTerm { get; set; }
         public CompetitionSorting Sorting { get; set; }
         public int CurrentPage { get; set; }

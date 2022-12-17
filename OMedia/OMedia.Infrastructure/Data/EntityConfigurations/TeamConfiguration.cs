@@ -21,7 +21,22 @@ namespace OMedia.Infrastructure.Data.EntityConfigurations
                 new Team()
                 {
                     Id = 1,
-                    Name = "CoolTeam"
+                    Name = "Runners"
+                },
+                new Team()
+                {
+                    Id = 2,
+                    Name = "Tourists"
+                },
+                new Team()
+                {
+                    Id = 3,
+                    Name = "Sliven"
+                },
+                 new Team()
+                {
+                    Id = 4,
+                    Name = "Uno"
                 },
              };
 

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using OMedia.Core.Contracts;
 using OMedia.Core.Models.News;
 using OMedia.Extensions;
+using static OMedia.Areas.Admin.Constants.AdminConstants;
+
 
 namespace OMedia.Controllers
 {
@@ -61,7 +63,7 @@ namespace OMedia.Controllers
 
             int writerId = await userService.GetCompetitorId(User.Id());
             await newsService.Create(model, writerId);
-            return RedirectToAction("All");
+            return RedirectToAction("All", new {currentPage = 1});
         }
 
         [HttpGet]
@@ -72,7 +74,8 @@ namespace OMedia.Controllers
               || (await newsService.GetNewsById(id) == null)
                     )
             {
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("All", new { currentPage = 1 });
+
             }
 
             var news = await newsService.GetNewsById(id);
@@ -92,7 +95,8 @@ namespace OMedia.Controllers
              || ((await newsService.GetWriterUserId(id)) != User.Id())
              || (await newsService.GetNewsById(id) == null))
             {
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("All", new { currentPage = 1 });
+
             }
 
             await newsService.Edit(id, model);
@@ -107,7 +111,7 @@ namespace OMedia.Controllers
             }
             if ((await newsService.Exists(id)) == false)
             {
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("All", new { currentPage = 1 });
             }
 
             var model = await newsService.GetNewsById(id);
@@ -119,15 +123,16 @@ namespace OMedia.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             if (((await newsService.Exists(id)) == false)
-             || ((await newsService.GetWriterUserId(id)) != User.Id())
+             || ((await newsService.GetWriterUserId(id)) != User.Id() && !User.IsInRole(AdminRoleName))
              || (await newsService.GetNewsById(id) == null))
             {
-                return RedirectToAction(nameof(All));
+            return RedirectToAction("All", new {currentPage = 1});
+
             }
 
             await newsService.Delete(id);
+            return RedirectToAction("All", new { currentPage = 1 });
 
-            return RedirectToAction(nameof(All));
         }
         [HttpGet]
         public async Task<IActionResult> Comment(int id)
@@ -173,7 +178,7 @@ namespace OMedia.Controllers
               || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
               || (await newsService.GetCommentById(id) == null))
             {
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("All", new { currentPage = 1 });
             }
 
             var comment = await newsService.GetCommentById(id);
@@ -200,10 +205,10 @@ namespace OMedia.Controllers
         public async Task<IActionResult> DeleteComment(int id)
         {
             if (((await newsService.ExistsComment(id)) == false)
-              || ((await newsService.GetCommentAuthorUserId(id)) != User.Id())
+              || ((await newsService.GetCommentAuthorUserId(id)) != User.Id() && !User.IsInRole(AdminRoleName))
               || (await newsService.GetCommentById(id) == null))
             {
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("All", new { currentPage = 1 });
             }
             var comment = await newsService.GetCommentById(id);
             int newId = comment.NewsId;

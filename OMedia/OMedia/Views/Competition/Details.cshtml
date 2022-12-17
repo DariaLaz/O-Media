@@ -1,4 +1,5 @@
 ﻿@using OMedia.Extensions
+@using static OMedia.Areas.Admin.Constants.AdminConstants;
 
 @model CompetitionDetailsModel
 @{
@@ -13,17 +14,15 @@
     <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> @Model.Name</h2>
   </div>
 
-  <!-- Main content -->
   <div class="row">
     <div class="col-lg-8">
-      <!-- Details -->
       <div class="card mb-4">
         <div class="card-body">
           <div class="mb-3 d-flex justify-content-between">
             <div>
               <span class="me-3">@Model.Date</span>
-              <span class="me-3">@(Model.OrganizerName ?? "")</span>
-              <span class="me-3">@(Model.OrganizerTeamName ?? "")</span>
+              <span class="me-3">@(Model.OrganizerName)</span>
+              <span class="me-3">@(Model.OrganizerTeamName)</span>
 
             </div>
           </div>
@@ -31,16 +30,35 @@
             <tbody>
                @Model.Details
             </tbody>
+            
             <div>
               @if(this.User.Identity == null 
                ? false 
-               : User.Id() == @Model.OrganizerUserId)
+               : User.Id() == @Model.OrganizerUserId )
                {
                     <a class="btn btn-warning" asp-controller="Competition" asp-action="Edit"
                        asp-route-id="@Model.Id">Edit</a>
                     <a class="ml-2 btn btn-danger" asp-controller="Competition" asp-action="Delete"
                        asp-route-id="@Model.Id">Delete</a>
                }
+               else if(User.IsInRole(AdminRoleName)){
+                   <a class="ml-2 btn btn-danger" asp-controller="Competition" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
+               }
+               @if (Model.IsCurrUserTakingPart && !Model.IsOrganizer)
+                {
+                     <form class="input-group-sm" asp-area="" asp-controller="Competition"
+                     asp-action="Cancel" asp-route-id="@Model.Id" method="post">
+                          <input class="btn btn-danger" type="submit" value="Cancel" />
+                    </form>
+                }
+                else if(!Model.IsOrganizer)
+                {
+                    <form class="input-group-sm" asp-area="" asp-controller="Competition"
+                     asp-action="TakePart" asp-route-id="@Model.Id" method="post">
+                          <input class="btn btn-primary" type="submit" value="⨭ Take part" />
+                     </form>
+                }
             </div>
           </table>
         </div>

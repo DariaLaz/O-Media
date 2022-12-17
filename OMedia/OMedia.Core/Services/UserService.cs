@@ -42,8 +42,15 @@ namespace OMedia.Core.Services
                 .Include(x => x.Competitions)
                 .ThenInclude(x => x.Competition)
                 .FirstOrDefaultAsync(a => a.Id == id && a.IsActive));
+            if (competitior == null)
+            {
+                return new ProfileViewModel()
+                {
+                    IsActive = false
+                };
+            }
             var competitions = competitior.Competitions
-                .Where(x => x.Role != "Organizer" && x.Competitor.Id == id)
+                .Where(x => x.Role != "Organizer" && x.Competitor.Id == id && x.IsActive && x.Competition.IsActive)
                 .Select(c => new CompetitionViewModel()
                 {
                     Id = c.CompetitionId,
@@ -56,7 +63,7 @@ namespace OMedia.Core.Services
                     })
                 }).ToList();
             var competitionsOrganized = competitior.Competitions
-                .Where(x => x.Role == "Organizer" && x.Competitor.Id == id)
+                .Where(x => x.Role == "Organizer" && x.Competitor.Id == id && x.IsActive && x.Competition.IsActive)
                 .Select(c => new CompetitionViewModel()
                 {
                     Id = c.CompetitionId,
@@ -76,7 +83,8 @@ namespace OMedia.Core.Services
                 TeamName = competitior.Team.Name,
                 Competitions = competitions,
                 CompetitionsOrganized = competitionsOrganized,
-                Email = competitior.User.Email
+                Email = competitior.User.Email,
+                IsActive = true,
             };
         }
         public async Task<IEnumerable<UserViewModel>> All()
@@ -114,7 +122,7 @@ namespace OMedia.Core.Services
                 var competitor = (await repo.All<Competitor>()
                     .FirstOrDefaultAsync(a => a.UserId == user.Id));
                 competitor.IsActive = false;
-                competitor.Name = null;
+                competitor.Name = "Deleted_User-{DateTime.Now.Ticks}";
                 await repo.SaveChangesAsync();
             }
             return result.Succeeded;
@@ -130,7 +138,6 @@ namespace OMedia.Core.Services
         {
             var user = await repo.All<Competitor>()
                 .Include(x => x.User)
-                .AsNoTracking()
                 .Select(x => x.User)
                 .FirstAsync(x => x.Id == id);
 
@@ -142,13 +149,16 @@ namespace OMedia.Core.Services
 
             return result.Succeeded;
         }
-        public async Task<bool> RemoveAdmin(IdentityUser user)
+        public async Task<bool> RemoveAdmin(string id)
         {
+            var user = await repo.All<Competitor>()
+                .Include(x => x.User)
+                .Select(x => x.User)
+                .FirstAsync(x => x.Id == id);
+            var roles = new List<string>();
+            roles.Add("Administrator");
 
-
-            var userRoles = await userManager.GetRolesAsync(user);
-
-            await userManager.RemoveFromRolesAsync(user, userRoles);
+            await userManager.RemoveFromRolesAsync(user, roles);
             var result = await userManager.UpdateAsync(user);
 
             return result.Succeeded;
@@ -171,18 +181,25 @@ namespace OMedia.Core.Services
         }
         public async Task<UserViewModel> GetInfo(string id)
         {
-            var competitor = await repo.AllReadonly<Competitor>()
-                .Include(x => x.User)
-                .FirstAsync(x => x.UserId == id);
-            var isAdmin = await userManager.IsInRoleAsync(competitor.User, "Administrator");
+            var competitor = await repo.AllReadonly<IdentityUser>()
+                .FirstAsync(x => x.Id == id);
+            var isAdmin = await userManager.IsInRoleAsync(competitor, "Administrator");
 
-            return new UserViewModel()
+            var resulr = new UserViewModel()
             {
-                UserId = competitor.UserId,
-                Email = competitor.User.Email,
-                Name = competitor.Name,
-                IsAdministrator = isAdmin
+                UserId = competitor.Id,
+                Email = competitor.Email,
+                IsAdministrator = isAdmin,
+                Name = competitor.UserName
             };
+            if (await isCompetitorById(competitor.Id))
+            {
+                var comp = await GetCompetitorId(competitor.Id);
+                var name = (await GetCompetitor(comp)).Name;
+
+                resulr.Name = name;
+            }
+            return resulr;
         }
     }
 }

@@ -64,6 +64,7 @@ namespace OMedia.Core.Services
                    WriterId = n.Writer.UserId,
                    WriterName = n.Writer.Name,
                    Date = n.Date.ToString("dd-MM-yyyy"),
+                   IsChanged = n.IsChanged,
                    Comments = n.Comments.Where(c => c.IsActive)
                        .Select(x => new CommentViewModel()
                        {
@@ -71,7 +72,8 @@ namespace OMedia.Core.Services
                            AuthorId = x.Author.UserId,
                            AuthorName = x.Author.Name,
                            Content = x.Content,
-                           IsChanged = x.IsChanged
+                           IsChanged = x.IsChanged,
+                           Date = x.Date.ToString("dd/MM/yyyy")
                        }).ToList()
                })
                .ToListAsync();
@@ -94,6 +96,7 @@ namespace OMedia.Core.Services
                     Content = news.Content,
                     WriterId = writerUserId,
                     Date = news.Date.ToString("dd/MM/yyyy"),
+                    IsChanged = news.IsChanged,
                     Comments = news.Comments
                            .Where(c => c.IsActive)
                            .Select(x => new CommentViewModel()
@@ -102,7 +105,8 @@ namespace OMedia.Core.Services
                                AuthorId = x.Author.UserId,
                                AuthorName = x.Author.Name,
                                Content = x.Content,
-                               IsChanged = x.IsChanged
+                               IsChanged = x.IsChanged,
+                               Date = x.Date.ToString("dd/MM/yyyy")
                            }).ToList()
                 };
 
@@ -140,7 +144,8 @@ namespace OMedia.Core.Services
                            AuthorId = x.Author.UserId,
                            AuthorName = x.Author.Name,
                            Content = x.Content,
-                           IsChanged = x.IsChanged
+                           IsChanged = x.IsChanged,
+                           Date = x.Date.ToString("dd/MM/yyyy")
                        }).ToList();
 
         }
@@ -238,6 +243,7 @@ namespace OMedia.Core.Services
             }
 
             result.News = news
+                .OrderByDescending(x => x.Date)
                 .Skip((currentPage - 1) * newsPerPage)
                 .Take(newsPerPage)
                 .Select(c => new NewsViewModel()
@@ -248,6 +254,7 @@ namespace OMedia.Core.Services
                     WriterId = c.Writer.UserId,
                     WriterName = c.Writer.Name,
                     Date = c.Date.ToString("dd/MM/yyyy"),
+                    IsChanged = c.IsChanged,
                     Comments = c.Comments
                        .Where(x => x.IsActive)
                        .Select(x => new CommentViewModel()
@@ -256,7 +263,8 @@ namespace OMedia.Core.Services
                            AuthorId = x.Author.UserId,
                            AuthorName = x.Author.Name,
                            Content = x.Content,
-                           IsChanged = x.IsChanged
+                           IsChanged = x.IsChanged,
+                           Date = x.Date.ToString("dd/MM/yyyy")
                        }).ToList()
                 }).ToList();
 
@@ -292,9 +300,11 @@ namespace OMedia.Core.Services
                                AuthorId = x.Author.UserId,
                                AuthorName = x.Author.Name,
                                Content = x.Content,
-                               IsChanged = x.IsChanged
+                               IsChanged = x.IsChanged,
+                               Date = x.Date.ToString("dd/MM/yyyy")
                            }).ToList(),
                         Content = x.Content,
+                        IsChanged = x.IsChanged,
                         Date = x.Date.ToString("dd/MM/yyyy"),
                         Title = x.Title,
                         WriterId = x.Writer.UserId,
